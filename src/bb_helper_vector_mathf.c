@@ -62,4 +62,8 @@ bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b){
     .z =  (a.x  * b.y) - (a.y * b.x)};
 }
 
+float bb_vec3f_dot(bb_vec3f a, bb_vec3f b){
+  return (a.x * b.x) +(a.y * b.y) +(a.z * b.z);
+}
+
 #endif

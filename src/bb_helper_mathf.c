@@ -48,7 +48,9 @@ float bb_absf(const float n){
 }
 
 float bb_clampf(float n, const float min, const float max){
-  if (min >= max) printf("[ERROR]\tminimum constraint cannot be greater than or equal to maximum constraint.\n");
+  if (min >= max) {
+    printf("[ERROR]\tminimum constraint cannot be greater than or equal to maximum constraint.\n");
+  }
   if (n > max) n = max;
   if (n < min) n = min;
   return n;

@@ -31,22 +31,25 @@ SOFTWARE.
 
 /*END LEGAL*/
 
-/*-----------------------------------------------Project Vision----------------------------------------------
+/*------------------------------Project Vision----------------------------------
 
-This project is a general purpose tool library for tasks I believe to be common in software development. 
-bb_helper is written in C89. I realise that no one asked for this and there might be someone out there 
-who has already done what I am trying to do here. The main goal for me is to learn the inner-workings of 
-the code most people take for granted. This will allow me to completely understand all of the code that 
-I use in my projects.
+This project is a general purpose tool library for tasks I believe to be common
+ in software development. bb_helper is written in C89. I realise that no one 
+ asked for this and there might be someone out there who has already done what 
+ I am trying to do here. The main goal for me is to learn the inner-workings of 
+ the code most people take for granted. This will allow me to completely 
+ understand all of the code that I use in my projects.
 
------------------------------------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 
 /*
 Memory tracking system that documents uses of malloc, free, calloc, and realloc.
-TODO  This system should be easy to enable and disable using #define #ifdef #ifndef, etc.
-TODO  This system should provide debugging information reguarding where memory has been allocated, 
-      reallocated, or freed.
-TODO  This system should also make it clear exactly which line of code and in which file a piece of 
+TODO  This system should be easy to enable and disable using #define #ifdef 
+#ifndef, etc.
+TODO  This system should provide debugging information reguarding where memory 
+has been allocated, reallocated, or freed.
+TODO  This system should also make it clear exactly which line of code and in 
+which file a piece of 
 TODO  memory has been changed.
 TODO  Warnings should appear when the user fails to free memory appropriately.
 */
@@ -60,56 +63,76 @@ TODO    Epsilon	A tiny floating point value (Read Only).
 TODO    Infinity	A representation of positive infinity (Read Only).
 TODO    NegativeInfinity	A representation of negative infinity (Read Only).
 DONE    Abs	Returns the absolute value of f.
-DONE    Acos	Returns the arc-cosine of f - the angle in radians whose cosine is f.
-        Approximately	Compares two floating point values and returns true if they are similar.
+DONE    Acos	Returns the arc-cosine of f - the angle in radians whose cosine 
+is f.
+        Approximately	Compares two floating point values and returns true if 
+        they are similar.
 DONE    Asin	Returns the arc-sine of f - the angle in radians whose sine is f.
-DONE    Atan	Returns the arc-tangent of f - the angle in radians whose tangent is f.
+DONE    Atan	Returns the arc-tangent of f - the angle in radians whose tangent 
+is f.
 DONE    Atan2	Returns the angle in radians whose Tan is y/x.
 DONE    Ceil	Returns the smallest integer greater to or equal to f.
 TODO    CeilToInt	Returns the smallest integer greater to or equal to f.
-TODO    Clamp	Clamps the given value between the given minimum float and maximum float values. 
+TODO    Clamp	Clamps the given value between the given minimum float and 
+maximum float values. 
         Returns the given value if it is within the minimum and maximum range.
 TODO    Clamp01	Clamps value between 0 and 1 and returns value.
 TODO    ClosestPowerOfTwo	Returns the closest power of two value.
-TODO    CorrelatedColorTemperatureToRGB	Convert a color temperature in Kelvin to RGB color.
+TODO    CorrelatedColorTemperatureToRGB	Convert a color temperature in Kelvin 
+to RGB color.
 DONE    Cos	Returns the cosine of angle f.
-TODO    DeltaAngle	Calculates the shortest difference between two given angles given in degrees.
+TODO    DeltaAngle	Calculates the shortest difference between two given angles 
+given in degrees.
 DONE    Exp	Returns e raised to the specified power.
 TODO    FloatToHalf	Encode a floating point value into a 16-bit representation.
 DONE    Floor	Returns the largest integer smaller than or equal to f.
 TODO    FloorToInt	Returns the largest integer smaller to or equal to f.
-TODO    GammaToLinearSpace	Converts the given value from gamma (sRGB) to linear color space.
-DONE    HalfToFloat	Convert a half precision float to a 32-bit floating point value.
+TODO    GammaToLinearSpace	Converts the given value from gamma (sRGB) to 
+linear color space.
+DONE    HalfToFloat	Convert a half precision float to a 32-bit floating point 
+value.
 TODO?   Lerp	Linearly interpolates between a and b by t.
 TODO    InverseLerp	Determines where a value lies between two points.
-TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly when they wrap around 360
+TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
+when they wrap around 360
         degrees.
-TODO    LerpUnclamped	Linearly interpolates between a and b by t with no limit to t.
-TODO    LinearToGammaSpace	Converts the given value from linear to gamma (sRGB) color space.
+TODO    LerpUnclamped	Linearly interpolates between a and b by t with no limit 
+to t.
+TODO    LinearToGammaSpace	Converts the given value from linear to gamma 
+(sRGB) color space.
 DONE    Log	Returns the logarithm of a specified number in a specified base.
 TODO    Log10	Returns the base 10 logarithm of a specified number.
 TODO    MoveTowards	Moves a value current towards target.
-TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values interpolate correctly when they 
+TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values 
+interpolate correctly when they 
         wrap around 360 degrees.
 TODO    PerlinNoise	Generate 2D Perlin noise.
-TODO    PerlinNoise1D	Generates a 1D pseudo-random pattern of float values across a 2D plane.
-TODO    PingPong	PingPong returns a value that will increment and decrement between the value 0 and length.
+TODO    PerlinNoise1D	Generates a 1D pseudo-random pattern of float values 
+across a 2D plane.
+TODO    PingPong	PingPong returns a value that will increment and decrement 
+between the value 0 and length.
 DONE    Pow	Returns f raised to power p.
-TODO    Repeat	Loops the value t, so that it is never larger than length and never smaller than 0.
+TODO    Repeat	Loops the value t, so that it is never larger than length and 
+never smaller than 0.
 TODO    SmoothDamp	Gradually changes a value towards a desired goal over time.
-TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a desired goal angle over time.
-TODO    SmoothStep	Interpolates between min and max with smoothing at the limits.
+TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a 
+desired goal angle over time.
+TODO    SmoothStep	Interpolates between min and max with smoothing at the 
+limits.
 */
 
 #include <math.h>
 typedef int bb_bool;
 /*
 These functions will be seperated by data type.
-You can choose which functions you want to enable by using the following defines:
+You can choose which functions you want to enable by using the following 
+defines:
 */
 #define BB_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
-#define BB_ENABLE_MATHF         /*Enables functions for manipulating float values*/
-#define BB_ENABLE_MATHD         /*Enables functions for manipulating double values*/
+#define BB_ENABLE_MATHF         /*Enables functions for manipulating float 
+values*/
+#define BB_ENABLE_MATHD         /*Enables functions for manipulating double 
+values*/
 
 #ifdef BB_ENABLE_MATHF
 
@@ -145,21 +168,27 @@ DONE Equals	Returns true if the given vector is exactly equal to this vector.
 DONE Distance	Returns the distance between a and b.
 DONE Scale	Multiplies two vectors component-wise.
 DONE Cross	Cross Product of two vectors.
-TODO Dot	Dot Product of two vectors.
-TODO MoveTowards	Calculate a position between the points specified by current and target, moving no farther than the distance specified by maxDistanceDelta.
+DONE Dot	Dot Product of two vectors.
+TODO MoveTowards	Calculate a position between the points specified by current 
+and target, moving no farther than the distance specified by maxDistanceDelta.
 TODO Lerp	Linearly interpolates between two points.
 TODO Slerp	Spherically interpolates between two vectors.
-TODO ClampMagnitude	Returns a copy of vector with its magnitude clamped to maxLength.
+TODO ClampMagnitude	Returns a copy of vector with its magnitude clamped to 
+maxLength.
 TODO Angle	Calculates the angle between vectors from and.
 TODO LerpUnclamped	Linearly interpolates between two vectors.
-TODO Max	Returns a vector that is made from the largest components of two vectors.
-TODO Min	Returns a vector that is made from the smallest components of two vectors.
+TODO Max	Returns a vector that is made from the largest components of two 
+vectors.
+TODO Min	Returns a vector that is made from the smallest components of two 
+vectors.
 TODO OrthoNormalize	Makes vectors normalized and orthogonal to each other.
 TODO Project	Projects a vector onto another vector.
-TODO ProjectOnPlane	Projects a vector onto a plane defined by a normal orthogonal to the plane.
+TODO ProjectOnPlane	Projects a vector onto a plane defined by a normal 
+orthogonal to the plane.
 TODO Reflect	Reflects a vector off the plane defined by a normal.
 TODO RotateTowards	Rotates a vector current towards target.
-TODO SignedAngle	Calculates the signed angle between vectors from and to in relation to axis.
+TODO SignedAngle	Calculates the signed angle between vectors from and to in 
+relation to axis.
 TODO SlerpUnclamped	Spherically interpolates between two vectors.
 TODO SmoothDamp	Gradually changes a vector towards a desired goal over time.
 */
@@ -186,5 +215,6 @@ float bb_vec3f_distance(bb_vec3f a, bb_vec3f b);
 bb_vec3f bb_vec3f_add(bb_vec3f a, bb_vec3f b);
 bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar);
 bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b);
+float bb_vec3f_dot(bb_vec3f a, bb_vec3f b);
 #endif
 #endif
