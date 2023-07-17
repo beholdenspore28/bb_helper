@@ -143,8 +143,8 @@ DONE sqrMagnitude	Returns the squared length of this vector (Read Only).
 DONE normalized	Returns this vector with a magnitude of 1 (Read Only).
 DONE Equals	Returns true if the given vector is exactly equal to this vector.
 DONE Distance	Returns the distance between a and b.
-TODO Scale	Multiplies two vectors component-wise.
-TODO Cross	Cross Product of two vectors.
+DONE Scale	Multiplies two vectors component-wise.
+DONE Cross	Cross Product of two vectors.
 TODO Dot	Dot Product of two vectors.
 TODO MoveTowards	Calculate a position between the points specified by current and target, moving no farther than the distance specified by maxDistanceDelta.
 TODO Lerp	Linearly interpolates between two points.
@@ -185,5 +185,6 @@ bb_vec3f bb_vec3f_normalize(bb_vec3f v);
 float bb_vec3f_distance(bb_vec3f a, bb_vec3f b);
 bb_vec3f bb_vec3f_add(bb_vec3f a, bb_vec3f b);
 bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar);
+bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b);
 #endif
 #endif
