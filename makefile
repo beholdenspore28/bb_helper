@@ -19,11 +19,11 @@ run: build/bin/test
 	./build/bin/test
 build/bin/test: ${OBJFILES};
 	@mkdir -p build/bin
-	clang ${OBJFILES} -I ${INCDIR} ${LIBS} ${LDFLAGS} -o build/bin/test
+	gcc ${OBJFILES} -I ${INCDIR} ${LIBS} ${LDFLAGS} -o build/bin/test
 
 ${OBJFILES}: ${@:build/obj/%.o=%.c}
 	@mkdir -p ${dir ${@}}
-	clang -c ${@:build/obj/%.o=%.c} ${CFLAGS} ${INCDIR:%=-I%} -o ${@}
+	gcc -c ${@:build/obj/%.o=%.c} ${CFLAGS} ${INCDIR:%=-I%} -o ${@}
 clean: 
 	rm build/bin/test
 lib/libtest.a: ${OBJFILES}
