@@ -101,7 +101,6 @@ TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a de
 TODO    SmoothStep	Interpolates between min and max with smoothing at the limits.
 */
 
-
 #include <math.h>
 typedef int bb_bool;
 /*
@@ -143,7 +142,7 @@ DONE magnitude	Returns the length of this vector (Read Only).
 DONE sqrMagnitude	Returns the squared length of this vector (Read Only).
 DONE normalized	Returns this vector with a magnitude of 1 (Read Only).
 DONE Equals	Returns true if the given vector is exactly equal to this vector.
-TODO Distance	Returns the distance between a and b.
+DONE Distance	Returns the distance between a and b.
 TODO Scale	Multiplies two vectors component-wise.
 TODO Cross	Cross Product of two vectors.
 TODO Dot	Dot Product of two vectors.
@@ -171,22 +170,20 @@ typedef struct{
   float z;
 }bb_vec3f;
 
-extern const bb_vec3f zero;		  /*shorthand for vector3 (0, 0, 0)*/
-extern const bb_vec3f up;		    /*shorthand for vector3 (0, 1, 0)*/
-extern const bb_vec3f down;		  /*shorthand for vector3 (0,-1, 0)*/
-extern const bb_vec3f left;		  /*shorthand for vector3 (-1,0, 0)*/
-extern const bb_vec3f right;		/*shorthand for vector3 (1, 0, 0)*/
-extern const bb_vec3f forward;	/*shorthand for vector3 (0, 0, 1)*/
-extern const bb_vec3f back;		  /*shorthand for vector3 (0, 0,-1)*/
-extern const bb_vec3f one;		  /*shorthand for vector3 (1, 1, 1)*/
+extern const bb_vec3f BB_VEC3F_ZERO;      /*shorthand for vector3 (0, 0, 0)*/
+extern const bb_vec3f BB_VEC3F_UP;        /*shorthand for vector3 (0, 1, 0)*/
+extern const bb_vec3f BB_VEC3F_DOWN;      /*shorthand for vector3 (0,-1, 0)*/
+extern const bb_vec3f BB_VEC3F_LEFT;      /*shorthand for vector3 (-1,0, 0)*/
+extern const bb_vec3f BB_VEC3F_RIGHT;     /*shorthand for vector3 (1, 0, 0)*/
+extern const bb_vec3f BB_VEC3F_FORWARD;   /*shorthand for vector3 (0, 0, 1)*/
+extern const bb_vec3f BB_VEC3F_BACK;      /*shorthand for vector3 (0, 0,-1)*/
+extern const bb_vec3f BB_VEC3F_ONE;       /*shorthand for vector3 (1, 1, 1)*/
 
-/*The length of a given vector. Use bb_vec3f_sqrmagnitude if
-you can sacrifice accuracy for performance*/
 float bb_vec3f_magnitude(bb_vec3f v);
-/*The squared length of a given vector.*/
 float bb_vec3f_sqrmagnitude(bb_vec3f v);
 bb_vec3f bb_vec3f_normalize(bb_vec3f v);
 float bb_vec3f_distance(bb_vec3f a, bb_vec3f b);
 bb_vec3f bb_vec3f_add(bb_vec3f a, bb_vec3f b);
+bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar);
 #endif
 #endif
