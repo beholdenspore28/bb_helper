@@ -52,9 +52,13 @@ float bb_clampf(float n, const float min, const float max){
   if (n < min) n = min;
   return n;
 }
-/*TODO Test this function.*/
-float bb_lerpf(float a, float b, float t) {
+
+float bb_lerpclampedf(float a, float b, float t) {
   return a + (b - a) * bb_clampf(t,0.0f,1.0f);
+}
+
+float bb_lerpf(float a, float b, float t) {
+  return a + (b - a) * t;
 }
 
 float bb_normf(float n, float min, float max){
@@ -62,7 +66,7 @@ float bb_normf(float n, float min, float max){
 }
 
 float bb_mapf(float n, float fromMin, float fromMax, float toMin, float toMax){
-  return bb_lerpf(norm(n, fromMin, fromMax), toMin, toMax);
+  return bb_lerpf(bb_normf(n, fromMin, fromMax), toMin, toMax);
 }
 
 bb_bool bb_aproxequalf(float a, float b, float tolerance){
