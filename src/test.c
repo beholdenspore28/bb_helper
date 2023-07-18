@@ -1,6 +1,4 @@
-/*BEGIN LEGAL*/
-
-/*
+/*----------------------------------LEGAL--------------------------------------
 
 MIT License
 
@@ -24,16 +22,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-*/
-
-/*END LEGAL*/
+------------------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include "bb_helper.h"
 
 int main(){
-  bb_vec3f va = BB_VEC3F_ONE;
-  bb_vec3f vb = {.x=1.0f, .y=3.0f, .z=3.0f};
-  printf("%f\n", bb_vec3f_dot(va,vb));
+  bb_vec3f va = BB_VEC3F_ZERO;
+  bb_vec3f vb = {.x=2.0f, .y=2.0f, .z=2.0f};
+  bb_vec3f vc = bb_vec3f_lerp(va,vb,0.25f);
+  printf("[MESSAGE]\t%f\t%f\t%f\n",vc.x,vc.y,vc.z);
+  printf("[MESSAGE]\t%d\n",bb_aproxequalf(1.0,1.0f,0.1f));
   return 0;
 }

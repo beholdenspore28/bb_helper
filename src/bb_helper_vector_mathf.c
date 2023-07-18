@@ -1,6 +1,4 @@
-/*BEGIN LEGAL*/
-
-/*
+/*----------------------------------LEGAL--------------------------------------
 
 MIT License
 
@@ -24,9 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-*/
-
-/*END LEGAL*/
+------------------------------------------------------------------------------*/
 
 #include "bb_helper.h"
 
@@ -93,6 +89,23 @@ bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b){
 
 float bb_vec3f_dot(bb_vec3f a, bb_vec3f b){
   return (a.x * b.x) +(a.y * b.y) +(a.z * b.z);
+}
+
+bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float t){
+  return (bb_vec3f){
+    .x= a.x + (b.x - a.x) * t,
+    .y= a.y + (b.y - a.y) * t,
+    .z= a.z + (b.z - a.z) * t,
+  };
+}
+
+bb_vec3f bb_vec3f_lerpclamped(bb_vec3f a, bb_vec3f b, float t){
+  t = bb_clampf(t,0.0f,1.0f);
+  return (bb_vec3f){
+    .x= a.x + (b.x - a.x) * t,
+    .y= a.y + (b.y - a.y) * t,
+    .z= a.z + (b.z - a.z) * t,
+  };
 }
 
 #endif

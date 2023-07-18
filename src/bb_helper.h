@@ -1,4 +1,4 @@
-/*-----------------------------------LEGAL--------------------------------------
+/*----------------------------------LEGAL--------------------------------------
 
 MIT License
 
@@ -22,7 +22,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
---------------------------------Project Vision----------------------------------
+------------------------------------------------------------------------------*/
+
+/*------------------------------Project Vision----------------------------------
 
   This project is a general purpose tool library for tasks I believe to be 
 common in software development. bb_helper is written in C89. I realise that no 
@@ -50,22 +52,12 @@ TODO  Warnings should appear when the user fails to free memory appropriately.
 
 /*
 General floating point math functions
-DONE    PI	The well-known 3.14159265358979... value (Read Only).
-DONE    Deg2Rad	Degrees-to-radians conversion constant (Read Only).
-DONE    Rad2Deg	Radians-to-degrees conversion constant (Read Only).
+
 TODO    Epsilon	A tiny floating point value (Read Only).
 TODO    Infinity	A representation of positive infinity (Read Only).
 TODO    NegativeInfinity	A representation of negative infinity (Read Only).
-DONE    Abs	Returns the absolute value of f.
-DONE    Acos	Returns the arc-cosine of f - the angle in radians whose cosine 
-is f.
         Approximately	Compares two floating point values and returns true if 
         they are similar.
-DONE    Asin	Returns the arc-sine of f - the angle in radians whose sine is f.
-DONE    Atan	Returns the arc-tangent of f - the angle in radians whose tangent 
-is f.
-DONE    Atan2	Returns the angle in radians whose Tan is y/x.
-DONE    Ceil	Returns the smallest integer greater to or equal to f.
 TODO    CeilToInt	Returns the smallest integer greater to or equal to f.
 TODO    Clamp	Clamps the given value between the given minimum float and 
 maximum float values. 
@@ -74,17 +66,12 @@ TODO    Clamp01	Clamps value between 0 and 1 and returns value.
 TODO    ClosestPowerOfTwo	Returns the closest power of two value.
 TODO    CorrelatedColorTemperatureToRGB	Convert a color temperature in Kelvin 
 to RGB color.
-DONE    Cos	Returns the cosine of angle f.
 TODO    DeltaAngle	Calculates the shortest difference between two given angles 
 given in degrees.
-DONE    Exp	Returns e raised to the specified power.
 TODO    FloatToHalf	Encode a floating point value into a 16-bit representation.
-DONE    Floor	Returns the largest integer smaller than or equal to f.
 TODO    FloorToInt	Returns the largest integer smaller to or equal to f.
 TODO    GammaToLinearSpace	Converts the given value from gamma (sRGB) to 
 linear color space.
-DONE    HalfToFloat	Convert a half precision float to a 32-bit floating point 
-value.
 TODO?   Lerp	Linearly interpolates between a and b by t.
 TODO    InverseLerp	Determines where a value lies between two points.
 TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
@@ -102,7 +89,6 @@ TODO    PerlinNoise1D	Generates a 1D pseudo-random pattern of float values
 across a 2D plane.
 TODO    PingPong	PingPong returns a value that will increment and decrement 
 between the value 0 and length.
-DONE    Pow	Returns f raised to power p.
 TODO    Repeat	Loops the value t, so that it is never larger than length and 
 never smaller than 0.
 TODO    SmoothDamp	Gradually changes a value towards a desired goal over time.
@@ -143,10 +129,13 @@ float bb_absf(const float n);
 /*Returns n confined to be greater than min and less than max*/
 float bb_clampf(float n, const float min, const float max);
 
-/*TODO Test this function*/
 /*Linearly interpolates between a and b by t*/
 float bb_lerpf(float a, float b, float t);
 
+/*It is very rare that one floating point number is exactly the same as another.
+This function will check if two numbers are similar enough to be considered 
+equal. Returns true if the absolute value of "a" minus the absolute value of 
+"b" is smaller than "tolerance".*/
 bb_bool bb_aproxequalf(float a, float b, float tolerance);
 
 #endif
@@ -154,17 +143,9 @@ bb_bool bb_aproxequalf(float a, float b, float tolerance);
 #ifdef BB_ENABLE_VEC3F
 
 /*
-DONE magnitude	Returns the length of this vector (Read Only).
-DONE sqrMagnitude	Returns the squared length of this vector (Read Only).
-DONE normalized	Returns this vector with a magnitude of 1 (Read Only).
-DONE Equals	Returns true if the given vector is exactly equal to this vector.
-DONE Distance	Returns the distance between a and b.
-DONE Scale	Multiplies two vectors component-wise.
-DONE Cross	Cross Product of two vectors.
-DONE Dot	Dot Product of two vectors.
 TODO MoveTowards	Calculate a position between the points specified by current 
 and target, moving no farther than the distance specified by maxDistanceDelta.
-TODO Lerp	Linearly interpolates between two points.
+DONE Lerp	Linearly interpolates between two points.
 TODO Slerp	Spherically interpolates between two vectors.
 TODO ClampMagnitude	Returns a copy of vector with its magnitude clamped to 
 maxLength.
@@ -186,20 +167,36 @@ TODO SlerpUnclamped	Spherically interpolates between two vectors.
 TODO SmoothDamp	Gradually changes a vector towards a desired goal over time.
 */
 
+/*A data small structure for storing positions, rotations, scales, or lines.*/
 typedef struct{
   float x;
   float y;
   float z;
 }bb_vec3f;
 
-extern const bb_vec3f BB_VEC3F_ZERO;      /*shorthand for vector3 (0, 0, 0)*/
-extern const bb_vec3f BB_VEC3F_UP;        /*shorthand for vector3 (0, 1, 0)*/
-extern const bb_vec3f BB_VEC3F_DOWN;      /*shorthand for vector3 (0,-1, 0)*/
-extern const bb_vec3f BB_VEC3F_LEFT;      /*shorthand for vector3 (-1,0, 0)*/
-extern const bb_vec3f BB_VEC3F_RIGHT;     /*shorthand for vector3 (1, 0, 0)*/
-extern const bb_vec3f BB_VEC3F_FORWARD;   /*shorthand for vector3 (0, 0, 1)*/
-extern const bb_vec3f BB_VEC3F_BACK;      /*shorthand for vector3 (0, 0,-1)*/
-extern const bb_vec3f BB_VEC3F_ONE;       /*shorthand for vector3 (1, 1, 1)*/
+/*shorthand for vector3 (0, 0, 0)*/
+extern const bb_vec3f BB_VEC3F_ZERO;
+
+/*shorthand for vector3 (0, 1, 0)*/
+extern const bb_vec3f BB_VEC3F_UP;
+
+/*shorthand for vector3 (0,-1, 0)*/
+extern const bb_vec3f BB_VEC3F_DOWN;
+
+/*shorthand for vector3 (-1,0, 0)*/
+extern const bb_vec3f BB_VEC3F_LEFT;
+
+/*shorthand for vector3 (1, 0, 0)*/
+extern const bb_vec3f BB_VEC3F_RIGHT;
+
+/*shorthand for vector3 (0, 0, 1)*/
+extern const bb_vec3f BB_VEC3F_FORWARD;
+
+/*shorthand for vector3 (0, 0,-1)*/
+extern const bb_vec3f BB_VEC3F_BACK;
+
+/*shorthand for vector3 (1, 1, 1)*/
+extern const bb_vec3f BB_VEC3F_ONE;
 
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use bb_vec3f_sqrmagnitude()
@@ -242,6 +239,16 @@ bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b);
 /*For normalized vectors Dot returns 1 if they point in 
 exactly the same direction, -1 if they point in completely opposite directions and zero if the vectors are perpendicular.*/
 float bb_vec3f_dot(bb_vec3f a, bb_vec3f b);
+
+/*Linearly interpolates between "a" and "b" by "t".
+If you want to make sure the returned value stays 
+between "a" and "b", use bb_vec3f_lerpclamped() instead.
+Returns a point at "t"% of the way between "a" and "b".*/
+bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float t);
+
+/*Linearly interpolates between "a" and "b" by "t".
+Returns a point at "t"% of the way between "a" and "b".*/
+bb_vec3f bb_vec3f_lerpclamped(bb_vec3f a, bb_vec3f b, float t);
 
 #endif
 #endif

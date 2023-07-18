@@ -1,6 +1,4 @@
-/*BEGIN LEGAL*/
-
-/*
+/*----------------------------------LEGAL--------------------------------------
 
 MIT License
 
@@ -24,9 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-*/
-
-/*END LEGAL*/
+------------------------------------------------------------------------------*/
 
 #include <math.h>
 #include <stdio.h>
@@ -58,7 +54,15 @@ float bb_clampf(float n, const float min, const float max){
 }
 /*TODO Test this function.*/
 float bb_lerpf(float a, float b, float t) {
-  return (1 - t) * a + t * b;
+  return a + (b - a) * bb_clampf(t,0.0f,1.0f);
+}
+
+float bb_normf(float n, float min, float max){
+  return (n - min) / (max - min);
+}
+
+float bb_mapf(float n, float fromMin, float fromMax, float toMin, float toMax){
+  return bb_lerpf(norm(n, fromMin, fromMax), toMin, toMax);
 }
 
 bb_bool bb_aproxequalf(float a, float b, float tolerance){
