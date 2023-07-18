@@ -65,6 +65,4 @@ bb_bool bb_aproxequalf(float a, float b, float tolerance){
   if (bb_absf(a - b) < tolerance) return 1; else return 0;
 }
 
-
-
 #endif

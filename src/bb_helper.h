@@ -1,9 +1,4 @@
-#ifndef BB_HELPER_H
-#define BB_HELPER_H
-
-/*BEGIN LEGAL*/
-
-/*
+/*-----------------------------------LEGAL--------------------------------------
 
 MIT License
 
@@ -27,22 +22,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-*/
+--------------------------------Project Vision----------------------------------
 
-/*END LEGAL*/
+  This project is a general purpose tool library for tasks I believe to be 
+common in software development. bb_helper is written in C89. I realise that no 
+one asked for this and there might be someone out there who has already done 
+what I am trying to do here. The main goal for me is to learn the 
+inner-workings of the code most people take for granted. This will allow me to 
+completely understand all of the code that I use in my projects.
 
-/*------------------------------Project Vision----------------------------------
+----------------------------How-to-use-this-library-----------------------------
 
-This project is a general purpose tool library for tasks I believe to be common
- in software development. bb_helper is written in C89. I realise that no one 
- asked for this and there might be someone out there who has already done what 
- I am trying to do here. The main goal for me is to learn the inner-workings of 
- the code most people take for granted. This will allow me to completely 
- understand all of the code that I use in my projects.
 
-------------------------------------------------------------------------------*/
 
-/*
+-------------------------------------TO-DO--------------------------------------
+
 Memory tracking system that documents uses of malloc, free, calloc, and realloc.
 TODO  This system should be easy to enable and disable using #define #ifdef 
 #ifndef, etc.
@@ -95,13 +89,10 @@ TODO?   Lerp	Linearly interpolates between a and b by t.
 TODO    InverseLerp	Determines where a value lies between two points.
 TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
 when they wrap around 360
-        degrees.
-TODO    LerpUnclamped	Linearly interpolates between a and b by t with no limit 
+        degrees.#ifndef BB_HELPER_H
+#define BB_HELPER_Hbetween a and b by t with no limit 
 to t.
-TODO    LinearToGammaSpace	Converts the given value from linear to gamma 
-(sRGB) color space.
-DONE    Log	Returns the logarithm of a specified number in a specified base.
-TODO    Log10	Returns the base 10 logarithm of a specified number.
+TODO    LinearToGammaSpace	Converts the given value from linear to gamma  harry potter
 TODO    MoveTowards	Moves a value current towards target.
 TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values 
 interpolate correctly when they 
@@ -119,20 +110,22 @@ TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a
 desired goal angle over time.
 TODO    SmoothStep	Interpolates between min and max with smoothing at the 
 limits.
-*/
+------------------------------------------------------------------------------*/
+
+#ifndef BB_HELPER_H
+#define BB_HELPER_H
 
 #include <math.h>
 typedef int bb_bool;
+
 /*
 These functions will be seperated by data type.
 You can choose which functions you want to enable by using the following 
 defines:
 */
 #define BB_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
-#define BB_ENABLE_MATHF         /*Enables functions for manipulating float 
-values*/
-#define BB_ENABLE_MATHD         /*Enables functions for manipulating double 
-values*/
+#define BB_ENABLE_MATHF  /*Enables functions for manipulating float values*/
+#define BB_ENABLE_MATHD  /*Enables functions for manipulating double values*/
 
 #ifdef BB_ENABLE_MATHF
 
@@ -208,13 +201,47 @@ extern const bb_vec3f BB_VEC3F_FORWARD;   /*shorthand for vector3 (0, 0, 1)*/
 extern const bb_vec3f BB_VEC3F_BACK;      /*shorthand for vector3 (0, 0,-1)*/
 extern const bb_vec3f BB_VEC3F_ONE;       /*shorthand for vector3 (1, 1, 1)*/
 
+/*Returns the actual length of a vector "v". 
+This uses a square root operation. Use bb_vec3f_sqrmagnitude()
+to sacrifice accuracy and save on performance when comparing
+distances.*/
 float bb_vec3f_magnitude(bb_vec3f v);
+
+/*A more performant way of getting the relative length of a 
+vector "v". This saves a square root operation making it more 
+performant than bb_vec3f_magnitude(). If all you have to do is 
+compare a vectors length relatively, use this function instead of bb_vec3f_magnitude()*/
 float bb_vec3f_sqrmagnitude(bb_vec3f v);
+
+/*Returns a given vector "v" as a unit vector.
+This means the magnitude(length) of the returned
+vector will always be 1 unit. The returned vector always points 
+in the save direction as the given vector "v"*/
 bb_vec3f bb_vec3f_normalize(bb_vec3f v);
+
+/*Returns the distance between point a and point b 
+in units.*/
 float bb_vec3f_distance(bb_vec3f a, bb_vec3f b);
+
+/*Adds a vector "a" to another vector "b"*/
 bb_vec3f bb_vec3f_add(bb_vec3f a, bb_vec3f b);
+
+/*Subtracts a vector "subtrahend" from another vector "minuend"*/
+bb_vec3f bb_vec3f_subtract(bb_vec3f minuend, bb_vec3f subtrahend);
+
+/*Scales a vector "v" by "scalar".
+increases the magnitude when "scalar" is greater than 1.
+decreases the magnitude when "scalar" is less than 0.
+The returned vector will point in the same direction as
+the given vector "v".*/
 bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar);
+
+/*Returns a vector parallel to both "a" and "b".*/
 bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b);
+
+/*For normalized vectors Dot returns 1 if they point in 
+exactly the same direction, -1 if they point in completely opposite directions and zero if the vectors are perpendicular.*/
 float bb_vec3f_dot(bb_vec3f a, bb_vec3f b);
+
 #endif
 #endif
