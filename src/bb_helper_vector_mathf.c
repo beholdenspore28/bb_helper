@@ -75,12 +75,6 @@ bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar){
 }
 
 bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b){
-
-  /*
-  product[0] = (A[1] * B[2]) - (A[2] * B[1]);
-  product[1] = -((A[0] * B[2]) - (A[2] * B[0]));
-  product[2] = (A[0] * B[1]) - (A[1] * B[0]);
-  */
   return (bb_vec3f){
     .x =  (a.y  * b.z) - (a.z * b.y),
     .y = -((a.x * b.z) - (a.z * b.x)),

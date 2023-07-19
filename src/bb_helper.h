@@ -138,7 +138,7 @@ float bb_lerpclampedf(float a, float b, float t);
 /*Returns the percentage of "n" from "min" to "max".*/
 float bb_normf(float n, float min, float max);
 
-/*Converts a percentage of one range to another.*/
+/*Converts a percentage of one range to a percentage of another.*/
 float bb_mapf(float n, float fromMin, float fromMax, float toMin, float toMax);
 
 /*It is very rare that one floating point number is exactly the same as another.
