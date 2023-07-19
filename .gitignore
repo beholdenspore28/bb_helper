@@ -51,8 +51,4 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# Custom
 build
-lib
-obj
-test

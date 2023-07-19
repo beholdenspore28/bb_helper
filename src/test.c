@@ -28,10 +28,7 @@ SOFTWARE.
 #include "bb_helper.h"
 
 int main(){
-  bb_vec3f va = BB_VEC3F_ZERO;
-  bb_vec3f vb = {.x=2.0f, .y=2.0f, .z=2.0f};
-  bb_vec3f vc = bb_vec3f_lerp(va,vb,0.25f);
-  printf("[MESSAGE]\t%f\t%f\t%f\n",vc.x,vc.y,vc.z);
-  printf("[MESSAGE]\t%d\n",bb_aproxequalf(1.0,1.0f,0.1f));
+  double a = noise1d(0,1,12);
+  printf("%lf",a);
   return 0;
 }

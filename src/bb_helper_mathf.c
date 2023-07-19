@@ -45,12 +45,8 @@ float bb_absf(const float n){
 }
 
 float bb_clampf(float n, const float min, const float max){
-  if (min >= max) {
-    printf("[ERROR]\tminimum constraint cannot be greater than or equal to maximum constraint.\nFILE:%s\nLINE:%d\n", __FILE__, __LINE__);
-  }
-  if (n > max) n = max;
-  if (n < min) n = min;
-  return n;
+  n = n < min ? min : n;
+  return n > max ? max : n;
 }
 
 float bb_lerpf(float a, float b, float t) {

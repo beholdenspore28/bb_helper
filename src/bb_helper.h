@@ -52,56 +52,35 @@ TODO  Warnings should appear when the user fails to free memory appropriately.
 
 /*
 General floating point math functions
-TODO    Epsilon	A tiny floating point value (Read Only).
 TODO    Infinity	A representation of positive infinity (Read Only).
 TODO    NegativeInfinity	A representation of negative infinity (Read Only).
-        Approximately	Compares two floating point values and returns true if 
-        they are similar.
-TODO    CeilToInt	Returns the smallest integer greater to or equal to f.
-TODO    Clamp	Clamps the given value between the given minimum float and 
-maximum float values. 
-        Returns the given value if it is within the minimum and maximum range.
-TODO    Clamp01	Clamps value between 0 and 1 and returns value.
-TODO    ClosestPowerOfTwo	Returns the closest power of two value.
-TODO    CorrelatedColorTemperatureToRGB	Convert a color temperature in Kelvin 
-to RGB color.
 TODO    DeltaAngle	Calculates the shortest difference between two given angles 
-given in degrees.
-TODO    FloatToHalf	Encode a floating point value into a 16-bit representation.
-TODO    FloorToInt	Returns the largest integer smaller to or equal to f.
-TODO    GammaToLinearSpace	Converts the given value from gamma (sRGB) to 
-linear color space.
-TODO?   Lerp	Linearly interpolates between a and b by t.
-TODO    InverseLerp	Determines where a value lies between two points.
+        given in degrees.
 TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
-when they wrap around 360
-        degrees.#ifndef BB_HELPER_H
-#define BB_HELPER_Hbetween a and b by t with no limit 
-to t.
-TODO    LinearToGammaSpace	Converts the given value from linear to gamma
+        when they wrap around 360 degrees.
 TODO    MoveTowards	Moves a value current towards target.
 TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values 
-interpolate correctly when they 
-        wrap around 360 degrees.
+        interpolate correctly when they wrap around 360 degrees.
 TODO    PerlinNoise	Generate 2D Perlin noise.
 TODO    PerlinNoise1D	Generates a 1D pseudo-random pattern of float values 
-across a 2D plane.
+        across a 2D plane.
 TODO    PingPong	PingPong returns a value that will increment and decrement 
-between the value 0 and length.
+        between the value 0 and length.
 TODO    Repeat	Loops the value t, so that it is never larger than length and 
-never smaller than 0.
+        never smaller than 0.
 TODO    SmoothDamp	Gradually changes a value towards a desired goal over time.
 TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a 
-desired goal angle over time.
+        desired goal angle over time.
 TODO    SmoothStep	Interpolates between min and max with smoothing at the 
-limits.
+        limits.
 ------------------------------------------------------------------------------*/
 
 #ifndef BB_HELPER_H
 #define BB_HELPER_H
 
 #include <math.h>
-typedef int bb_bool;
+#include <stdlib.h>
+typedef short bb_bool;
 
 /*
 These functions will be seperated by data type.
@@ -110,7 +89,23 @@ defines:
 */
 #define BB_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
 #define BB_ENABLE_MATHF  /*Enables functions for manipulating float values*/
-#define BB_ENABLE_MATHD  /*Enables functions for manipulating double values*/
+#define BB_ENABLE_NOISEF /*Enables functions for generating noise*/ 
+/*#define BB_ENABLE_DEBUG_MEMORY*/ /*Gives useful information for debugging*/
+
+#ifdef BB_ENABLE_DEBUG_MEMORY
+
+#define malloc(n) bb_debug_malloc(n)
+#define calloc(n) bb_debug_calloc(n)
+#define realloc(n) bb_debug_realloc(n)
+#define free(n) bb_debug_free(n)
+
+#endif
+
+#ifdef BB_ENABLE_NOISEF
+
+
+
+#endif
 
 #ifdef BB_ENABLE_MATHF
 
@@ -154,7 +149,6 @@ bb_bool bb_aproxequalf(float a, float b, float tolerance);
 /*
 TODO MoveTowards	Calculate a position between the points specified by current 
 and target, moving no farther than the distance specified by maxDistanceDelta.
-DONE Lerp	Linearly interpolates between two points.
 TODO Slerp	Spherically interpolates between two vectors.
 TODO ClampMagnitude	Returns a copy of vector with its magnitude clamped to 
 maxLength.

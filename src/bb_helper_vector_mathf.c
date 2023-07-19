@@ -85,20 +85,23 @@ float bb_vec3f_dot(bb_vec3f a, bb_vec3f b){
   return (a.x * b.x) +(a.y * b.y) +(a.z * b.z);
 }
 
-bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float t){
+bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float n){
   return (bb_vec3f){
-    .x= a.x + (b.x - a.x) * t,
-    .y= a.y + (b.y - a.y) * t,
-    .z= a.z + (b.z - a.z) * t,
+    .x= a.x + (b.x - a.x) * n,
+    .y= a.y + (b.y - a.y) * n,
+    .z= a.z + (b.z - a.z) * n,
   };
 }
 
-bb_vec3f bb_vec3f_lerpclamped(bb_vec3f a, bb_vec3f b, float t){
-  t = bb_clampf(t,0.0f,1.0f);
+bb_vec3f bb_vec3f_lerpclamped(bb_vec3f a, bb_vec3f b, float n){
+  /*clamp n between 0 and 1*/
+  n = n < 0.0f ? 0.0f : n;
+  n = n > 1.0f ? 1.0f : n;
+  /*perform lerp*/
   return (bb_vec3f){
-    .x= a.x + (b.x - a.x) * t,
-    .y= a.y + (b.y - a.y) * t,
-    .z= a.z + (b.z - a.z) * t,
+    .x= a.x + (b.x - a.x) * n,
+    .y= a.y + (b.y - a.y) * n,
+    .z= a.z + (b.z - a.z) * n,
   };
 }
 
