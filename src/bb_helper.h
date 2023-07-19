@@ -33,11 +33,11 @@ what I am trying to do here. The main goal for me is to learn the
 inner-workings of the code most people take for granted. This will allow me to 
 completely understand all of the code that I use in my projects.
 
-----------------------------How-to-use-this-library-----------------------------
+----------------------------How-to-use-this-library---------------------------*/
 
 
 
--------------------------------------TO-DO--------------------------------------
+/*-----------------------------------TO-DO--------------------------------------
 
 Memory tracking system that documents uses of malloc, free, calloc, and realloc.
 TODO  This system should be easy to enable and disable using #define #ifdef 
@@ -52,7 +52,6 @@ TODO  Warnings should appear when the user fails to free memory appropriately.
 
 /*
 General floating point math functions
-
 TODO    Epsilon	A tiny floating point value (Read Only).
 TODO    Infinity	A representation of positive infinity (Read Only).
 TODO    NegativeInfinity	A representation of negative infinity (Read Only).
@@ -79,7 +78,7 @@ when they wrap around 360
         degrees.#ifndef BB_HELPER_H
 #define BB_HELPER_Hbetween a and b by t with no limit 
 to t.
-TODO    LinearToGammaSpace	Converts the given value from linear to gamma  harry potter
+TODO    LinearToGammaSpace	Converts the given value from linear to gamma
 TODO    MoveTowards	Moves a value current towards target.
 TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values 
 interpolate correctly when they 
@@ -117,20 +116,30 @@ defines:
 
 #define PIf 3.141592f
 
-/*Converts n radians into degrees.*/
+/*Converts "n" radians into degrees.*/
 float bb_rad2degf(const float n);
 
-/*Converts n degrees into radians*/
+/*Converts "n" degrees into radians*/
 float bb_deg2radf(const float n);
 
-/*Returns the absolute value of n*/
+/*Returns the absolute value of "n"*/
 float bb_absf(const float n);
 
-/*Returns n confined to be greater than min and less than max*/
+/*Returns "n" confined to be greater than min and less than max*/
 float bb_clampf(float n, const float min, const float max);
 
-/*Linearly interpolates between a and b by t*/
+/*Linearly interpolates between "a" and "b" by "t"*/
 float bb_lerpf(float a, float b, float t);
+
+/*Linearly interpolates between "a" and "b" by "t".
+"t" is always clamped between 0 and 1.*/
+float bb_lerpclampedf(float a, float b, float t);
+
+/*Returns the percentage of "n" from "min" to "max".*/
+float bb_normf(float n, float min, float max);
+
+/*Converts a percentage of one range to another.*/
+float bb_mapf(float n, float fromMin, float fromMax, float toMin, float toMax);
 
 /*It is very rare that one floating point number is exactly the same as another.
 This function will check if two numbers are similar enough to be considered 
@@ -207,7 +216,8 @@ float bb_vec3f_magnitude(bb_vec3f v);
 /*A more performant way of getting the relative length of a 
 vector "v". This saves a square root operation making it more 
 performant than bb_vec3f_magnitude(). If all you have to do is 
-compare a vectors length relatively, use this function instead of bb_vec3f_magnitude()*/
+compare a vectors length relatively, use this function instead of 
+bb_vec3f_magnitude()*/
 float bb_vec3f_sqrmagnitude(bb_vec3f v);
 
 /*Returns a given vector "v" as a unit vector.
@@ -237,7 +247,8 @@ bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar);
 bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b);
 
 /*For normalized vectors Dot returns 1 if they point in 
-exactly the same direction, -1 if they point in completely opposite directions and zero if the vectors are perpendicular.*/
+exactly the same direction, -1 if they point in completely opposite directions 
+and zero if the vectors are perpendicular.*/
 float bb_vec3f_dot(bb_vec3f a, bb_vec3f b);
 
 /*Linearly interpolates between "a" and "b" by "t".

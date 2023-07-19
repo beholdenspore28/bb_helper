@@ -53,12 +53,12 @@ float bb_clampf(float n, const float min, const float max){
   return n;
 }
 
-float bb_lerpclampedf(float a, float b, float t) {
-  return a + (b - a) * bb_clampf(t,0.0f,1.0f);
-}
-
 float bb_lerpf(float a, float b, float t) {
   return a + (b - a) * t;
+}
+
+float bb_lerpclampedf(float a, float b, float t) {
+  return a + (b - a) * bb_clampf(t,0.0f,1.0f);
 }
 
 float bb_normf(float n, float min, float max){
