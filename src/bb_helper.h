@@ -24,18 +24,29 @@ SOFTWARE.
 
 ------------------------------------------------------------------------------*/
 
+#ifndef BB_HELPER_H
+#define BB_HELPER_H
+
 /*------------------------------Project Vision----------------------------------
 
   This project is a general purpose tool library for tasks I believe to be 
 common in software development. bb_helper is written in C89. I realise that no 
-one asked for this and there might be someone out there who has already done 
+one asked for this and there is probably someone out there who has already done 
 what I am trying to do here. The main goal for me is to learn the 
 inner-workings of the code most people take for granted. This will allow me to 
 completely understand all of the code that I use in my projects.
 
-----------------------------How-to-use-this-library---------------------------*/
+----------------------------How-to-Use-This-Library---------------------------*/
 
+/*You can choose which modules of bb_helper you want to enable by defining the 
+following in this header file. Use comments to enable and disable them. */
 
+#define BB_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
+#define BB_ENABLE_MATHF  /*Enables functions for manipulating float values*/
+#define BB_ENABLE_NOISEF /*Enables functions for generating noise*/ 
+#define BB_ENABLE_DEBUG_MEMORY /*Gives useful information for debugging*/
+
+/*If you don't plan on using a certain module of this library, you can simply remove its #define from the list above and delete its corresponding .c file*/
 
 /*-----------------------------------TO-DO--------------------------------------
 
@@ -75,22 +86,9 @@ TODO    SmoothStep	Interpolates between min and max with smoothing at the
         limits.
 ------------------------------------------------------------------------------*/
 
-#ifndef BB_HELPER_H
-#define BB_HELPER_H
-
 #include <math.h>
 #include <stdlib.h>
 typedef short bb_bool;
-
-/*
-These functions will be seperated by data type.
-You can choose which functions you want to enable by using the following 
-defines:
-*/
-#define BB_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
-#define BB_ENABLE_MATHF  /*Enables functions for manipulating float values*/
-#define BB_ENABLE_NOISEF /*Enables functions for generating noise*/ 
-/*#define BB_ENABLE_DEBUG_MEMORY*/ /*Gives useful information for debugging*/
 
 #ifdef BB_ENABLE_DEBUG_MEMORY
 
@@ -112,35 +110,35 @@ defines:
 #define PIf 3.141592f
 
 /*Converts "n" radians into degrees.*/
-float bb_rad2degf(const float n);
+float bb_mathf_rad2deg(const float n);
 
 /*Converts "n" degrees into radians*/
-float bb_deg2radf(const float n);
+float bb_mathf_deg2rad(const float n);
 
 /*Returns the absolute value of "n"*/
-float bb_absf(const float n);
+float bb_mathf_abs(const float n);
 
 /*Returns "n" confined to be greater than min and less than max*/
-float bb_clampf(float n, const float min, const float max);
+float bb_mathf_clamp(float n, const float min, const float max);
 
 /*Linearly interpolates between "a" and "b" by "t"*/
-float bb_lerpf(float a, float b, float t);
+float bb_mathf_lerp(float a, float b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 "t" is always clamped between 0 and 1.*/
-float bb_lerpclampedf(float a, float b, float t);
+float bb_mathf_lerpclamped(float a, float b, float t);
 
 /*Returns the percentage of "n" from "min" to "max".*/
-float bb_normf(float n, float min, float max);
+float bb_mathf_norm(float n, float min, float max);
 
 /*Converts a percentage of one range to a percentage of another.*/
-float bb_mapf(float n, float fromMin, float fromMax, float toMin, float toMax);
+float bb_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMax);
 
 /*It is very rare that one floating point number is exactly the same as another.
 This function will check if two numbers are similar enough to be considered 
 equal. Returns true if the absolute value of "a" minus the absolute value of 
 "b" is smaller than "tolerance".*/
-bb_bool bb_aproxequalf(float a, float b, float tolerance);
+bb_bool bb_mathf_aproxequal(float a, float b, float tolerance);
 
 #endif
 
