@@ -2,8 +2,7 @@
 
 int main(int argc,char **argv){
   
-  /*COMPLETED TESTS*/
-  
+  /*COMPLETED TESTS
   printf("abs\n");
   printf("%f\n",bb_mathf_abs(-9.0f));
   printf("%f\n",bb_mathf_abs( 9.0f));
@@ -61,15 +60,21 @@ int main(int argc,char **argv){
   printf("normalize\n");
   printf("%f\n",bb_mathf_norm(8.0f,0.0f,5.0f));
   printf("\n");
-
+  */
+  
   /*ONGOING TESTS*/
   
-  printf("noise1d %f\n",bb_noise_1d(56465));
-  printf("noise_interpolated1d %f\n",bb_noise_interpolated1d(1.0f));
-  printf("noise_smoothed1d %f\n",bb_noise_smoothed1d(1.0f));
-  
   float i = 0;
+    /* code */
   float j = 0;
+  printf("1d perlin-ish noise\n");
+  for (i = 0; i < 0.1; i+=0.01f)
+  {
+    printf("%f\t", bb_noise_perlin1d(i,0.25f,8));
+  }
+  printf("\n\n");
+  
+  printf("2d perlin-ish noise\n");
   for (i = 0; i < 0.1f; i+=0.01f){
     for (j = 0; j < 0.1f; j+=0.01f)
     {

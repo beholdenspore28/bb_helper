@@ -115,20 +115,28 @@ void *bb_debug_free(size_t size);
 
 #ifdef BB_ENABLE_NOISE
 
+/*Returns completely raw, random, single-dimensional noise values*/
 float bb_noise_1d(int x);
 
+/*Returns smoothed single-dimensional noise values*/
 float bb_noise_smoothed1d(float x);
 
+/*Returns smoothed and interpolated single-dimensional noise values*/
 float bb_noise_interpolated1d(float x);
 
+/*Returns perlin-ish single-dimensional noise values.*/
 float bb_noise_perlin1d(float x, float persistance, int octaves);
 
+/*Returns completely raw, random, two-dimensional noise values*/
 float bb_noise_2d(int x, int y);
 
+/*Returns smoothed two-dimensional noise values*/
 float bb_noise_smoothed2d(float x, float y);
 
+/*Returns smoothed and interpolated two-dimensional noise values*/
 float bb_noise_interpolated2d(float x, float y);
 
+/*Returns perlin-ish two-dimensional noise values.*/
 float bb_noise_perlin2d(float x, float y, float persistance, int octaves);
 
 #endif
