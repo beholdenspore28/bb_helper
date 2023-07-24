@@ -67,9 +67,15 @@ int main(int argc,char **argv){
   printf("noise1d %f\n",bb_noise_1d(56465));
   printf("noise_interpolated1d %f\n",bb_noise_interpolated1d(1.0f));
   printf("noise_smoothed1d %f\n",bb_noise_smoothed1d(1.0f));
+  
   float i = 0;
-  for (i = 0; i < 10.0f; i+=0.01f){
-    printf("%f ",bb_noise_perlin1d(i, 0.25f, 8));
+  float j = 0;
+  for (i = 0; i < 0.1f; i+=0.01f){
+    for (j = 0; j < 0.1f; j+=0.01f)
+    {
+      printf("%f\t",bb_noise_perlin2d(i, j, 0.25f, 8));
+    }
+    printf("\n");
   }
 
   return EXIT_SUCCESS;

@@ -123,6 +123,14 @@ float bb_noise_interpolated1d(float x);
 
 float bb_noise_perlin1d(float x, float persistance, int octaves);
 
+float bb_noise_2d(int x, int y);
+
+float bb_noise_smoothed2d(float x, float y);
+
+float bb_noise_interpolated2d(float x, float y);
+
+float bb_noise_perlin2d(float x, float y, float persistance, int octaves);
+
 #endif
 
 #ifdef BB_ENABLE_MATHF
