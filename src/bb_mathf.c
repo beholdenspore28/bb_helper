@@ -69,4 +69,9 @@ bb_bool bb_mathf_aproxequal(float a, float b, float tolerance){
   return (bb_mathf_abs(a - b) < tolerance);
 }
 
+float bb_mathf_cosInterpolate(float a, float b, float t){
+  float f = (1.0f - cos(t * PIf)) * 0.5f;
+  return a*(1.0-f) + b*f;
+}
+
 #endif

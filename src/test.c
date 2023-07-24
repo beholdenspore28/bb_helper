@@ -64,7 +64,13 @@ int main(int argc,char **argv){
 
   /*ONGOING TESTS*/
   
-  
-  
+  printf("noise1d %f\n",bb_noise_1d(56465));
+  printf("noise_interpolated1d %f\n",bb_noise_interpolated1d(1.0f));
+  printf("noise_smoothed1d %f\n",bb_noise_smoothed1d(1.0f));
+  float i = 0;
+  for (i = 0; i < 10.0f; i+=0.01f){
+    printf("%f ",bb_noise_perlin1d(i, 0.25f, 8));
+  }
+
   return EXIT_SUCCESS;
 }

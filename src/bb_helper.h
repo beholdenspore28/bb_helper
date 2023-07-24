@@ -45,7 +45,7 @@ completely understand all of the code that I use in my projects.
 #define BB_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
 #define BB_ENABLE_VEC2F  /*Enables functions for manipulating 2d float vectors*/
 #define BB_ENABLE_MATHF  /*Enables functions for manipulating float values*/
-#define BB_ENABLE_NOISEF /*Enables functions for generating noise*/ 
+#define BB_ENABLE_NOISE /*Enables functions for generating noise*/ 
 #define BB_ENABLE_DEBUG_MEMORY /*Gives useful information for debugging*/
 
 /* If you don't plan on using a certain module of this library, you can simply 
@@ -113,12 +113,15 @@ void *bb_debug_free(size_t size);
 
 #endif
 
-#ifdef BB_ENABLE_NOISEF
+#ifdef BB_ENABLE_NOISE
 
-float bb_noise1d(int x);
-float bb_smoothedNoise1d(float x);
-float bb_interpolatedNoise1d(float x);
-float bb_perlinNoise1d(float x);
+float bb_noise_1d(int x);
+
+float bb_noise_smoothed1d(float x);
+
+float bb_noise_interpolated1d(float x);
+
+float bb_noise_perlin1d(float x, float persistance, int octaves);
 
 #endif
 
@@ -159,6 +162,8 @@ This function will check if two numbers are similar enough to be considered
 equal. Returns true if the absolute value of "a" minus the absolute value of 
 "b" is smaller than "tolerance".*/
 bb_bool bb_mathf_aproxequal(float a, float b, float tolerance);
+
+float bb_mathf_cosInterpolate(float a, float b, float t);
 
 #endif
 
