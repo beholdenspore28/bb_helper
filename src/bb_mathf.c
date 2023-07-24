@@ -66,7 +66,7 @@ float bb_mathf_map(float n, float fromMin, float fromMax, float toMin, float toM
 }
 
 bb_bool bb_mathf_aproxequal(float a, float b, float tolerance){
-  if (bb_mathf_abs(a - b) < tolerance) return 1; else return 0;
+  return (bb_mathf_abs(a - b) < tolerance);
 }
 
 #endif

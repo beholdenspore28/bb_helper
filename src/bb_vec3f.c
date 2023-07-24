@@ -28,13 +28,13 @@ SOFTWARE.
 
 #ifdef BB_ENABLE_VEC3F
 const bb_vec3f BB_VEC3F_ZERO     =  {.x =  0, .y =  0, .z =  0};
+const bb_vec3f BB_VEC3F_ONE	     =	{.x =  1, .y =  1, .z =  1};
 const bb_vec3f BB_VEC3F_UP       =  {.x =  0, .y =  1, .z =  0};
 const bb_vec3f BB_VEC3F_DOWN     =  {.x =  0, .y = -1, .z =  0};
 const bb_vec3f BB_VEC3F_LEFT     =  {.x = -1, .y =  0, .z =  0};
 const bb_vec3f BB_VEC3F_RIGHT	   =	{.x =  1, .y =  0, .z =  0};
 const bb_vec3f BB_VEC3F_FORWARD	 =  {.x =  0, .y =  0, .z =  1};
 const bb_vec3f BB_VEC3F_BACK     =	{.x =  0, .y =  0, .z = -1};
-const bb_vec3f BB_VEC3F_ONE	     =	{.x =  1, .y =  1, .z =  1};
 
 float bb_vec3f_magnitude(bb_vec3f v){
   return sqrt(bb_vec3f_sqrmagnitude(v));
@@ -82,14 +82,14 @@ bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b){
 }
 
 float bb_vec3f_dot(bb_vec3f a, bb_vec3f b){
-  return (a.x * b.x) +(a.y * b.y) +(a.z * b.z);
+  return (a.x * b.x) + (a.y * b.y) +(a.z * b.z);
 }
 
-bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float n){
+bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float t){
   return (bb_vec3f){
-    .x= a.x + (b.x - a.x) * n,
-    .y= a.y + (b.y - a.y) * n,
-    .z= a.z + (b.z - a.z) * n,
+    .x= a.x + (b.x - a.x) * t,
+    .y= a.y + (b.y - a.y) * t,
+    .z= a.z + (b.z - a.z) * t,
   };
 }
 
