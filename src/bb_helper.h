@@ -160,16 +160,13 @@ float bb_mathf_clamp(float n, const float min, const float max);
 /*Linearly interpolates between "a" and "b" by "t"*/
 float bb_mathf_lerp(float a, float b, float t);
 
-/*TODO tell the people*/
 /*Linearly interpolates between "a" and "b" by "t".
 "t" is always clamped between 0 and 1.*/
 float bb_mathf_lerpclamped(float a, float b, float t);
 
-/*TODO tell the people*/
 /*Returns the percentage of "n" from "min" to "max".*/
 float bb_mathf_norm(float n, float min, float max);
 
-/*TODO tell the people*/
 /*Converts a percentage of one range to a percentage of another.*/
 float bb_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMax);
 
@@ -183,7 +180,6 @@ float bb_mathf_cosInterpolate(float a, float b, float t);
 
 #endif
 
-/*TODO tell the people*/
 #ifdef BB_ENABLE_VEC2F
 
 /*A small data structure for storing 2D positions, rotations, scales, or lines.*/
@@ -262,7 +258,6 @@ Returns a point at "t"% of the way between "a" and "b".*/
 bb_vec2f bb_vec2f_lerpclamped(bb_vec2f a, bb_vec2f b, float t);
 
 #endif
-
 
 #ifdef BB_ENABLE_VEC3F
 
@@ -352,7 +347,7 @@ bb_vec3f bb_vec3f_subtract(bb_vec3f minuend, bb_vec3f subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
-decreases the magnitude when "scalar" is less than 0.
+decreases the magnitude when "scalar" is less than 1.
 The returned vector will point in the same direction as
 the given vector "v".*/
 bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar);
@@ -367,13 +362,21 @@ float bb_vec3f_dot(bb_vec3f a, bb_vec3f b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays 
-between "a" and "b", use bb_vec3f_lerpclamped() instead.
+between "a" and "b", use bb_vec2f_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
 bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
 bb_vec3f bb_vec3f_lerpclamped(bb_vec3f a, bb_vec3f b, float t);
+
+/*Returns a vector that is made from the largest components of two 
+vectors.*/
+bb_vec3f bb_vec3f_max(bb_vec3f a, bb_vec3f b);
+
+/*Returns a vector that is made from the smallest components of two 
+vectors.*/
+bb_vec3f bb_vec3f_min(bb_vec3f a, bb_vec3f b);
 
 #endif
 #endif

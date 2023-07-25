@@ -105,4 +105,20 @@ bb_vec3f bb_vec3f_lerpclamped(bb_vec3f a, bb_vec3f b, float n){
   };
 }
 
+bb_vec3f bb_vec3f_max(bb_vec3f a, bb_vec3f b){
+  return (bb_vec3f){
+    .x = a.x >= b.x ? a.x : b.x,
+    .y = a.y >= b.y ? a.y : b.y,
+    .z = a.z >= b.z ? a.z : b.z,
+  };
+}
+
+bb_vec3f bb_vec3f_min(bb_vec3f a, bb_vec3f b){
+  return (bb_vec3f){
+    .x = a.x <= b.x ? a.x : b.x,
+    .y = a.y <= b.y ? a.y : b.y,
+    .z = a.z <= b.z ? a.z : b.z,
+  };
+}
+
 #endif
