@@ -10,7 +10,7 @@ completely understand all of the code that I use in my projects.
 
 How do I use it?
 
-All questions will be answered when you look at lite_lib.h
+All questions will be answered when you look at the lite.h header file
 
 Why is it called lite_lib?
 
