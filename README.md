@@ -1,4 +1,4 @@
-# lite-lib
+# lite_lib
 What is this and why have you created it?
 
   This project is a general purpose tool library for tasks I believe to be 
