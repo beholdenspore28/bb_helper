@@ -24,13 +24,13 @@ SOFTWARE.
 
 ------------------------------------------------------------------------------*/
 
-#ifndef BB_HELPER_H
-#define BB_HELPER_H
+#ifndef LITE_H
+#define LITE_H
 
 /*------------------------------Project Vision----------------------------------
 
   This project is a general purpose tool library for tasks I believe to be 
-common in software development. bb_helper is written in C89. I realise that no 
+common in software development. l_helper is written in C89. I realise that no 
 one asked for this and there is probably someone out there who has already done 
 what I am trying to do here. The main goal for me is to learn the 
 inner-workings of the code most people take for granted. This will allow me to 
@@ -38,15 +38,15 @@ completely understand all of the code that I use in my projects.
 
 ----------------------------How-to-Use-This-Library---------------------------*/
 
-/* You can choose which modules of bb_helper you want to enable by defining the 
+/* You can choose which modules of l_helper you want to enable by defining the 
  * following in this header file. Use comments to enable and disable them. 
  * */
 
-#define BB_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
-#define BB_ENABLE_VEC2F  /*Enables functions for manipulating 2d float vectors*/
-#define BB_ENABLE_MATHF  /*Enables functions for manipulating float values*/
-#define BB_ENABLE_NOISE /*Enables functions for generating noise*/ 
-#define BB_ENABLE_DEBUG_MEMORY /*Gives useful information for debugging*/
+#define L_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
+#define L_ENABLE_VEC2F  /*Enables functions for manipulating 2d float vectors*/
+#define L_ENABLE_MATHF  /*Enables functions for manipulating float values*/
+#define L_ENABLE_NOISE /*Enables functions for generating noise*/ 
+#define L_ENABLE_DEBUG_MEMORY /*Gives useful information for debugging*/
 
 /* If you don't plan on using a certain module of this library, you can simply 
  * remove its #define from the list above and delete its corresponding .c file
@@ -93,94 +93,94 @@ TODO    SmoothStep	Interpolates between min and max with smoothing at the
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-typedef short bb_bool;
+typedef short l_bool;
 
-#ifdef BB_ENABLE_DEBUG_MEMORY
+#ifdef L_ENABLE_DEBUG_MEMORY
 
 /*
-#define malloc(n) malloc(n) bb_debug_malloc(n)
-#define calloc(n) bb_debug_calloc(n)
-#define realloc(n) bb_debug_realloc(n)
-#define free(n) bb_debug_free(n)
+#define malloc(n) malloc(n) l_debug_malloc(n)
+#define calloc(n) l_debug_calloc(n)
+#define realloc(n) l_debug_realloc(n)
+#define free(n) l_debug_free(n)
 */
 
 /*
-void *bb_debug_malloc(size_t size);
-void *bb_debug_calloc(size_t size);
-void *bb_debug_realloc(size_t size);
-void *bb_debug_free(size_t size);
+void *l_debug_malloc(size_t size);
+void *l_debug_calloc(size_t size);
+void *l_debug_realloc(size_t size);
+void *l_debug_free(size_t size);
 */
 
 #endif
 
-#ifdef BB_ENABLE_NOISE
+#ifdef L_ENABLE_NOISE
 
 /*Returns completely raw, random, single-dimensional noise values*/
-float bb_noise_1d(int x);
+float l_noise_1d(int x);
 
 /*Returns smoothed single-dimensional noise values*/
-float bb_noise_smoothed1d(float x);
+float l_noise_smoothed1d(float x);
 
 /*Returns smoothed and interpolated single-dimensional noise values*/
-float bb_noise_interpolated1d(float x);
+float l_noise_interpolated1d(float x);
 
 /*Returns perlin-ish single-dimensional noise values.*/
-float bb_noise_perlin1d(float x, float persistance, int octaves);
+float l_noise_perlin1d(float x, float persistance, int octaves);
 
 /*Returns completely raw, random, two-dimensional noise values*/
-float bb_noise_2d(int x, int y);
+float l_noise_2d(int x, int y);
 
 /*Returns smoothed two-dimensional noise values*/
-float bb_noise_smoothed2d(float x, float y);
+float l_noise_smoothed2d(float x, float y);
 
 /*Returns smoothed and interpolated two-dimensional noise values*/
-float bb_noise_interpolated2d(float x, float y);
+float l_noise_interpolated2d(float x, float y);
 
 /*Returns perlin-ish two-dimensional noise values.*/
-float bb_noise_perlin2d(float x, float y, float persistance, int octaves);
+float l_noise_perlin2d(float x, float y, float persistance, int octaves);
 
 #endif
 
-#ifdef BB_ENABLE_MATHF
+#ifdef L_ENABLE_MATHF
 
-#define PIf 3.141592f
+#define L_PI 3.141592
 
 /*Converts "n" radians into degrees.*/
-float bb_mathf_rad2deg(const float n);
+float l_mathf_rad2deg(const float n);
 
 /*Converts "n" degrees into radians*/
-float bb_mathf_deg2rad(const float n);
+float l_mathf_deg2rad(const float n);
 
 /*Returns the absolute value of "n"*/
-float bb_mathf_abs(const float n);
+float l_mathf_abs(const float n);
 
 /*Returns "n" confined to be greater than min and less than max*/
-float bb_mathf_clamp(float n, const float min, const float max);
+float l_mathf_clamp(float n, const float min, const float max);
 
 /*Linearly interpolates between "a" and "b" by "t"*/
-float bb_mathf_lerp(float a, float b, float t);
+float l_mathf_lerp(float a, float b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 "t" is always clamped between 0 and 1.*/
-float bb_mathf_lerpclamped(float a, float b, float t);
+float l_mathf_lerpclamped(float a, float b, float t);
 
 /*Returns the percentage of "n" from "min" to "max".*/
-float bb_mathf_norm(float n, float min, float max);
+float l_mathf_norm(float n, float min, float max);
 
 /*Converts a percentage of one range to a percentage of another.*/
-float bb_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMax);
+float l_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMax);
 
 /*It is very rare that one floating point number is exactly the same as another.
 This function will check if two numbers are similar enough to be considered 
 equal. Returns true if the absolute value of "a" minus the absolute value of 
 "b" is smaller than "tolerance".*/
-bb_bool bb_mathf_aproxequal(float a, float b, float tolerance);
+l_bool l_mathf_aproxequal(float a, float b, float tolerance);
 
-float bb_mathf_cosInterpolate(float a, float b, float t);
+float l_mathf_cosInterpolate(float a, float b, float t);
 
 #endif
 
-#ifdef BB_ENABLE_VEC2F
+#ifdef L_ENABLE_VEC2F
 
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
@@ -189,80 +189,80 @@ float bb_mathf_cosInterpolate(float a, float b, float t);
 typedef struct{
   float x;
   float y;
-}bb_vec2f;
+}l_vec2f;
 
 /*shorthand for vector3 (0, 0)*/
-extern const bb_vec2f BB_VEC2F_ZERO;
+extern const l_vec2f L_VEC2F_ZERO;
 
 /*shorthand for vector3 (1, 1)*/
-extern const bb_vec2f BB_VEC2F_ONE;
+extern const l_vec2f L_VEC2F_ONE;
 
 /*shorthand for vector3 (0, 1)*/
-extern const bb_vec2f BB_VEC2F_UP;
+extern const l_vec2f L_VEC2F_UP;
 
 /*shorthand for vector3 (0,-1)*/
-extern const bb_vec2f BB_VEC2F_DOWN;
+extern const l_vec2f L_VEC2F_DOWN;
 
 /*shorthand for vector3 (-1,0)*/
-extern const bb_vec2f BB_VEC2F_LEFT;
+extern const l_vec2f L_VEC2F_LEFT;
 
 /*shorthand for vector3 (1, 0)*/
-extern const bb_vec2f BB_VEC2F_RIGHT;
+extern const l_vec2f L_VEC2F_RIGHT;
 
 /*Returns the actual length of a vector "v". 
-This uses a square root operation. Use bb_vec2f_sqrmagnitude()
+This uses a square root operation. Use l_vec2f_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-float bb_vec2f_magnitude(bb_vec2f v);
+float l_vec2f_magnitude(l_vec2f v);
 
 /*A more performant way of getting the relative length of a 
 vector "v". This saves a square root operation making it more 
-performant than bb_vec2f_magnitude(). If all you have to do is 
+performant than l_vec2f_magnitude(). If all you have to do is 
 compare a vectors length relatively, use this function instead of 
-bb_vec2f_magnitude()*/
-float bb_vec2f_sqrmagnitude(bb_vec2f v);
+l_vec2f_magnitude()*/
+float l_vec2f_sqrmagnitude(l_vec2f v);
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points 
 in the same direction as the given vector "v"*/
-bb_vec2f bb_vec2f_normalize(bb_vec2f v);
+l_vec2f l_vec2f_normalize(l_vec2f v);
 
 /*Returns the distance between point a and point b 
 in units.*/
-float bb_vec2f_distance(bb_vec2f a, bb_vec2f b);
+float l_vec2f_distance(l_vec2f a, l_vec2f b);
 
 /*Adds a vector "a" to another vector "b"*/
-bb_vec2f bb_vec2f_add(bb_vec2f a, bb_vec2f b);
+l_vec2f l_vec2f_add(l_vec2f a, l_vec2f b);
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-bb_vec2f bb_vec2f_subtract(bb_vec2f minuend, bb_vec2f subtrahend);
+l_vec2f l_vec2f_subtract(l_vec2f minuend, l_vec2f subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 0.
 The returned vector will point in the same direction as
 the given vector "v".*/
-bb_vec2f bb_vec2f_scale(bb_vec2f v, float scalar);
+l_vec2f l_vec2f_scale(l_vec2f v, float scalar);
 
 /*For normalized vectors Dot returns 1 if they point in 
 exactly the same direction, -1 if they point in completely opposite directions 
 and zero if the vectors are perpendicular.*/
-float bb_vec2f_dot(bb_vec2f a, bb_vec2f b);
+float l_vec2f_dot(l_vec2f a, l_vec2f b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays 
-between "a" and "b", use bb_vec3f_lerpclamped() instead.
+between "a" and "b", use l_vec3f_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-bb_vec2f bb_vec2f_lerp(bb_vec2f a, bb_vec2f b, float t);
+l_vec2f l_vec2f_lerp(l_vec2f a, l_vec2f b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-bb_vec2f bb_vec2f_lerpclamped(bb_vec2f a, bb_vec2f b, float t);
+l_vec2f l_vec2f_lerpclamped(l_vec2f a, l_vec2f b, float t);
 
 #endif
 
-#ifdef BB_ENABLE_VEC3F
+#ifdef L_ENABLE_VEC3F
 
 /*
 TODO MoveTowards	Calculate a position between the points specified by current 
@@ -293,93 +293,93 @@ typedef struct{
   float x;
   float y;
   float z;
-}bb_vec3f;
+}l_vec3f;
 
 /*shorthand for vector3 (0, 0, 0)*/
-extern const bb_vec3f BB_VEC3F_ZERO;
+extern const l_vec3f L_VEC3F_ZERO;
 
 /*shorthand for vector3 (0, 1, 0)*/
-extern const bb_vec3f BB_VEC3F_UP;
+extern const l_vec3f L_VEC3F_UP;
 
 /*shorthand for vector3 (0,-1, 0)*/
-extern const bb_vec3f BB_VEC3F_DOWN;
+extern const l_vec3f L_VEC3F_DOWN;
 
 /*shorthand for vector3 (-1,0, 0)*/
-extern const bb_vec3f BB_VEC3F_LEFT;
+extern const l_vec3f L_VEC3F_LEFT;
 
 /*shorthand for vector3 (1, 0, 0)*/
-extern const bb_vec3f BB_VEC3F_RIGHT;
+extern const l_vec3f L_VEC3F_RIGHT;
 
 /*shorthand for vector3 (0, 0, 1)*/
-extern const bb_vec3f BB_VEC3F_FORWARD;
+extern const l_vec3f L_VEC3F_FORWARD;
 
 /*shorthand for vector3 (0, 0,-1)*/
-extern const bb_vec3f BB_VEC3F_BACK;
+extern const l_vec3f L_VEC3F_BACK;
 
 /*shorthand for vector3 (1, 1, 1)*/
-extern const bb_vec3f BB_VEC3F_ONE;
+extern const l_vec3f L_VEC3F_ONE;
 
 /*Returns the actual length of a vector "v". 
-This uses a square root operation. Use bb_vec3f_sqrmagnitude()
+This uses a square root operation. Use l_vec3f_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-float bb_vec3f_magnitude(bb_vec3f v);
+float l_vec3f_magnitude(l_vec3f v);
 
 /*A more performant way of getting the relative length of a 
 vector "v". This saves a square root operation making it more 
-performant than bb_vec3f_magnitude(). If all you have to do is 
+performant than l_vec3f_magnitude(). If all you have to do is 
 compare a vectors length relatively, use this function instead of 
-bb_vec3f_magnitude()*/
-float bb_vec3f_sqrmagnitude(bb_vec3f v);
+l_vec3f_magnitude()*/
+float l_vec3f_sqrmagnitude(l_vec3f v);
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points 
 in the same direction as the given vector "v"*/
-bb_vec3f bb_vec3f_normalize(bb_vec3f v);
+l_vec3f l_vec3f_normalize(l_vec3f v);
 
 /*Returns the distance between point a and point b 
 in units.*/
-float bb_vec3f_distance(bb_vec3f a, bb_vec3f b);
+float l_vec3f_distance(l_vec3f a, l_vec3f b);
 
 /*Adds a vector "a" to another vector "b"*/
-bb_vec3f bb_vec3f_add(bb_vec3f a, bb_vec3f b);
+l_vec3f l_vec3f_add(l_vec3f a, l_vec3f b);
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-bb_vec3f bb_vec3f_subtract(bb_vec3f minuend, bb_vec3f subtrahend);
+l_vec3f l_vec3f_subtract(l_vec3f minuend, l_vec3f subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 1.
 The returned vector will point in the same direction as
 the given vector "v".*/
-bb_vec3f bb_vec3f_scale(bb_vec3f v, float scalar);
+l_vec3f l_vec3f_scale(l_vec3f v, float scalar);
 
 /*Returns a vector parallel to both "a" and "b".*/
-bb_vec3f bb_vec3f_cross(bb_vec3f a, bb_vec3f b);
+l_vec3f l_vec3f_cross(l_vec3f a, l_vec3f b);
 
 /*For normalized vectors Dot returns 1 if they point in 
 exactly the same direction, -1 if they point in completely opposite directions 
 and zero if the vectors are perpendicular.*/
-float bb_vec3f_dot(bb_vec3f a, bb_vec3f b);
+float l_vec3f_dot(l_vec3f a, l_vec3f b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays 
-between "a" and "b", use bb_vec2f_lerpclamped() instead.
+between "a" and "b", use l_vec2f_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-bb_vec3f bb_vec3f_lerp(bb_vec3f a, bb_vec3f b, float t);
+l_vec3f l_vec3f_lerp(l_vec3f a, l_vec3f b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-bb_vec3f bb_vec3f_lerpclamped(bb_vec3f a, bb_vec3f b, float t);
+l_vec3f l_vec3f_lerpclamped(l_vec3f a, l_vec3f b, float t);
 
 /*Returns a vector that is made from the largest components of two 
 vectors.*/
-bb_vec3f bb_vec3f_max(bb_vec3f a, bb_vec3f b);
+l_vec3f l_vec3f_max(l_vec3f a, l_vec3f b);
 
 /*Returns a vector that is made from the smallest components of two 
 vectors.*/
-bb_vec3f bb_vec3f_min(bb_vec3f a, bb_vec3f b);
+l_vec3f l_vec3f_min(l_vec3f a, l_vec3f b);
 
 #endif
 #endif

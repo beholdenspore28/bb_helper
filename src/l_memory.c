@@ -1,6 +1,6 @@
-#include "bb_helper.h"
+#include "lite.h"
 
-#ifdef BB_ENABLE_DEBUG_MEMORY
+#ifdef L_ENABLE_DEBUG_MEMORY
 
 /*
 Memory TODO
@@ -15,10 +15,10 @@ Memory TODO
  print a memory report at the end of the program
  */
 /*
-void *bb_debug_malloc(size_t size){ 
+void *l_debug_malloc(size_t size){ 
   void *p = malloc(size);
   if (p == NULL) {
-    printf("[BB_MEM_DEBUG] malloc() failed to allocate %ld bytes. Out of memory\n",size);
+    printf("[L_MEM_DEBUG] malloc() failed to allocate %ld bytes. Out of memory\n",size);
     exit(1);
   } 
   printf("[MALLOC] allocating %ld bytes to address %p\n", size, p);
