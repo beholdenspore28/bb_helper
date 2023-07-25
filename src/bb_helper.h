@@ -119,7 +119,7 @@ void *bb_debug_free(size_t size);
 float bb_noise_1d(int x);
 
 /*Returns smoothed single-dimensional noise values*/
-float bb_noise_smoothed1d(float x)
+float bb_noise_smoothed1d(float x);
 
 /*Returns smoothed and interpolated single-dimensional noise values*/
 float bb_noise_interpolated1d(float x);
