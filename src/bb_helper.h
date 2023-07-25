@@ -182,6 +182,9 @@ float bb_mathf_cosInterpolate(float a, float b, float t);
 
 #ifdef BB_ENABLE_VEC2F
 
+/*TODO vec2f_min()*/
+/*TODO vec2f_max()*/
+
 /*A small data structure for storing 2D positions, rotations, scales, or lines.*/
 typedef struct{
   float x;

@@ -2,7 +2,7 @@
 
 void testMathf(){
   printf("=====================================================\n");
-  printf("                       MATHF                         \n");
+  printf("                     MATHF TEST                      \n");
   printf("=====================================================\n");
 
 
@@ -67,18 +67,73 @@ void testMathf(){
 
 void testNoise(){
   printf("=====================================================\n");
-  printf("                       NOISE                         \n");
+  printf("                     NOISE TEST                      \n");
   printf("=====================================================\n");
 
   float i = 0;
   float j = 0;
-  printf("1d perlin-ish noise\n");
-  for (i = 0; i < 0.1; i+=0.01f)
+  
+  printf("noise 1d\n");
+  for (i = 0; i < 1.0f; i+=0.01f)
   {
-    printf("%f\t", bb_noise_perlin1d(i,0.25f,8));
+    printf("%f ", bb_noise_1d(i));
+  }
+  printf("\n\n");
+
+  printf("smooth noise 1d\n");
+  for (i = 0; i < 1.0f; i+=0.01f)
+  {
+    printf("%f ", bb_noise_smoothed1d(i));
   }
   printf("\n\n");
   
+  printf("interpolated noise 1d\n");
+  for (i = 0; i < 1.0f; i+=0.01f)
+  {
+    printf("%f ", bb_noise_interpolated1d(i));
+  }
+  printf("\n\n");
+  
+  printf("1d perlin-ish noise\n");
+  for (i = 0; i < 1.0; i+=0.01f)
+  {
+    printf("%f ", bb_noise_perlin1d(i,0.1f,8));
+  }
+  printf("\n\n");
+
+  printf("noise 2d\n");
+  for (i = 0; i < 10.0f; i++)
+  {
+    for (j = 0; j < 10.0f; j++)
+    {
+      printf("%f\t", bb_noise_2d(i,j));
+    }
+    printf("\n");
+  }
+  printf("\n\n");
+
+  printf("smooth noise 2d\n");
+  for (i = 0; i < 10.0f; i++)
+  {
+    for (j = 0; j < 10.0f; j++)
+    {
+      printf("%f\t", bb_noise_smoothed2d(i,j));
+    }
+    printf("\n");
+  }
+  printf("\n\n");
+
+  printf("interpolated noise 2d\n");
+  for (i = 0; i < 10.0f; i++)
+  {
+    for (j = 0; j < 10.0f; j++)
+    {
+      printf("%f\t", bb_noise_interpolated2d(i,j));
+    }
+    printf("\n");
+  }
+  printf("\n\n");
+
   printf("2d perlin-ish noise\n");
   for (i = 0; i < 0.1f; i+=0.01f){
     for (j = 0; j < 0.1f; j+=0.01f)
@@ -91,7 +146,7 @@ void testNoise(){
 
 void testvec3(){
   printf("=====================================================\n");
-  printf("                       VECTOR3                       \n");
+  printf("                     VECTOR3 TEST                    \n");
   printf("=====================================================\n");
 
   bb_vec3f v1 = BB_VEC3F_ONE;
@@ -142,7 +197,7 @@ void testvec3(){
 
 void testvec2(){
   printf("=====================================================\n");
-  printf("                       VECTOR2                       \n");
+  printf("                     VECTOR2 TEST                    \n");
   printf("=====================================================\n");
 
   bb_vec2f v1 = BB_VEC2F_ONE;
@@ -180,10 +235,12 @@ void testvec2(){
 }
 
 int main(int argc,char **argv){
-  testNoise();
+  /*
   testMathf();
   testvec2();
-  testvec3();  
-  
+  testvec3();
+  testNoise();
+  */
+ 
   return EXIT_SUCCESS;
 }
