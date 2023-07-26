@@ -178,6 +178,8 @@ l_bool l_mathf_aproxequal(float a, float b, float tolerance);
 
 float l_mathf_cosInterpolate(float a, float b, float t);
 
+float l_mathf_sigmoid(float n);
+
 #endif
 
 #ifdef L_ENABLE_VEC2F

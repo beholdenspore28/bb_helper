@@ -28,14 +28,13 @@ float l_noise_perlin1d(float x, float persistance, int octaves){
   size_t i = 0;
   float freq = 0.0f;
   float amp = 0.0f;
-  for (i = 0; i < n; i++)
-  {
+  for (i = 0; i < n; i++){
     freq = 2 * i;
     amp = persistance * i;
 
     total = total + l_noise_interpolated1d(x * freq) * amp;
   }
-
+  
   return total;
 }
 /*END SINGLE DIMENSIONAL*/
@@ -80,15 +79,12 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves){
   size_t i = 0;
   float freq = 0.0f;
   float amp = 0.0f;
-  for (i = 0; i < n; i++)
-  {
+  for (i = 0; i < n; i++){
     freq = 2 * i;
     amp = persistance * i;
 
     total = total + l_noise_interpolated2d(x * freq, y * freq) * amp;
-    
   }
-  
   return total;
 }
 

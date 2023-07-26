@@ -70,78 +70,39 @@ void testNoise(){
   printf("                     NOISE TEST                      \n");
   printf("=====================================================\n");
 
+  float range = 5.0f;
+  float step = 0.001f;
+  float persistance = 0.25f;
+  int octaves = 16;
   float i = 0;
-  float j = 0;
-  
-  printf("noise 1d\n");
-  for (i = 0; i < 1.0f; i+=0.01f)
+
+  printf("pseudo-random noise\n");
+  for (i = 0; i < 100 ; i += step)
   {
     printf("%f ", l_noise_1d(i));
   }
   printf("\n\n");
 
-  printf("smooth noise 1d\n");
-  for (i = 0; i < 1.0f; i+=0.01f)
+  printf("pseudo-random smoothed noise\n");
+  for (i = 0; i < range ; i += step)
   {
     printf("%f ", l_noise_smoothed1d(i));
   }
   printf("\n\n");
-  
-  printf("interpolated noise 1d\n");
-  for (i = 0; i < 1.0f; i+=0.01f)
+
+  printf("pseudo-random, smoothed, cos interpolated noise\n");
+  for (i = 0; i < range ; i += step)
   {
-    printf("%f ", l_noise_interpolated1d(i));
-  }
-  printf("\n\n");
-  
-  printf("1d perlin-ish noise\n");
-  for (i = 0; i < 1.0; i+=0.01f)
-  {
-    printf("%f ", l_noise_perlin1d(i,0.1f,8));
+    printf("%f ", l_noise_smoothed1d(i));
   }
   printf("\n\n");
 
-  printf("noise 2d\n");
-  for (i = 0; i < 10.0f; i++)
+  printf("perlin-ish noise\n");
+  for (i = 0; i < range ; i += step)
   {
-    for (j = 0; j < 10.0f; j++)
-    {
-      printf("%f\t", l_noise_2d(i,j));
-    }
-    printf("\n");
+    printf("%f ", l_noise_perlin1d(i,persistance, octaves));
   }
   printf("\n\n");
-
-  printf("smooth noise 2d\n");
-  for (i = 0; i < 10.0f; i++)
-  {
-    for (j = 0; j < 10.0f; j++)
-    {
-      printf("%f\t", l_noise_smoothed2d(i,j));
-    }
-    printf("\n");
-  }
-  printf("\n\n");
-
-  printf("interpolated noise 2d\n");
-  for (i = 0; i < 10.0f; i++)
-  {
-    for (j = 0; j < 10.0f; j++)
-    {
-      printf("%f\t", l_noise_interpolated2d(i,j));
-    }
-    printf("\n");
-  }
-  printf("\n\n");
-
-  printf("2d perlin-ish noise\n");
-  for (i = 0; i < 0.1f; i+=0.01f){
-    for (j = 0; j < 0.1f; j+=0.01f)
-    {
-      printf("%f\t",l_noise_perlin2d(i, j, 0.25f, 8));
-    }
-    printf("\n");
-  }
 }
 
 void testvec3(){
@@ -236,10 +197,10 @@ void testvec2(){
 
 int main(int argc,char **argv){
   /*
-  */
   testMathf();
   testvec2();
   testvec3();
+  */
   testNoise();
  
   return EXIT_SUCCESS;
