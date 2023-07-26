@@ -24,10 +24,10 @@ float l_noise_interpolated1d(float x){
 float l_noise_perlin1d(float x, float persistance, int octaves){
   float total = 0.0f;
   int n = octaves - 1;
-  
-  size_t i = 0;
   float freq = 0.0f;
   float amp = 0.0f;
+  
+  size_t i = 0;
   for (i = 0; i < n; i++){
     freq = 2 * i;
     amp = persistance * i;
