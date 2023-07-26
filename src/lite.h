@@ -143,7 +143,8 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves);
 
 #ifdef L_ENABLE_MATHF
 
-#define L_PI 3.141592
+#define L_PI 3.14159265358
+#define L_TAU 6.28318530718
 
 /*Converts "n" radians into degrees.*/
 float l_mathf_rad2deg(const float n);
