@@ -200,8 +200,8 @@ int main(int argc,char **argv){
   testMathf();
   testvec2();
   testvec3();
-  */
   testNoise();
+  */
  
-  return EXIT_SUCCESS;
+  return EXIT_SUCCESS; 
 }
