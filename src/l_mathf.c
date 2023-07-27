@@ -75,7 +75,7 @@ float l_mathf_cosInterpolate(float a, float b, float t){
 }
 
 float l_mathf_sigmoid(float n) {
-    return (1 / (1 + powf(2.71828182846, -n)));
+    return (1 / (1 + pow(2.71828182846, -n)));
 }
 
 #endif
