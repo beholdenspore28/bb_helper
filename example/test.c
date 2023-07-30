@@ -214,26 +214,41 @@ void testvec2(){
 }
 
 void writeNoiseFile2D(){
-  float range = 10.0f;
-  float step = (range/256);
+  printf("creating noise map..\n");
+  float range = 100.0f;
+  float step = (range/1024);
   float i = 0;
   float j = 0;
   float value = 0;
-
   FILE *fptr = fopen("build/example/noise2.pbm", "w");
-  
   fputs("P2\n", fptr);
   fprintf(fptr, "%d %d\n", (int)ceil(range/step), (int)ceil(range/step));
-  fputs("65535\n", fptr);
-  
+  fputs("256\n", fptr);
   for (i = 0; i < range; i += step){
     for ( j = 0; j < range; j += step){
-      value = l_noise_perlin2d(i, j, 1.0, 16);
-      value = ((value + 1) * 0.5f) * 65535;
+      value = l_noise_perlin2d(i, j, 1.0f, 32);
+      value = ((value + 1) * 0.5f) * 256;
       fprintf(fptr, "%d ", (int)value);
     }
   }
-  
+  fclose(fptr);
+}
+
+void writeNoiseFile1D(){
+  printf("creating noise map..\n");
+  float range = 10.0f;
+  float step = (range/1024);
+  float i = 0;
+  float value = 0;
+  FILE *fptr = fopen("build/example/noise1.pbm", "w");
+  fputs("P2\n", fptr);
+  fprintf(fptr, "%d %d\n", (int)ceil(range), 1);
+  fputs("256\n", fptr);
+  for (i = 0; i < range; i += step){
+    value = l_noise_perlin1d(i,1.0f,16);
+    value = ((value + 1) * 0.5f) * 256;
+    fprintf(fptr, "%d ", (int)value);
+  }
   fclose(fptr);
 }
 
@@ -245,7 +260,10 @@ int main(int argc,char **argv){
   testNoise1();
   testNoise2();
   */
-  writeNoiseFile2D();
+ 
+  writeNoiseFile1D();
+  writeNoiseFile2D();    
+  
   printf("rev up those fryers!\n");
   return EXIT_SUCCESS; 
 }

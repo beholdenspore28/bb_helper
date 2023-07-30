@@ -1,4 +1,6 @@
 #include "lite.h"
+#include "assert.h"
+
 #if defined(L_ENABLE_NOISE)
 
 /*BEGIN SINGLE DIMENSIONAL*/
@@ -21,19 +23,23 @@ float l_noise_interpolated1d(float x){
 }
 
 float l_noise_perlin1d(float x, float persistance, int octaves){
+  persistance *= 0.5f;
+  persistance = l_mathf_clamp(persistance, 0.0f, 1.0f);
   float total = 0.0f;
   int n = octaves - 1;
+
+  size_t i = 0;
   float freq = 0.0f;
   float amp = 0.0f;
-  
-  size_t i = 0;
   for (i = 0; i < n; i++){
-    freq = 2 * i;
-    amp = persistance * i;
+    freq = pow(2,  i);
+    amp = pow(persistance, i);
 
     total = total + l_noise_interpolated1d(x * freq) * amp;
   }
-  
+  total = (total + 1) * 0.5f;
+  assert(total <= 1);
+  assert(total >= -1);
   return total;
 }
 /*END SINGLE DIMENSIONAL*/
@@ -86,7 +92,9 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves){
 
     total = total + l_noise_interpolated2d(x * freq, y * freq) * amp;
   }
-  
+  total = (total + 1) * 0.5f;
+  assert(total <= 1);
+  assert(total >= -1);
   return total;
 }
 

@@ -38,20 +38,20 @@ completely understand all of the code that I use in my projects.
 
 ----------------------------How-to-Use-This-Library---------------------------*/
 
-/* You can choose which modules of l_helper you want to enable by defining the 
- * following in this header file. Use comments to enable and disable them. 
- * */
+/*
+You can choose which modules of l_helper you want to enable by defining the 
+following in this header file. Use comments to enable and disable them. 
+*/
 
-#define L_ENABLE_VEC3F  /*Enables functions for manipulating 3d float vectors*/
-#define L_ENABLE_VEC2F  /*Enables functions for manipulating 2d float vectors*/
-#define L_ENABLE_MATHF  /*Enables functions for manipulating float values*/
-#define L_ENABLE_NOISE /*Enables functions for generating noise*/ 
-#define L_ENABLE_FILE /*Functions and types related to reading and writing files*/
-#define L_ENABLE_DEBUG_MEMORY /*Gives useful information for debugging*/
-
-/* If you don't plan on using a certain module of this library, you can simply 
- * remove its #define from the list above and delete its corresponding .c file
- * */
+#define L_ENABLE_VEC3F  /*for manipulating 3d float vectors*/
+#define L_ENABLE_VEC2F  /*for manipulating 2d float vectors*/
+#define L_ENABLE_MATHF  /*for manipulating float values*/
+#define L_ENABLE_NOISE  /*for generating noise*/ 
+#define L_ENABLE_FILE   /*for reading and writing files*/
+/* 
+If you don't plan on using a certain module of this library, you can simply 
+remove its #define from the list above and delete its corresponding .c file
+*/
 
 /*-----------------------------------TO-DO--------------------------------------
 
@@ -98,32 +98,14 @@ TODO    SmoothStep	Interpolates between min and max with smoothing at the
 #include <stddef.h>
 #include <stdbool.h>
 
-#ifdef L_ENABLE_DEBUG_MEMORY
-
-/*
-#define malloc(n) malloc(n) l_debug_malloc(n)
-#define calloc(n) l_debug_calloc(n)
-#define realloc(n) l_debug_realloc(n)
-#define free(n) l_debug_free(n)
-*/
-
-/*
-void *l_debug_malloc(size_t size);
-void *l_debug_calloc(size_t size);
-void *l_debug_realloc(size_t size);
-void *l_debug_free(size_t size);
-*/
-
-#endif
-
 #if defined(L_ENABLE_FILE)
 
 #if !defined(L_READFILE_CHUNK_SIZE)
-#define L_READFILE_CHUNK_SIZE (64 /* chars */)
+#define L_READFILE_CHUNK_SIZE (64 /* chars */) /*Number of chars before buffer must be expanded*/
 #endif
 
 #if !defined(L_READFILE_GROWTH)
-#define L_READFILE_GROWTH (4 /* times */)
+#define L_READFILE_GROWTH (4 /* times */) /*Scalar to multiply chunk size when expanding*/
 #endif
 
 struct l_readfile_t;
@@ -216,11 +198,14 @@ float l_mathf_sigmoid(float n);
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
 
+struct l_vec2f_t;
+typedef struct l_vec2f_t l_vec2f_t;
+
 /*A small data structure for storing 2D positions, rotations, scales, or lines.*/
-typedef struct{
+struct l_vec2f_t {
   float x;
   float y;
-}l_vec2f_t;
+};
 
 /*shorthand for vector3 (0, 0)*/
 extern const l_vec2f_t L_VEC2F_ZERO;
@@ -319,12 +304,15 @@ TODO SlerpUnclamped	Spherically interpolates between two vectors.
 TODO SmoothDamp	Gradually changes a vector towards a desired goal over time.
 */
 
+struct l_vec3f_t;
+typedef struct l_vec3f_t l_vec3f_t;
+
 /*A small data structure for storing 3D positions, rotations, scales, or lines.*/
-typedef struct{
+struct l_vec3f_t {
   float x;
   float y;
   float z;
-}l_vec3f_t;
+};
 
 /*shorthand for vector3 (0, 0, 0)*/
 extern const l_vec3f_t L_VEC3F_ZERO;
