@@ -65,19 +65,19 @@ void testMathf(){
   printf("\n");
 }
 
-void testNoise(){
+void testNoise1(){
   printf("=====================================================\n");
-  printf("                     NOISE TEST                      \n");
+  printf("                     NOISE1 TEST                     \n");
   printf("=====================================================\n");
 
-  float range = 5.0f;
+  float range = 0.2f;
   float step = 0.001f;
   float persistance = 0.25f;
   int octaves = 16;
   float i = 0;
 
   printf("pseudo-random noise\n");
-  for (i = 0; i < 100 ; i += step)
+  for (i = 0; i < range/step ; i++)
   {
     printf("%f ", l_noise_1d(i));
   }
@@ -105,21 +105,39 @@ void testNoise(){
   printf("\n\n");
 }
 
+void testNoise2(){
+  float range = 1.0f;
+  float step = 0.01f;
+  float persistance = 0.25f;
+  int octaves = 4;
+  float i = 0;
+  float j = 0;
+
+  printf("2D perlin-ish noise\n");
+  for (i = 0; i < range ; i += step){
+    for ( j = 0; j < range; j += step){
+      printf("%f ", l_noise_perlin2d(i, j,persistance, octaves));
+    }
+    printf("\n");
+  }
+  printf("\n\n");
+}
+
 void testvec3(){
   printf("=====================================================\n");
   printf("                     VECTOR3 TEST                    \n");
   printf("=====================================================\n");
 
-  l_vec3f v1 = L_VEC3F_ONE;
-  l_vec3f v2 = L_VEC3F_LEFT;
+  l_vec3f_t v1 = L_VEC3F_ONE;
+  l_vec3f_t v2 = L_VEC3F_LEFT;
 
   printf("v1          %f\t%f\t%f\n", v1.x,v1.y,v1.z);
   printf("v2          %f\t%f\t%f\n", v2.x,v2.y,v2.z);
 
-  l_vec3f add = l_vec3f_add(v1,v2);
+  l_vec3f_t add = l_vec3f_add(v1,v2);
   printf("add         %f\t%f\t%f\n", add.x,add.y,add.z);
 
-  l_vec3f cross = l_vec3f_cross(v1,v2);
+  l_vec3f_t cross = l_vec3f_cross(v1,v2);
   printf("cross       %f\t%f\t%f\n", cross.x,cross.y,cross.z);
 
   float dist = l_vec3f_distance(v1,v2);
@@ -128,31 +146,31 @@ void testvec3(){
   float dot = l_vec3f_dot(v1,v2);
   printf("dot         %f\n", dot);
 
-  l_vec3f lerp = l_vec3f_lerp(v1,v2,2.0f);
+  l_vec3f_t lerp = l_vec3f_lerp(v1,v2,2.0f);
   printf("lerp        %f\t%f\t%f\n", lerp.x, lerp.y, lerp.z);
 
-  l_vec3f lerpc = l_vec3f_lerpclamped(v1,v2, 2.0f);
+  l_vec3f_t lerpc = l_vec3f_lerpclamped(v1,v2, 2.0f);
   printf("lerpclamped %f\t%f\t%f\n", lerpc.x, lerpc.y, lerpc.z);
 
   float mag = l_vec3f_magnitude(v1);
   printf("magnitude   %f\n", mag);
 
-  l_vec3f max = l_vec3f_max(v1,v2);
+  l_vec3f_t max = l_vec3f_max(v1,v2);
   printf("max         %f\t%f\t%f\n", max.x, max.y, max.z);
 
-  l_vec3f min = l_vec3f_min(v1,v2);
+  l_vec3f_t min = l_vec3f_min(v1,v2);
   printf("max         %f\t%f\t%f\n", min.x, min.y, min.z);
 
-  l_vec3f norm = l_vec3f_normalize(v1);
+  l_vec3f_t norm = l_vec3f_normalize(v1);
   printf("normalize   %f\n", l_vec3f_magnitude(norm));
 
-  l_vec3f scale = l_vec3f_scale(v1, 2.0f);
+  l_vec3f_t scale = l_vec3f_scale(v1, 2.0f);
   printf("scale       %f\t%f\t%f\n", scale.x, scale.y, scale.z);
 
   float sqrmag = l_vec3f_sqrmagnitude(v1);
   printf("sqrmag      %f\n",sqrmag);
 
-  l_vec3f subt = l_vec3f_subtract(v1,v2);
+  l_vec3f_t subt = l_vec3f_subtract(v1,v2);
   printf("subtract    %f\t%f\t%f\n", subt.x, subt.y, subt.z);
 }
 
@@ -161,10 +179,10 @@ void testvec2(){
   printf("                     VECTOR2 TEST                    \n");
   printf("=====================================================\n");
 
-  l_vec2f v1 = L_VEC2F_ONE;
-  l_vec2f v2 = L_VEC2F_LEFT;
+  l_vec2f_t v1 = L_VEC2F_ONE;
+  l_vec2f_t v2 = L_VEC2F_LEFT;
 
-  l_vec2f add = l_vec2f_add(v1, v2);
+  l_vec2f_t add = l_vec2f_add(v1, v2);
   printf("add        %f\t%f\n", add.x, add.y);
 
   float dist = l_vec2f_distance(v1,v2);
@@ -173,26 +191,50 @@ void testvec2(){
   float dot = l_vec2f_dot(v1,v2);
   printf("dot        %f\n", dot);
 
-  l_vec2f lerp = l_vec2f_lerp(v1,v2,2.0f);
+  l_vec2f_t lerp = l_vec2f_lerp(v1,v2,2.0f);
   printf("lerp       %f\t%f\n", lerp.x, lerp.y);
 
-  l_vec2f lerpc = l_vec2f_lerpclamped(v1,v2,2.0f);
+  l_vec2f_t lerpc = l_vec2f_lerpclamped(v1,v2,2.0f);
   printf("lerpc      %f\t%f\n", lerpc.x, lerpc.y);
 
   float mag = l_vec2f_magnitude(v1);
   printf("mag        %f\n", mag);
 
-  l_vec2f norm = l_vec2f_normalize(v1);
+  l_vec2f_t norm = l_vec2f_normalize(v1);
   printf("norm       %f\t%f\n", norm.x, norm.y);
 
-  l_vec2f scale = l_vec2f_scale(v1, 2.0f);
+  l_vec2f_t scale = l_vec2f_scale(v1, 2.0f);
   printf("scale      %f\t%f\n", scale.x, scale.y);
 
   float sqrmag = l_vec2f_sqrmagnitude(v1);
   printf("sqrmag     %f\n", sqrmag);
 
-  l_vec2f subt = l_vec2f_subtract(v1,v2);
+  l_vec2f_t subt = l_vec2f_subtract(v1,v2);
   printf("subtract   %f\t%f\n", subt.x, subt.y);
+}
+
+void writeNoiseFile2D(){
+  float range = 10.0f;
+  float step = (range/256);
+  float i = 0;
+  float j = 0;
+  float value = 0;
+
+  FILE *fptr = fopen("build/example/noise2.pbm", "w");
+  
+  fputs("P2\n", fptr);
+  fprintf(fptr, "%d %d\n", (int)ceil(range/step), (int)ceil(range/step));
+  fputs("65535\n", fptr);
+  
+  for (i = 0; i < range; i += step){
+    for ( j = 0; j < range; j += step){
+      value = l_noise_perlin2d(i, j, 1.0, 16);
+      value = ((value + 1) * 0.5f) * 65535;
+      fprintf(fptr, "%d ", (int)value);
+    }
+  }
+  
+  fclose(fptr);
 }
 
 int main(int argc,char **argv){
@@ -200,8 +242,10 @@ int main(int argc,char **argv){
   testMathf();
   testvec2();
   testvec3();
-  testNoise();
+  testNoise1();
+  testNoise2();
   */
- 
+  writeNoiseFile2D();
+  printf("rev up those fryers!\n");
   return EXIT_SUCCESS; 
 }

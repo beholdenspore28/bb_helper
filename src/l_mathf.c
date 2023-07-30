@@ -28,7 +28,7 @@ SOFTWARE.
 #include <stdio.h>
 #include "lite.h"
 
-#ifdef L_ENABLE_MATHF
+#if defined(L_ENABLE_MATHF)
 
 float l_mathf_rad2deg(const float n){
   return n * (180.0f/L_PI);
@@ -65,7 +65,7 @@ float l_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMa
   return l_mathf_lerp(l_mathf_norm(n, fromMin, fromMax), toMin, toMax);
 }
 
-l_bool l_mathf_aproxequal(float a, float b, float tolerance){
+bool l_mathf_aproxequal(float a, float b, float tolerance){
   return (l_mathf_abs(a - b) < tolerance);
 }
 

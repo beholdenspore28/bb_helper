@@ -24,7 +24,7 @@ SOFTWARE.
 
 ------------------------------------------------------------------------------*/
 
-#ifndef LITE_H
+#if !defined(LITE_H)
 #define LITE_H
 
 /*------------------------------Project Vision----------------------------------
@@ -46,6 +46,7 @@ completely understand all of the code that I use in my projects.
 #define L_ENABLE_VEC2F  /*Enables functions for manipulating 2d float vectors*/
 #define L_ENABLE_MATHF  /*Enables functions for manipulating float values*/
 #define L_ENABLE_NOISE /*Enables functions for generating noise*/ 
+#define L_ENABLE_FILE /*Functions and types related to reading and writing files*/
 #define L_ENABLE_DEBUG_MEMORY /*Gives useful information for debugging*/
 
 /* If you don't plan on using a certain module of this library, you can simply 
@@ -93,7 +94,9 @@ TODO    SmoothStep	Interpolates between min and max with smoothing at the
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-typedef short l_bool;
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
 
 #ifdef L_ENABLE_DEBUG_MEMORY
 
@@ -113,7 +116,32 @@ void *l_debug_free(size_t size);
 
 #endif
 
-#ifdef L_ENABLE_NOISE
+#if defined(L_ENABLE_FILE)
+
+#if !defined(L_READFILE_CHUNK_SIZE)
+#define L_READFILE_CHUNK_SIZE (64 /* chars */)
+#endif
+
+#if !defined(L_READFILE_GROWTH)
+#define L_READFILE_GROWTH (4 /* times */)
+#endif
+
+struct l_readfile_t;
+typedef struct l_readfile_t l_readfile_t;
+
+struct l_readfile_t {
+  size_t len;
+  char *text;
+  bool error: 1;
+};
+
+void l_file_close(l_readfile_t file);
+
+l_readfile_t l_file_read(const char *filename);
+
+#endif
+
+#if defined(L_ENABLE_NOISE)
 
 /*Returns completely raw, random, single-dimensional noise values*/
 float l_noise_1d(int x);
@@ -141,7 +169,7 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves);
 
 #endif
 
-#ifdef L_ENABLE_MATHF
+#if defined(L_ENABLE_MATHF)
 
 #define L_PI 3.14159265358
 #define L_TAU 6.28318530718
@@ -175,7 +203,7 @@ float l_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMa
 This function will check if two numbers are similar enough to be considered 
 equal. Returns true if the absolute value of "a" minus the absolute value of 
 "b" is smaller than "tolerance".*/
-l_bool l_mathf_aproxequal(float a, float b, float tolerance);
+bool l_mathf_aproxequal(float a, float b, float tolerance);
 
 float l_mathf_cosInterpolate(float a, float b, float t);
 
@@ -183,7 +211,7 @@ float l_mathf_sigmoid(float n);
 
 #endif
 
-#ifdef L_ENABLE_VEC2F
+#if defined(L_ENABLE_VEC2F)
 
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
@@ -192,80 +220,80 @@ float l_mathf_sigmoid(float n);
 typedef struct{
   float x;
   float y;
-}l_vec2f;
+}l_vec2f_t;
 
 /*shorthand for vector3 (0, 0)*/
-extern const l_vec2f L_VEC2F_ZERO;
+extern const l_vec2f_t L_VEC2F_ZERO;
 
 /*shorthand for vector3 (1, 1)*/
-extern const l_vec2f L_VEC2F_ONE;
+extern const l_vec2f_t L_VEC2F_ONE;
 
 /*shorthand for vector3 (0, 1)*/
-extern const l_vec2f L_VEC2F_UP;
+extern const l_vec2f_t L_VEC2F_UP;
 
 /*shorthand for vector3 (0,-1)*/
-extern const l_vec2f L_VEC2F_DOWN;
+extern const l_vec2f_t L_VEC2F_DOWN;
 
 /*shorthand for vector3 (-1,0)*/
-extern const l_vec2f L_VEC2F_LEFT;
+extern const l_vec2f_t L_VEC2F_LEFT;
 
 /*shorthand for vector3 (1, 0)*/
-extern const l_vec2f L_VEC2F_RIGHT;
+extern const l_vec2f_t L_VEC2F_RIGHT;
 
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use l_vec2f_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-float l_vec2f_magnitude(l_vec2f v);
+float l_vec2f_magnitude(l_vec2f_t v);
 
 /*A more performant way of getting the relative length of a 
 vector "v". This saves a square root operation making it more 
 performant than l_vec2f_magnitude(). If all you have to do is 
 compare a vectors length relatively, use this function instead of 
 l_vec2f_magnitude()*/
-float l_vec2f_sqrmagnitude(l_vec2f v);
+float l_vec2f_sqrmagnitude(l_vec2f_t v);
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points 
 in the same direction as the given vector "v"*/
-l_vec2f l_vec2f_normalize(l_vec2f v);
+l_vec2f_t l_vec2f_normalize(l_vec2f_t v);
 
 /*Returns the distance between point a and point b 
 in units.*/
-float l_vec2f_distance(l_vec2f a, l_vec2f b);
+float l_vec2f_distance(l_vec2f_t a, l_vec2f_t b);
 
 /*Adds a vector "a" to another vector "b"*/
-l_vec2f l_vec2f_add(l_vec2f a, l_vec2f b);
+l_vec2f_t l_vec2f_add(l_vec2f_t a, l_vec2f_t b);
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-l_vec2f l_vec2f_subtract(l_vec2f minuend, l_vec2f subtrahend);
+l_vec2f_t l_vec2f_subtract(l_vec2f_t minuend, l_vec2f_t subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 0.
 The returned vector will point in the same direction as
 the given vector "v".*/
-l_vec2f l_vec2f_scale(l_vec2f v, float scalar);
+l_vec2f_t l_vec2f_scale(l_vec2f_t v, float scalar);
 
 /*For normalized vectors Dot returns 1 if they point in 
 exactly the same direction, -1 if they point in completely opposite directions 
 and zero if the vectors are perpendicular.*/
-float l_vec2f_dot(l_vec2f a, l_vec2f b);
+float l_vec2f_dot(l_vec2f_t a, l_vec2f_t b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays 
 between "a" and "b", use l_vec3f_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-l_vec2f l_vec2f_lerp(l_vec2f a, l_vec2f b, float t);
+l_vec2f_t l_vec2f_lerp(l_vec2f_t a, l_vec2f_t b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-l_vec2f l_vec2f_lerpclamped(l_vec2f a, l_vec2f b, float t);
+l_vec2f_t l_vec2f_lerpclamped(l_vec2f_t a, l_vec2f_t b, float t);
 
 #endif
 
-#ifdef L_ENABLE_VEC3F
+#if defined(L_ENABLE_VEC3F)
 
 /*
 TODO MoveTowards	Calculate a position between the points specified by current 
@@ -296,93 +324,93 @@ typedef struct{
   float x;
   float y;
   float z;
-}l_vec3f;
+}l_vec3f_t;
 
 /*shorthand for vector3 (0, 0, 0)*/
-extern const l_vec3f L_VEC3F_ZERO;
+extern const l_vec3f_t L_VEC3F_ZERO;
 
 /*shorthand for vector3 (0, 1, 0)*/
-extern const l_vec3f L_VEC3F_UP;
+extern const l_vec3f_t L_VEC3F_UP;
 
 /*shorthand for vector3 (0,-1, 0)*/
-extern const l_vec3f L_VEC3F_DOWN;
+extern const l_vec3f_t L_VEC3F_DOWN;
 
 /*shorthand for vector3 (-1,0, 0)*/
-extern const l_vec3f L_VEC3F_LEFT;
+extern const l_vec3f_t L_VEC3F_LEFT;
 
 /*shorthand for vector3 (1, 0, 0)*/
-extern const l_vec3f L_VEC3F_RIGHT;
+extern const l_vec3f_t L_VEC3F_RIGHT;
 
 /*shorthand for vector3 (0, 0, 1)*/
-extern const l_vec3f L_VEC3F_FORWARD;
+extern const l_vec3f_t L_VEC3F_FORWARD;
 
 /*shorthand for vector3 (0, 0,-1)*/
-extern const l_vec3f L_VEC3F_BACK;
+extern const l_vec3f_t L_VEC3F_BACK;
 
 /*shorthand for vector3 (1, 1, 1)*/
-extern const l_vec3f L_VEC3F_ONE;
+extern const l_vec3f_t L_VEC3F_ONE;
 
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use l_vec3f_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-float l_vec3f_magnitude(l_vec3f v);
+float l_vec3f_magnitude(l_vec3f_t v);
 
 /*A more performant way of getting the relative length of a 
 vector "v". This saves a square root operation making it more 
 performant than l_vec3f_magnitude(). If all you have to do is 
 compare a vectors length relatively, use this function instead of 
 l_vec3f_magnitude()*/
-float l_vec3f_sqrmagnitude(l_vec3f v);
+float l_vec3f_sqrmagnitude(l_vec3f_t v);
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points 
 in the same direction as the given vector "v"*/
-l_vec3f l_vec3f_normalize(l_vec3f v);
+l_vec3f_t l_vec3f_normalize(l_vec3f_t v);
 
 /*Returns the distance between point a and point b 
 in units.*/
-float l_vec3f_distance(l_vec3f a, l_vec3f b);
+float l_vec3f_distance(l_vec3f_t a, l_vec3f_t b);
 
 /*Adds a vector "a" to another vector "b"*/
-l_vec3f l_vec3f_add(l_vec3f a, l_vec3f b);
+l_vec3f_t l_vec3f_add(l_vec3f_t a, l_vec3f_t b);
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-l_vec3f l_vec3f_subtract(l_vec3f minuend, l_vec3f subtrahend);
+l_vec3f_t l_vec3f_subtract(l_vec3f_t minuend, l_vec3f_t subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 1.
 The returned vector will point in the same direction as
 the given vector "v".*/
-l_vec3f l_vec3f_scale(l_vec3f v, float scalar);
+l_vec3f_t l_vec3f_scale(l_vec3f_t v, float scalar);
 
 /*Returns a vector parallel to both "a" and "b".*/
-l_vec3f l_vec3f_cross(l_vec3f a, l_vec3f b);
+l_vec3f_t l_vec3f_cross(l_vec3f_t a, l_vec3f_t b);
 
 /*For normalized vectors Dot returns 1 if they point in 
 exactly the same direction, -1 if they point in completely opposite directions 
 and zero if the vectors are perpendicular.*/
-float l_vec3f_dot(l_vec3f a, l_vec3f b);
+float l_vec3f_dot(l_vec3f_t a, l_vec3f_t b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays 
 between "a" and "b", use l_vec2f_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-l_vec3f l_vec3f_lerp(l_vec3f a, l_vec3f b, float t);
+l_vec3f_t l_vec3f_lerp(l_vec3f_t a, l_vec3f_t b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-l_vec3f l_vec3f_lerpclamped(l_vec3f a, l_vec3f b, float t);
+l_vec3f_t l_vec3f_lerpclamped(l_vec3f_t a, l_vec3f_t b, float t);
 
 /*Returns a vector that is made from the largest components of two 
 vectors.*/
-l_vec3f l_vec3f_max(l_vec3f a, l_vec3f b);
+l_vec3f_t l_vec3f_max(l_vec3f_t a, l_vec3f_t b);
 
 /*Returns a vector that is made from the smallest components of two 
 vectors.*/
-l_vec3f l_vec3f_min(l_vec3f a, l_vec3f b);
+l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b);
 
 #endif
 #endif

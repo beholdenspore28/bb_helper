@@ -1,6 +1,5 @@
 #include "lite.h"
-
-#ifdef L_ENABLE_NOISE
+#if defined(L_ENABLE_NOISE)
 
 /*BEGIN SINGLE DIMENSIONAL*/
 
@@ -73,6 +72,8 @@ float l_noise_interpolated2d(float x, float y){
 }
 
 float l_noise_perlin2d(float x, float y, float persistance, int octaves){
+  persistance *= 0.5f;
+  persistance = l_mathf_clamp(persistance, 0.0f, 1.0f);
   float total = 0.0f;
   float n = octaves - 1;
 
@@ -80,11 +81,12 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves){
   float freq = 0.0f;
   float amp = 0.0f;
   for (i = 0; i < n; i++){
-    freq = 2 * i;
-    amp = persistance * i;
+    freq = pow(2, i);
+    amp = pow(persistance, i);
 
     total = total + l_noise_interpolated2d(x * freq, y * freq) * amp;
   }
+  
   return total;
 }
 

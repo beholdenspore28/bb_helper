@@ -1,6 +1,6 @@
 #include "lite.h"
 
-#ifdef L_ENABLE_DEBUG_MEMORY
+#if defined(L_ENABLE_DEBUG_MEMORY)
 
 /*
 Memory TODO
