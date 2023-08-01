@@ -78,4 +78,13 @@ float l_mathf_sigmoid(float n) {
     return (1 / (1 + pow(2.71828182846, -n)));
 }
 
+float l_mathf_loop(float n, const float length){
+  return l_mathf_clamp(n - floor(n / length) * length, 0.0f, length);
+}
+
+float l_mathf_pingpong(float n, const float length){
+  n = l_mathf_loop(n, length * 2.0f);
+  return fabs(n - length);
+}
+
 #endif

@@ -68,8 +68,6 @@ TODO  Warnings should appear when the user fails to free memory appropriately.
 
 /*
 General floating point math functions
-TODO    Infinity	A representation of positive infinity (Read Only).
-TODO    NegativeInfinity	A representation of negative infinity (Read Only).
 TODO    DeltaAngle	Calculates the shortest difference between two given angles 
         given in degrees.
 TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
@@ -77,13 +75,6 @@ TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly
 TODO    MoveTowards	Moves a value current towards target.
 TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values 
         interpolate correctly when they wrap around 360 degrees.
-TODO    PerlinNoise	Generate 2D Perlin noise.
-TODO    PerlinNoise1D	Generates a 1D pseudo-random pattern of float values 
-        across a 2D plane.
-TODO    PingPong	PingPong returns a value that will increment and decrement 
-        between the value 0 and length.
-TODO    Repeat	Loops the value t, so that it is never larger than length and 
-        never smaller than 0.
 TODO    SmoothDamp	Gradually changes a value towards a desired goal over time.
 TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a 
         desired goal angle over time.
@@ -191,6 +182,9 @@ float l_mathf_cosInterpolate(float a, float b, float t);
 
 float l_mathf_sigmoid(float n);
 
+float l_mathf_loop(float n, const float length);
+
+float l_mathf_pingpong(float n, const float length);
 #endif
 
 #if defined(L_ENABLE_VEC2F)

@@ -1,10 +1,12 @@
 #include "lite.h"
 
 void testMathf(){
+  float n = 0.0f;
+  size_t i = 0;
+
   printf("=====================================================\n");
   printf("                     MATHF TEST                      \n");
   printf("=====================================================\n");
-
 
   printf("abs\n");
   printf("%f\n",l_mathf_abs(-9.0f));
@@ -63,6 +65,27 @@ void testMathf(){
   printf("normalize\n");
   printf("%f\n",l_mathf_norm(8.0f,0.0f,5.0f));
   printf("\n");
+  
+  printf("loop\n");
+  n = 0.0f;
+  i = 0;
+  for (i = 0; i < 15; i++)
+  {
+    n++;
+    n = l_mathf_loop(n, 5.0f);
+    printf("%f\n", n);
+  }
+  printf("\n");
+
+  printf("pingpong\n");
+  n = 0.0f;
+  i = 0;
+  for (i = 0; i < 15; i++)
+  {
+    n++;
+    n = l_mathf_pingpong(i, 5.0f);
+    printf("%f\n", n);
+  }
 }
 
 void testNoise1(){
@@ -254,16 +277,18 @@ void writeNoiseFile1D(){
 
 int main(int argc,char **argv){
   /*
-  testMathf();
   testvec2();
   testvec3();
   testNoise1();
   testNoise2();
-  */
  
   writeNoiseFile1D();
   writeNoiseFile2D();    
+  */
+  
+  testMathf();
   
   printf("rev up those fryers!\n");
+
   return EXIT_SUCCESS; 
 }
