@@ -53,35 +53,6 @@ If you don't plan on using a certain module of this library, you can simply
 remove its #define from the list above and delete its corresponding .c file
 */
 
-/*-----------------------------------TO-DO--------------------------------------
-
-Memory tracking system that documents uses of malloc, free, calloc, and realloc.
-TODO  This system should be easy to enable and disable using #define #ifdef 
-#ifndef, etc.
-TODO  This system should provide debugging information reguarding where memory 
-has been allocated, reallocated, or freed.
-TODO  This system should also make it clear exactly which line of code and in 
-which file a piece of 
-TODO  memory has been changed.
-TODO  Warnings should appear when the user fails to free memory appropriately.
-*/
-
-/*
-General floating point math functions
-TODO    DeltaAngle	Calculates the shortest difference between two given angles 
-        given in degrees.
-TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
-        when they wrap around 360 degrees.
-TODO    MoveTowards	Moves a value current towards target.
-TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values 
-        interpolate correctly when they wrap around 360 degrees.
-TODO    SmoothDamp	Gradually changes a value towards a desired goal over time.
-TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a 
-        desired goal angle over time.
-TODO    SmoothStep	Interpolates between min and max with smoothing at the 
-        limits.
-------------------------------------------------------------------------------*/
-
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -143,7 +114,21 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves);
 #endif
 
 #if defined(L_ENABLE_MATHF)
-
+/*
+General floating point math functions
+TODO    DeltaAngle	Calculates the shortest difference between two given angles 
+        given in degrees.
+TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
+        when they wrap around 360 degrees.
+TODO    MoveTowards	Moves a value current towards target.
+TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values 
+        interpolate correctly when they wrap around 360 degrees.
+TODO    SmoothDamp	Gradually changes a value towards a desired goal over time.
+TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a 
+        desired goal angle over time.
+TODO    SmoothStep	Interpolates between min and max with smoothing at the 
+        limits.
+------------------------------------------------------------------------------*/
 #define L_PI 3.14159265358
 #define L_TAU 6.28318530718
 
