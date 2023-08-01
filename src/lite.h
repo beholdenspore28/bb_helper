@@ -48,6 +48,8 @@ following in this header file. Use comments to enable and disable them.
 #define L_ENABLE_MATHF  /*for manipulating float values*/
 #define L_ENABLE_NOISE  /*for generating noise*/ 
 #define L_ENABLE_FILE   /*for reading and writing files*/
+#define L_ENABLE_MATRIX4
+
 /* 
 If you don't plan on using a certain module of this library, you can simply 
 remove its #define from the list above and delete its corresponding .c file
@@ -379,5 +381,27 @@ l_vec3f_t l_vec3f_max(l_vec3f_t a, l_vec3f_t b);
 vectors.*/
 l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b);
 
+#endif
+
+#if defined(L_ENABLE_MATRIX4)
+
+/*A column major 4x4 matrix*/
+typedef float l_mat4_t[16][16];
+
+/*Adds (translates) a 4x4 matrix to another 4x4 matrix.*/
+void l_mat4_add(l_mat4_t a, l_mat4_t b, l_mat4_t sum);
+
+/*Returns the difference between two 4x4 matrices.
+Pass the l_mat4_t you wish to store said difference into the "dif" parameter.
+min = minuend.
+sub = subtrahend.
+dif = difference.*/
+void l_mat4_subtract(l_mat4_t min, l_mat4_t sub, l_mat4_t dif);
+
+/*Prints a formatted l_mat4_t to the console.*/
+void l_mat4_printf(l_mat4_t m, const char* label);
+
+/*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
+void l_mat4_scale(l_mat4_t mat, float scalar);
 #endif
 #endif

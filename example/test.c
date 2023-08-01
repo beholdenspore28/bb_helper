@@ -287,7 +287,15 @@ int main(int argc,char **argv){
   */
   
   testMathf();
-  
+  l_mat4_t a = { 
+    {1,1,1,1,},
+    {1,1,1,1,}, 
+    {1,1,1,1,}, 
+    {1,1,1,1,}, 
+  };
+
+  l_mat4_printf(a, "a");
+
   printf("rev up those fryers!\n");
 
   return EXIT_SUCCESS; 
