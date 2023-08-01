@@ -388,6 +388,8 @@ l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b);
 /*A column major 4x4 matrix*/
 typedef float l_mat4_t[16][16];
 
+#define L_MAT4_IDENTITY {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},};
+
 /*Adds (translates) a 4x4 matrix to another 4x4 matrix.*/
 void l_mat4_add(l_mat4_t a, l_mat4_t b, l_mat4_t sum);
 
@@ -403,5 +405,8 @@ void l_mat4_printf(l_mat4_t m, const char* label);
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
 void l_mat4_scale(l_mat4_t mat, float scalar);
+
+/*Multiplies a 4x4 matrix with another 4x4 matrix*/
+void l_mat4_multiply(const l_mat4_t a, const l_mat4_t b, l_mat4_t p);
 #endif
 #endif

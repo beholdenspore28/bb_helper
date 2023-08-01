@@ -4,16 +4,16 @@
 void l_mat4_printf(l_mat4_t m, const char* label){
   size_t i = 0;
   size_t j = 0;
-  printf("--------------------------------------\n");
+  printf("=======================================================\n");
   printf("MATRIX4: %s\n", label);
   for (i = 0; i < 4; i++){
     printf("|");
     for (j = 0; j < 4; j++){
       printf("%f ", m[i][j]);
     }
-    printf("|\n");
+    printf("\n");
   }
-  printf("--------------------------------------\n");
+  printf("=======================================================\n");
 }
 
 void l_mat4_add(l_mat4_t a, l_mat4_t b, l_mat4_t sum){
@@ -33,7 +33,6 @@ void l_mat4_add(l_mat4_t a, l_mat4_t b, l_mat4_t sum){
         | a20+b20  a21+b21  a22+b22  a23+b23 |
         | a30+b30  a31+b31  a32+b32  a33+b33 |
   */
-
   size_t j = 0;
   size_t i = 0;
   for (i = 0; i < 4; i++){
@@ -81,7 +80,6 @@ void l_mat4_scale(l_mat4_t mat, float scalar){
         | m20*s m21*s m22*s m23*s |
         | m30*s m31*s m32*s m33*s |
   */
-  
   size_t i = 0;
   size_t j = 0;
   for (i = 0; i < 4; i++){
@@ -91,6 +89,19 @@ void l_mat4_scale(l_mat4_t mat, float scalar){
   }
 }
 
-
+/*Multiplies a 4x4 matrix by another and writes the product to "p"*/
+void l_mat4_multiply(const l_mat4_t a, const l_mat4_t b, l_mat4_t p){
+  /*im not even going to try to explain this...*/
+  size_t i = 0;
+  size_t j = 0;
+  size_t k = 0;
+  for ( i = 0; i < 4; i++){
+    for (j = 0; j < 4; j++){
+      for(k = 0; k < 4; k++){
+        p[i][j] += a[i][k] * b[k][j];
+      }
+    }
+  }
+}
 
 #endif

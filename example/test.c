@@ -283,19 +283,28 @@ int main(int argc,char **argv){
   testNoise2();
  
   writeNoiseFile1D();
-  writeNoiseFile2D();    
   */
+  writeNoiseFile2D();    
   
   testMathf();
   l_mat4_t a = { 
-    {1,1,1,1,},
-    {1,1,1,1,}, 
-    {1,1,1,1,}, 
-    {1,1,1,1,}, 
+    {1,2,3,4,},
+    {5,6,7,8,}, 
+    {9,10,11,12,}, 
+    {13,14,15,16,}, 
   };
 
-  l_mat4_printf(a, "a");
+  l_mat4_t b = { 
+    {1,2,3,4,},
+    {5,6,7,8,}, 
+    {9,10,11,12,}, 
+    {13,14,15,16,},
+  };
 
+  l_mat4_t c = L_MAT4_IDENTITY;
+  l_mat4_multiply(a, b, c);
+
+  l_mat4_printf(c, "product of a and b");
   printf("rev up those fryers!\n");
 
   return EXIT_SUCCESS; 
