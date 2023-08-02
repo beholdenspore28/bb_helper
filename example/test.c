@@ -283,8 +283,6 @@ int main(int argc,char **argv){
  
   writeNoiseFile1D();
   writeNoiseFile2D();    
-  testMathf();
-  */
   
   l_mat4_t a = { 
     {1,2,3,4,},
@@ -301,13 +299,12 @@ int main(int argc,char **argv){
   };
 
   l_mat4_t c = L_MAT4_IDENTITY;
-  size_t i = 0;
-  for (i = 0; i < 500000; i++){
-    l_mat4_multiply(a, b, c); 
-  }  
+  l_mat4_multiply(a, b, c); 
 
   l_mat4_printf(c, "product of a and b");
   printf("rev up those fryers!\n");
+  */
+  testMathf();
 
   return EXIT_SUCCESS; 
 }
