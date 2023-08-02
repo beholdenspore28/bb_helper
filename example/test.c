@@ -1,5 +1,4 @@
 #include "lite.h"
-
 void testMathf(){
   float n = 0.0f;
   size_t i = 0;
@@ -283,26 +282,29 @@ int main(int argc,char **argv){
   testNoise2();
  
   writeNoiseFile1D();
-  */
   writeNoiseFile2D();    
-  
   testMathf();
+  */
+  
   l_mat4_t a = { 
     {1,2,3,4,},
-    {5,6,7,8,}, 
-    {9,10,11,12,}, 
-    {13,14,15,16,}, 
+    {5,6,7,8,},
+    {9,10,11,12,},
+    {13,14,15,16,},
   };
 
   l_mat4_t b = { 
     {1,2,3,4,},
-    {5,6,7,8,}, 
-    {9,10,11,12,}, 
+    {5,6,7,8,},
+    {9,10,11,12,},
     {13,14,15,16,},
   };
 
   l_mat4_t c = L_MAT4_IDENTITY;
-  l_mat4_multiply(a, b, c);
+  size_t i = 0;
+  for (i = 0; i < 500000; i++){
+    l_mat4_multiply(a, b, c); 
+  }  
 
   l_mat4_printf(c, "product of a and b");
   printf("rev up those fryers!\n");
