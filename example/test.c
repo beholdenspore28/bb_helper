@@ -7,11 +7,6 @@ void testMathf(){
   printf("                     MATHF TEST                      \n");
   printf("=====================================================\n");
 
-  printf("abs\n");
-  printf("%f\n",l_mathf_abs(-9.0f));
-  printf("%f\n",l_mathf_abs( 9.0f));
-  printf("\n");
-
   printf("aproxequal\n");
   printf("%d\n",l_mathf_aproxequal( 0.0f, 2.0f, 0.01f));
   printf("%d\n",l_mathf_aproxequal( 2.0f, 2.0f, 0.01f));
@@ -305,6 +300,6 @@ int main(int argc,char **argv){
   printf("rev up those fryers!\n");
   */
   testMathf();
-
+  
   return EXIT_SUCCESS; 
 }

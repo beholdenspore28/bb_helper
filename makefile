@@ -44,5 +44,5 @@ build/bin/example: ${OBJFILES} ${EXAMPLEOBJFILES};
 	./build/bin/example
 
 fuzz: build/lib/lite-lib.a
-	clang -g -O1 -fsanitize=fuzzer,address example/fuzzer.c ${SRCFILES} ${LIBS} ${INCDIR:%=-I%} -o build/fuzz.out
+	clang -g -O1 -fsanitize=fuzzer example/fuzzer.c ${SRCFILES} ${LIBS} ${INCDIR:%=-I%} -o build/fuzz.out
 	./build/fuzz.out

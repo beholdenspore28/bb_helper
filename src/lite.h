@@ -140,9 +140,6 @@ float l_mathf_rad2deg(const float n);
 /*Converts "n" degrees into radians*/
 float l_mathf_deg2rad(const float n);
 
-/*Returns the absolute value of "n"*/
-float l_mathf_abs(const float n);
-
 /*Returns "n" confined to be greater than min and less than max*/
 float l_mathf_clamp(float n, const float min, const float max);
 

@@ -38,12 +38,6 @@ float l_mathf_deg2rad(const float n){
   return n * (L_PI/180.0f);
 }
 
-/*TODO see if we can remove the if statement in this function*/
-float l_mathf_abs(const float n){
-  if (n<0) return -n;
-  else return n;
-}
-
 float l_mathf_clamp(float n, const float min, const float max){
   n = n < min ? min : n;
   return n > max ? max : n;
@@ -66,7 +60,7 @@ float l_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMa
 }
 
 bool l_mathf_aproxequal(float a, float b, float tolerance){
-  return (l_mathf_abs(a - b) < tolerance);
+  return (fabs(a - b) < tolerance);
 }
 
 float l_mathf_cosInterpolate(float a, float b, float t){
