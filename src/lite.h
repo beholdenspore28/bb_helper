@@ -387,7 +387,7 @@ typedef float l_mat4_t[16][16];
 
 #define L_MAT4_IDENTITY {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},};
 
-/*Adds (translates) a 4x4 matrix to another 4x4 matrix.*/
+/*Adds a 4x4 matrix to another 4x4 matrix.*/
 void l_mat4_add(l_mat4_t a, l_mat4_t b, l_mat4_t sum);
 
 /*Returns the difference between two 4x4 matrices.
