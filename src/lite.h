@@ -43,8 +43,9 @@ You can choose which modules of l_helper you want to enable by defining the
 following in this header file. Use comments to enable and disable them. 
 */
 
-#define L_ENABLE_VEC3F  /*for manipulating 3d float vectors*/
 #define L_ENABLE_VEC2F  /*for manipulating 2d float vectors*/
+#define L_ENABLE_VEC3F  /*for manipulating 3d float vectors*/
+#define L_ENABLE_VEC4F  /*for manipulating 4d float vectors*/
 #define L_ENABLE_MATHF  /*for manipulating float values*/
 #define L_ENABLE_NOISE  /*for generating noise*/ 
 #define L_ENABLE_FILE   /*for reading and writing files*/
@@ -185,22 +186,22 @@ struct l_vec2f_t {
   float y;
 };
 
-/*shorthand for vector3 (0, 0)*/
+/*shorthand for vector2 (0, 0)*/
 extern const l_vec2f_t L_VEC2F_ZERO;
 
-/*shorthand for vector3 (1, 1)*/
+/*shorthand for vector2 (1, 1)*/
 extern const l_vec2f_t L_VEC2F_ONE;
 
-/*shorthand for vector3 (0, 1)*/
+/*shorthand for vector2 (0, 1)*/
 extern const l_vec2f_t L_VEC2F_UP;
 
-/*shorthand for vector3 (0,-1)*/
+/*shorthand for vector2 (0,-1)*/
 extern const l_vec2f_t L_VEC2F_DOWN;
 
-/*shorthand for vector3 (-1,0)*/
+/*shorthand for vector2 (-1,0)*/
 extern const l_vec2f_t L_VEC2F_LEFT;
 
-/*shorthand for vector3 (1, 0)*/
+/*shorthand for vector2 (1, 0)*/
 extern const l_vec2f_t L_VEC2F_RIGHT;
 
 /*Returns the actual length of a vector "v". 
@@ -377,6 +378,107 @@ l_vec3f_t l_vec3f_max(l_vec3f_t a, l_vec3f_t b);
 /*Returns a vector that is made from the smallest components of two 
 vectors.*/
 l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b);
+
+#endif
+
+#if defined(L_ENABLE_VEC4F)
+
+struct l_vec4f_t;
+typedef struct l_vec4f_t l_vec4f_t;
+
+/*A small data structure for storing 4D values*/
+struct l_vec4f_t {
+  float x;
+  float y;
+  float z;
+  float w;
+};
+
+/*shorthand for vector4 (0, 0, 0, 0)*/
+extern const l_vec4f_t L_VEC4F_ZERO;
+
+/*shorthand for vector4 (0, 1, 0, 1)*/
+extern const l_vec4f_t L_VEC4F_UP;
+
+/*shorthand for vector4 (0,-1, 0, 1)*/
+extern const l_vec4f_t L_VEC4F_DOWN;
+
+/*shorthand for vector4 (-1,0, 0, 1)*/
+extern const l_vec4f_t L_VEC4F_LEFT;
+
+/*shorthand for vector4 (1, 0, 0, 1)*/
+extern const l_vec4f_t L_VEC4F_RIGHT;
+
+/*shorthand for vector4 (0, 0, 1, 1)*/
+extern const l_vec4f_t L_VEC4F_FORWARD;
+
+/*shorthand for vector4 (0, 0,-1, 1)*/
+extern const l_vec4f_t L_VEC4F_BACK;
+
+/*shorthand for vector4 (1, 1, 1, 1)*/
+extern const l_vec4f_t L_VEC4F_ONE;
+
+/*Returns the actual length of a vector "v". 
+This uses a square root operation. Use l_vec4f_sqrmagnitude()
+to sacrifice accuracy and save on performance when comparing
+distances.*/
+float l_vec4f_magnitude(l_vec4f_t v);
+
+/*A more performant way of getting the relative length of a 
+vector "v". This saves a square root operation making it more 
+performant than l_vec4f_magnitude(). If all you have to do is 
+compare a vectors length relatively, use this function instead of 
+l_vec4f_magnitude()*/
+float l_vec4f_sqrmagnitude(l_vec4f_t v);
+
+/*Returns a given vector "v" as a unit vector.
+This means the magnitude(length) of the returned
+vector will always be 1 unit. The returned vector always points 
+in the same direction as the given vector "v"*/
+l_vec4f_t l_vec4f_normalize(l_vec4f_t v);
+
+/*Returns the distance between point a and point b 
+in units.*/
+float l_vec4f_distance(l_vec4f_t a, l_vec4f_t b);
+
+/*Adds a vector "a" to another vector "b"*/
+l_vec4f_t l_vec4f_add(l_vec4f_t a, l_vec4f_t b);
+
+/*Subtracts a vector "subtrahend" from another vector "minuend"*/
+l_vec4f_t l_vec4f_subtract(l_vec4f_t minuend, l_vec4f_t subtrahend);
+
+/*Scales a vector "v" by "scalar".
+increases the magnitude when "scalar" is greater than 1.
+decreases the magnitude when "scalar" is less than 1.
+The returned vector will point in the same direction as
+the given vector "v".*/
+l_vec4f_t l_vec4f_scale(l_vec4f_t v, float scalar);
+
+/*Returns a vector parallel to both "a" and "b".*/
+l_vec4f_t l_vec4f_cross(l_vec4f_t a, l_vec4f_t b);
+
+/*For normalized vectors Dot returns 1 if they point in 
+exactly the same direction, -1 if they point in completely opposite directions 
+and zero if the vectors are perpendicular.*/
+float l_vec4f_dot(l_vec4f_t a, l_vec4f_t b);
+
+/*Linearly interpolates between "a" and "b" by "t".
+If you want to make sure the returned value stays 
+between "a" and "b", use l_vec2f_lerpclamped() instead.
+Returns a point at "t"% of the way between "a" and "b".*/
+l_vec4f_t l_vec4f_lerp(l_vec4f_t a, l_vec4f_t b, float t);
+
+/*Linearly interpolates between "a" and "b" by "t".
+Returns a point at "t"% of the way between "a" and "b".*/
+l_vec4f_t l_vec4f_lerpclamped(l_vec4f_t a, l_vec4f_t b, float t);
+
+/*Returns a vector that is made from the largest components of two 
+vectors.*/
+l_vec4f_t l_vec4f_max(l_vec4f_t a, l_vec4f_t b);
+
+/*Returns a vector that is made from the smallest components of two 
+vectors.*/
+l_vec4f_t l_vec4f_min(l_vec4f_t a, l_vec4f_t b);
 
 #endif
 

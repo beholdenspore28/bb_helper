@@ -3,9 +3,9 @@ void testMathf(){
   float n = 0.0f;
   size_t i = 0;
 
-  printf("=====================================================\n");
-  printf("                     MATHF TEST                      \n");
-  printf("=====================================================\n");
+  printf("=========================================================================\n");
+  printf("                               MATHF TEST                                \n");
+  printf("=========================================================================\n");
 
   printf("aproxequal\n");
   printf("%d\n",l_mathf_aproxequal( 0.0f, 2.0f, 0.01f));
@@ -83,9 +83,9 @@ void testMathf(){
 }
 
 void testNoise1(){
-  printf("=====================================================\n");
-  printf("                     NOISE1 TEST                     \n");
-  printf("=====================================================\n");
+  printf("=========================================================================\n");
+  printf("                               NOISE1 TEST                               \n");
+  printf("=========================================================================\n");
 
   float range = 0.2f;
   float step = 0.001f;
@@ -140,94 +140,142 @@ void testNoise2(){
   printf("\n\n");
 }
 
+void testvec4(){
+  printf("=========================================================================\n");
+  printf("                               VECTOR4 TEST                              \n");
+  printf("=========================================================================\n");
+
+  l_vec4f_t v1 = L_VEC4F_ONE;
+  l_vec4f_t v2 = L_VEC4F_LEFT;
+
+  printf("v1                                %f\t%f\t%f\n", v1.x,v1.y,v1.z);
+  printf("v2                                %f\t%f\t%f\n", v2.x,v2.y,v2.z);
+
+  l_vec4f_t add = l_vec4f_add(v1,v2);
+  printf("add v1 + v2                       %f\t%f\t%f\n", add.x,add.y,add.z);
+
+  float dist = l_vec4f_distance(v1,v2);
+  printf("distance from v1 to v2            %f\n", dist);
+
+  float dot = l_vec4f_dot(v1,v2);
+  printf("dot v1 * v2                       %f\n", dot);
+
+  l_vec4f_t lerp = l_vec4f_lerp(v1,v2,2.0f);
+  printf("lerp v1 v2 2                      %f\t%f\t%f\n", lerp.x, lerp.y, lerp.z);
+
+  l_vec4f_t lerpc = l_vec4f_lerpclamped(v1,v2, 2.0f);
+  printf("lerpclamped v1 v2 2               %f\t%f\t%f\n", lerpc.x, lerpc.y, lerpc.z);
+
+  float mag = l_vec4f_magnitude(v1);
+  printf("magnitude v1                      %f\n", mag);
+
+  l_vec4f_t max = l_vec4f_max(v1,v2);
+  printf("max v1 v2                         %f\t%f\t%f\n", max.x, max.y, max.z);
+
+  l_vec4f_t min = l_vec4f_min(v1,v2);
+  printf("min v1 v2                         %f\t%f\t%f\n", min.x, min.y, min.z);
+
+  l_vec4f_t norm = l_vec4f_normalize(v1);
+  printf("normalize v1                      %f\n", l_vec4f_magnitude(norm));
+
+  l_vec4f_t scale = l_vec4f_scale(v1, 2.0f);
+  printf("scale v1 * 2                      %f\t%f\t%f\n", scale.x, scale.y, scale.z);
+
+  float sqrmag = l_vec4f_sqrmagnitude(v1);
+  printf("sqrmag v1                         %f\n",sqrmag);
+
+  l_vec4f_t subt = l_vec4f_subtract(v1,v2);
+  printf("subtract v1 - v2                  %f\t%f\t%f\n", subt.x, subt.y, subt.z);
+}
+
 void testvec3(){
-  printf("=====================================================\n");
-  printf("                     VECTOR3 TEST                    \n");
-  printf("=====================================================\n");
+  printf("=========================================================================\n");
+  printf("                               VECTOR3 TEST                              \n");
+  printf("=========================================================================\n");
 
   l_vec3f_t v1 = L_VEC3F_ONE;
   l_vec3f_t v2 = L_VEC3F_LEFT;
 
-  printf("v1          %f\t%f\t%f\n", v1.x,v1.y,v1.z);
-  printf("v2          %f\t%f\t%f\n", v2.x,v2.y,v2.z);
+  printf("v1                                %f\t%f\t%f\n", v1.x,v1.y,v1.z);
+  printf("v2                                %f\t%f\t%f\n", v2.x,v2.y,v2.z);
 
   l_vec3f_t add = l_vec3f_add(v1,v2);
-  printf("add         %f\t%f\t%f\n", add.x,add.y,add.z);
+  printf("add v1 + v2                       %f\t%f\t%f\n", add.x,add.y,add.z);
 
   l_vec3f_t cross = l_vec3f_cross(v1,v2);
-  printf("cross       %f\t%f\t%f\n", cross.x,cross.y,cross.z);
+  printf("cross v1 x v2                     %f\t%f\t%f\n", cross.x,cross.y,cross.z);
 
   float dist = l_vec3f_distance(v1,v2);
-  printf("distance    %f\n", dist);
+  printf("distance from v1 to v2            %f\n", dist);
 
   float dot = l_vec3f_dot(v1,v2);
-  printf("dot         %f\n", dot);
+  printf("dot v1 * v2                       %f\n", dot);
 
   l_vec3f_t lerp = l_vec3f_lerp(v1,v2,2.0f);
-  printf("lerp        %f\t%f\t%f\n", lerp.x, lerp.y, lerp.z);
+  printf("lerp v1 v2 2                      %f\t%f\t%f\n", lerp.x, lerp.y, lerp.z);
 
   l_vec3f_t lerpc = l_vec3f_lerpclamped(v1,v2, 2.0f);
-  printf("lerpclamped %f\t%f\t%f\n", lerpc.x, lerpc.y, lerpc.z);
+  printf("lerpclamped v1 v2 2               %f\t%f\t%f\n", lerpc.x, lerpc.y, lerpc.z);
 
   float mag = l_vec3f_magnitude(v1);
-  printf("magnitude   %f\n", mag);
+  printf("magnitude v1                      %f\n", mag);
 
   l_vec3f_t max = l_vec3f_max(v1,v2);
-  printf("max         %f\t%f\t%f\n", max.x, max.y, max.z);
+  printf("max v1 v2                         %f\t%f\t%f\n", max.x, max.y, max.z);
 
   l_vec3f_t min = l_vec3f_min(v1,v2);
-  printf("max         %f\t%f\t%f\n", min.x, min.y, min.z);
+  printf("min v1 v2                         %f\t%f\t%f\n", min.x, min.y, min.z);
 
   l_vec3f_t norm = l_vec3f_normalize(v1);
-  printf("normalize   %f\n", l_vec3f_magnitude(norm));
+  printf("normalize v1                      %f\n", l_vec3f_magnitude(norm));
 
   l_vec3f_t scale = l_vec3f_scale(v1, 2.0f);
-  printf("scale       %f\t%f\t%f\n", scale.x, scale.y, scale.z);
+  printf("scale v1 * 2                      %f\t%f\t%f\n", scale.x, scale.y, scale.z);
 
   float sqrmag = l_vec3f_sqrmagnitude(v1);
-  printf("sqrmag      %f\n",sqrmag);
+  printf("sqrmag v1                         %f\n",sqrmag);
 
   l_vec3f_t subt = l_vec3f_subtract(v1,v2);
-  printf("subtract    %f\t%f\t%f\n", subt.x, subt.y, subt.z);
+  printf("subtract v1 v2                    %f\t%f\t%f\n", subt.x, subt.y, subt.z);
 }
 
 void testvec2(){
-  printf("=====================================================\n");
-  printf("                     VECTOR2 TEST                    \n");
-  printf("=====================================================\n");
+  printf("=========================================================================\n");
+  printf("                               VECTOR2 TEST                              \n");
+  printf("=========================================================================\n");
 
   l_vec2f_t v1 = L_VEC2F_ONE;
   l_vec2f_t v2 = L_VEC2F_LEFT;
 
   l_vec2f_t add = l_vec2f_add(v1, v2);
-  printf("add        %f\t%f\n", add.x, add.y);
+  printf("add v1 + v2                       %f\t%f\n", add.x, add.y);
 
   float dist = l_vec2f_distance(v1,v2);
-  printf("distance   %f\n", dist);
+  printf("distance from v1 to v2            %f\n", dist);
 
   float dot = l_vec2f_dot(v1,v2);
-  printf("dot        %f\n", dot);
+  printf("dot v1 * v2                       %f\n", dot);
 
   l_vec2f_t lerp = l_vec2f_lerp(v1,v2,2.0f);
-  printf("lerp       %f\t%f\n", lerp.x, lerp.y);
+  printf("lerp v1 v2 2                      %f\t%f\n", lerp.x, lerp.y);
 
   l_vec2f_t lerpc = l_vec2f_lerpclamped(v1,v2,2.0f);
-  printf("lerpc      %f\t%f\n", lerpc.x, lerpc.y);
+  printf("lerpc v1 v2 2                     %f\t%f\n", lerpc.x, lerpc.y);
 
   float mag = l_vec2f_magnitude(v1);
-  printf("mag        %f\n", mag);
+  printf("mag v1                            %f\n", mag);
 
   l_vec2f_t norm = l_vec2f_normalize(v1);
-  printf("norm       %f\t%f\n", norm.x, norm.y);
+  printf("norm v1                           %f\t%f\n", norm.x, norm.y);
 
   l_vec2f_t scale = l_vec2f_scale(v1, 2.0f);
-  printf("scale      %f\t%f\n", scale.x, scale.y);
+  printf("scale v1 * 2                      %f\t%f\n", scale.x, scale.y);
 
   float sqrmag = l_vec2f_sqrmagnitude(v1);
-  printf("sqrmag     %f\n", sqrmag);
+  printf("sqrmag v1                         %f\n", sqrmag);
 
   l_vec2f_t subt = l_vec2f_subtract(v1,v2);
-  printf("subtract   %f\t%f\n", subt.x, subt.y);
+  printf("subtract v1 - v2                  %f\t%f\n", subt.x, subt.y);
 }
 
 void writeNoiseFile2D(){
@@ -271,8 +319,7 @@ void writeNoiseFile1D(){
 
 int main(int argc,char **argv){
   /*
-  testvec2();
-  testvec3();
+  testMathf();
   testNoise1();
   testNoise2();
  
@@ -299,7 +346,9 @@ int main(int argc,char **argv){
   l_mat4_printf(c, "product of a and b");
   printf("rev up those fryers!\n");
   */
-  testMathf();
+  testvec2();
+  testvec3();
+  testvec4();
   
   return EXIT_SUCCESS; 
 }
