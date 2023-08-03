@@ -25,7 +25,6 @@ SOFTWARE.
 ------------------------------------------------------------------------------*/
 
 #include "lite.h"
-#ifdef L_ENABLE_FILE
 
 void l_file_close(l_readfile_t file) {
   free(file.text);
@@ -61,5 +60,3 @@ l_readfile_t l_file_read(const char *filename) {
   ret.error = false;
   return ret;
 }
-
-#endif

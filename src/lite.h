@@ -24,8 +24,6 @@ SOFTWARE.
 
 ------------------------------------------------------------------------------*/
 
-#if !defined(LITE_H)
-#define LITE_H
 
 /*------------------------------Project Vision----------------------------------
 
@@ -35,26 +33,10 @@ one asked for this and there is probably someone out there who has already done
 what I am trying to do here. The main goal for me is to learn the 
 inner-workings of the code most people take for granted. This will allow me to 
 completely understand all of the code that I use in my projects.
+------------------------------------------------------------------------------*/
 
-----------------------------How-to-Use-This-Library---------------------------*/
-
-/*
-You can choose which modules of l_helper you want to enable by defining the 
-following in this header file. Use comments to enable and disable them. 
-*/
-
-#define L_ENABLE_VEC2F  /*for manipulating 2d float vectors*/
-#define L_ENABLE_VEC3F  /*for manipulating 3d float vectors*/
-#define L_ENABLE_VEC4F  /*for manipulating 4d float vectors*/
-#define L_ENABLE_MATHF  /*for manipulating float values*/
-#define L_ENABLE_NOISE  /*for generating noise*/ 
-#define L_ENABLE_FILE   /*for reading and writing files*/
-#define L_ENABLE_MATRIX4
-
-/* 
-If you don't plan on using a certain module of this library, you can simply 
-remove its #define from the list above and delete its corresponding .c file
-*/
+#if !defined(LITE_H)
+#define LITE_H
 
 #include <math.h>
 #include <stdlib.h>
@@ -62,8 +44,6 @@ remove its #define from the list above and delete its corresponding .c file
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-
-#if defined(L_ENABLE_FILE)
 
 #if !defined(L_READFILE_CHUNK_SIZE)
 #define L_READFILE_CHUNK_SIZE (64 /* chars */) /*Number of chars before buffer must be expanded*/
@@ -85,10 +65,6 @@ struct l_readfile_t {
 void l_file_close(l_readfile_t file);
 
 l_readfile_t l_file_read(const char *filename);
-
-#endif
-
-#if defined(L_ENABLE_NOISE)
 
 /*Returns completely raw, random, single-dimensional noise values*/
 float l_noise_1d(int x);
@@ -114,9 +90,6 @@ float l_noise_interpolated2d(float x, float y);
 /*Returns perlin-ish two-dimensional noise values.*/
 float l_noise_perlin2d(float x, float y, float persistance, int octaves);
 
-#endif
-
-#if defined(L_ENABLE_MATHF)
 /*
 General floating point math functions
 TODO    DeltaAngle	Calculates the shortest difference between two given angles 
@@ -132,8 +105,14 @@ TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a
 TODO    SmoothStep	Interpolates between min and max with smoothing at the 
         limits.
 ------------------------------------------------------------------------------*/
+
+#if !defined(L_PI)
 #define L_PI 3.14159265358
+#endif
+
+#if !defined(L_TAU)
 #define L_TAU 6.28318530718
+#endif
 
 /*Converts "n" radians into degrees.*/
 float l_mathf_rad2deg(const float n);
@@ -170,9 +149,6 @@ float l_mathf_sigmoid(float n);
 float l_mathf_loop(float n, const float length);
 
 float l_mathf_pingpong(float n, const float length);
-#endif
-
-#if defined(L_ENABLE_VEC2F)
 
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
@@ -254,10 +230,6 @@ l_vec2f_t l_vec2f_lerp(l_vec2f_t a, l_vec2f_t b, float t);
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
 l_vec2f_t l_vec2f_lerpclamped(l_vec2f_t a, l_vec2f_t b, float t);
-
-#endif
-
-#if defined(L_ENABLE_VEC3F)
 
 /*
 TODO MoveTowards	Calculate a position between the points specified by current 
@@ -379,10 +351,6 @@ l_vec3f_t l_vec3f_max(l_vec3f_t a, l_vec3f_t b);
 vectors.*/
 l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b);
 
-#endif
-
-#if defined(L_ENABLE_VEC4F)
-
 struct l_vec4f_t;
 typedef struct l_vec4f_t l_vec4f_t;
 
@@ -480,32 +448,41 @@ l_vec4f_t l_vec4f_max(l_vec4f_t a, l_vec4f_t b);
 vectors.*/
 l_vec4f_t l_vec4f_min(l_vec4f_t a, l_vec4f_t b);
 
-#endif
-
-#if defined(L_ENABLE_MATRIX4)
+struct l_mat4_t;
+typedef struct l_mat4_t l_mat4_t;
 
 /*A column major 4x4 matrix*/
-typedef float l_mat4_t[16][16];
+struct l_mat4_t {
+  float elements[16][16];
+};
 
-#define L_MAT4_IDENTITY {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},};
+#if !defined(L_MAT4_IDENTITY)
+#define L_MAT4_IDENTITY (l_mat4_t){ .elements={{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},}};
+#endif
 
 /*Adds a 4x4 matrix to another 4x4 matrix.*/
-void l_mat4_add(l_mat4_t a, l_mat4_t b, l_mat4_t sum);
+l_mat4_t l_mat4_add(l_mat4_t a, l_mat4_t b);
 
 /*Returns the difference between two 4x4 matrices.
 Pass the l_mat4_t you wish to store said difference into the "dif" parameter.
 min = minuend.
 sub = subtrahend.
 dif = difference.*/
-void l_mat4_subtract(l_mat4_t min, l_mat4_t sub, l_mat4_t dif);
+l_mat4_t l_mat4_subtract(l_mat4_t min, l_mat4_t sub);
 
 /*Prints a formatted l_mat4_t to the console.*/
 void l_mat4_printf(l_mat4_t m, const char* label);
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
-void l_mat4_scale(l_mat4_t mat, float scalar);
+l_mat4_t l_mat4_scale(l_mat4_t mat, float scalar);
+
+/*Translates a vector to a 4x4 matrix*/
+l_mat4_t l_mat4_translateVec3(l_vec3f_t t);
+
+/*Translates a vector to a 4x4 matrix*/
+l_mat4_t l_mat4_translateVec4(l_vec4f_t t);
 
 /*Multiplies a 4x4 matrix with another 4x4 matrix*/
-void l_mat4_multiply(const l_mat4_t a, const l_mat4_t b, l_mat4_t p);
-#endif
+l_mat4_t l_mat4_multiply(const l_mat4_t a, const l_mat4_t b);
+
 #endif

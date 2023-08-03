@@ -26,7 +26,6 @@ SOFTWARE.
 
 #include "lite.h"
 
-#if defined(L_ENABLE_VEC3F)
 const l_vec3f_t L_VEC3F_ZERO     =  {.x =  0, .y =  0, .z =  0};
 const l_vec3f_t L_VEC3F_ONE	     =	{.x =  1, .y =  1, .z =  1};
 const l_vec3f_t L_VEC3F_UP       =  {.x =  0, .y =  1, .z =  0};
@@ -120,5 +119,3 @@ l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b){
     .z = a.z <= b.z ? a.z : b.z,
   };
 }
-
-#endif

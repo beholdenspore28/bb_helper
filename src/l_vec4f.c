@@ -26,7 +26,6 @@ SOFTWARE.
 
 #include "lite.h"
 
-#if defined(L_ENABLE_VEC4F)
 const l_vec4f_t L_VEC4F_ZERO     =  {.x =  0, .y =  0, .z =  0};
 const l_vec4f_t L_VEC4F_ONE	     =	{.x =  1, .y =  1, .z =  1};
 const l_vec4f_t L_VEC4F_UP       =  {.x =  0, .y =  1, .z =  0};
@@ -123,5 +122,3 @@ l_vec4f_t l_vec4f_min(l_vec4f_t a, l_vec4f_t b){
     .w = a.w <= b.w ? a.w : b.w,
   };
 }
-
-#endif

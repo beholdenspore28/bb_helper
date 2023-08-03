@@ -27,8 +27,6 @@ SOFTWARE.
 #include "lite.h"
 #include "assert.h"
 
-#if defined(L_ENABLE_NOISE)
-
 /*BEGIN SINGLE DIMENSIONAL*/
 
 float l_noise_1d(int x){
@@ -125,5 +123,3 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves){
 }
 
 /*END TWO DIMENSIONAL*/
-
-#endif

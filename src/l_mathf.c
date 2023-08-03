@@ -28,8 +28,6 @@ SOFTWARE.
 #include <stdio.h>
 #include "lite.h"
 
-#if defined(L_ENABLE_MATHF)
-
 float l_mathf_rad2deg(const float n){
   return n * (180.0f/L_PI);
 }
@@ -80,5 +78,3 @@ float l_mathf_pingpong(float n, const float length){
   n = l_mathf_loop(n, length * 2.0f);
   return fabs(n - length);
 }
-
-#endif

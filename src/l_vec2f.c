@@ -25,7 +25,6 @@ SOFTWARE.
 ------------------------------------------------------------------------------*/
 
 #include "lite.h"
-#if defined(L_ENABLE_VEC2F)
 
 const l_vec2f_t L_VEC2F_ZERO     =  {.x =  0, .y =  0};
 const l_vec2f_t L_VEC2F_ONE	     =	{.x =  1, .y =  1};
@@ -90,5 +89,3 @@ l_vec2f_t l_vec2f_lerpclamped(l_vec2f_t a, l_vec2f_t b, float t){
     .y= a.y + (b.y - a.y) * t,
   };
 }
-
-#endif

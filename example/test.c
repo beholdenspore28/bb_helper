@@ -318,37 +318,44 @@ void writeNoiseFile1D(){
 }
 
 int main(int argc,char **argv){
+  printf("rev up those fryers!\n");
   /*
   testMathf();
   testNoise1();
   testNoise2();
+  
+  testvec2();
+  testvec3();
+  testvec4();
  
   writeNoiseFile1D();
   writeNoiseFile2D();    
   
-  l_mat4_t a = { 
-    {1,2,3,4,},
-    {5,6,7,8,},
-    {9,10,11,12,},
-    {13,14,15,16,},
-  };
-
-  l_mat4_t b = { 
-    {1,2,3,4,},
-    {5,6,7,8,},
-    {9,10,11,12,},
-    {13,14,15,16,},
-  };
-
-  l_mat4_t c = L_MAT4_IDENTITY;
-  l_mat4_multiply(a, b, c); 
-
-  l_mat4_printf(c, "product of a and b");
-  printf("rev up those fryers!\n");
   */
-  testvec2();
-  testvec3();
-  testvec4();
+  l_mat4_t a = { .elements={
+    {1,2,3,4,},
+    {5,6,7,8,},
+    {9,10,11,12,},
+    {13,14,15,16,},
+  }};
+
+  l_mat4_t b = { .elements={
+    {1,2,3,4,},
+    {5,6,7,8,},
+    {9,10,11,12,},
+    {13,14,15,16,},
+  }};
+
+  l_mat4_printf(a,"a");
+  l_mat4_printf(b,"b");
+  l_mat4_t c = l_mat4_multiply(a, b);
+  l_mat4_printf(c, "product of a and b");
+
+  l_mat4_t id = L_MAT4_IDENTITY;
+  l_mat4_printf(id, "IDENTITY MATRIX");
   
+  l_vec3f_t vec = l_vec3f_scale(L_VEC3F_ONE, 5.0f);
+  l_mat4_t translation = l_mat4_translateVec3(vec);
+  l_mat4_printf(translation, "VEC3 (5,5,5) TRANS");
   return EXIT_SUCCESS; 
 }
