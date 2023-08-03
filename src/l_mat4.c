@@ -115,7 +115,6 @@ void l_mat4_scale(l_mat4_t mat, float scalar){
   }
 }
 
-/*Multiplies a 4x4 matrix by another and writes the product to "p"*/
 void l_mat4_multiply(const l_mat4_t a, const l_mat4_t b, l_mat4_t p){
   /*im not even going to try to explain this...*/
   size_t i = 0;
