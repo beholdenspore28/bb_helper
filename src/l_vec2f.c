@@ -89,3 +89,11 @@ l_vec2f_t l_vec2f_lerpclamped(l_vec2f_t a, l_vec2f_t b, float t){
     .y= a.y + (b.y - a.y) * t,
   };
 }
+
+l_vec3f_t l_vec2f_toVec3f(l_vec2f_t v){
+  return (l_vec3f_t){.x=v.x, .y=v.y, .z=0.0f};
+}
+
+l_vec4f_t l_vec2f_toVec4f(l_vec2f_t v){
+  return (l_vec4f_t){.x=v.x, .y=v.y, .z=0.0f, .w=1.0f};
+}

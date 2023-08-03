@@ -119,3 +119,11 @@ l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b){
     .z = a.z <= b.z ? a.z : b.z,
   };
 }
+
+l_vec2f_t l_vec3f_toVec2f(l_vec3f_t v){
+  return (l_vec2f_t){.x=v.x, .y=v.y};
+}
+
+l_vec4f_t l_vec3f_toVec4f(l_vec3f_t v){
+  return (l_vec4f_t){.x=v.x, .y=v.y, .z=v.z, .w=1.0f};
+}

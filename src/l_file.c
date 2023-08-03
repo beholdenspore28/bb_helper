@@ -26,35 +26,35 @@ SOFTWARE.
 
 #include "lite.h"
 
-void l_file_close(l_readfile_t file) {
+void l_fileBuffer_close(l_fileBuffer_t file){
   free(file.text);
 }
 
-l_readfile_t l_file_read(const char *filename) {
+l_fileBuffer_t l_fileBuffer_read(const char *filename){
   FILE *file = fopen(filename, "r");
   if (file == NULL) {
-    l_readfile_t ret;
+    l_fileBuffer_t ret;
     ret.error = true;
     return ret;
   }
-  size_t alloc = L_READFILE_CHUNK_SIZE * L_READFILE_GROWTH;
+  size_t alloc = L_FILE_BUFFER_CHUNK_SIZE * L_FILE_BUFFER_GROWTH;
   char *buf = (char *) malloc(alloc);
   size_t len = 0;
-  while (!feof(file)) {
-    if (alloc - len >= L_READFILE_CHUNK_SIZE + 1) {
-      alloc += L_READFILE_CHUNK_SIZE;
-      alloc *= L_READFILE_GROWTH;
+  while (!feof(file)){
+    if (alloc - len >= L_FILE_BUFFER_CHUNK_SIZE + 1){
+      alloc += L_FILE_BUFFER_CHUNK_SIZE;
+      alloc *= L_FILE_BUFFER_GROWTH;
       buf = (char *) realloc((void *) buf, alloc);
     }
-    int got = fread((void *) &buf[len], 1, L_READFILE_CHUNK_SIZE, file);
+    int got = fread((void *) &buf[len], 1, L_FILE_BUFFER_CHUNK_SIZE, file);
     len += got;
-    if (got != L_READFILE_CHUNK_SIZE) {
+    if (got != L_FILE_BUFFER_CHUNK_SIZE){
       break;
     }
   }
   buf[len] = '\0';
   fclose(file);
-  l_readfile_t ret;
+  l_fileBuffer_t ret;
   ret.text = buf;
   ret.len = len;
   ret.error = false;

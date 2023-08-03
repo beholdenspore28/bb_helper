@@ -24,7 +24,6 @@ SOFTWARE.
 
 ------------------------------------------------------------------------------*/
 
-
 /*------------------------------Project Vision----------------------------------
 
   This project is a general purpose tool library for tasks I believe to be 
@@ -45,26 +44,76 @@ completely understand all of the code that I use in my projects.
 #include <stddef.h>
 #include <stdbool.h>
 
-#if !defined(L_READFILE_CHUNK_SIZE)
-#define L_READFILE_CHUNK_SIZE (64 /* chars */) /*Number of chars before buffer must be expanded*/
-#endif
+/*===========================================================================*/
+/*                                     TYPES                                 */
+/*===========================================================================*/
+            
+struct l_mat4_t;
+typedef struct l_mat4_t l_mat4_t;
 
-#if !defined(L_READFILE_GROWTH)
-#define L_READFILE_GROWTH (4 /* times */) /*Scalar to multiply chunk size when expanding*/
-#endif
+/*A column major 4x4 matrix*/
+struct l_mat4_t{
+  float elements[16][16];
+};
 
-struct l_readfile_t;
-typedef struct l_readfile_t l_readfile_t;
+struct l_fileBuffer_t;
+typedef struct l_fileBuffer_t l_fileBuffer_t;
 
-struct l_readfile_t {
+struct l_fileBuffer_t{
   size_t len;
   char *text;
   bool error: 1;
 };
 
-void l_file_close(l_readfile_t file);
+struct l_vec2f_t;
+typedef struct l_vec2f_t l_vec2f_t;
 
-l_readfile_t l_file_read(const char *filename);
+/*A small data structure for storing 2D positions, rotations, scales, or lines.*/
+struct l_vec2f_t{
+  float x;
+  float y;
+};
+
+struct l_vec3f_t;
+typedef struct l_vec3f_t l_vec3f_t;
+
+/*A small data structure for storing 3D positions, rotations, scales, or lines.*/
+struct l_vec3f_t{
+  float x;
+  float y;
+  float z;
+};
+
+struct l_vec4f_t;
+typedef struct l_vec4f_t l_vec4f_t;
+
+/*A small data structure for storing 4D values*/
+struct l_vec4f_t{
+  float x;
+  float y;
+  float z;
+  float w;
+};
+
+/*===========================================================================*/
+/*                                     FILE                                  */
+/*===========================================================================*/
+
+#if !defined(L_FILE_BUFFER_CHUNK_SIZE)
+#define L_FILE_BUFFER_CHUNK_SIZE (64 /* chars */) /*Number of chars before buffer must be expanded*/
+#endif
+
+#if !defined(L_FILE_BUFFER_GROWTH)
+#define L_FILE_BUFFER_GROWTH (4 /* times */) /*Scalar to multiply chunk size when expanding*/
+#endif
+
+void l_fileBuffer_close(l_fileBuffer_t file);
+
+l_fileBuffer_t l_fileBuffer_read(const char *filename);
+
+/*===========================================================================*/
+/*                                     NOISE                                 */
+/*===========================================================================*/
 
 /*Returns completely raw, random, single-dimensional noise values*/
 float l_noise_1d(int x);
@@ -92,7 +141,8 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves);
 
 /*
 General floating point math functions
-TODO    DeltaAngle	Calculates the shortest difference between two given angles 
+TODO    DeltaAngle	Calculates the shortest difference between two          
+        given angles 
         given in degrees.
 TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
         when they wrap around 360 degrees.
@@ -104,7 +154,11 @@ TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a
         desired goal angle over time.
 TODO    SmoothStep	Interpolates between min and max with smoothing at the 
         limits.
-------------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------*/
+
+/*===========================================================================*/
+/*                                     MATHF                                 */
+/*===========================================================================*/
 
 #if !defined(L_PI)
 #define L_PI 3.14159265358
@@ -153,14 +207,9 @@ float l_mathf_pingpong(float n, const float length);
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
 
-struct l_vec2f_t;
-typedef struct l_vec2f_t l_vec2f_t;
-
-/*A small data structure for storing 2D positions, rotations, scales, or lines.*/
-struct l_vec2f_t {
-  float x;
-  float y;
-};
+/*===========================================================================*/
+/*                                     VEC2F                                 */
+/*===========================================================================*/
 
 /*shorthand for vector2 (0, 0)*/
 extern const l_vec2f_t L_VEC2F_ZERO;
@@ -231,6 +280,10 @@ l_vec2f_t l_vec2f_lerp(l_vec2f_t a, l_vec2f_t b, float t);
 Returns a point at "t"% of the way between "a" and "b".*/
 l_vec2f_t l_vec2f_lerpclamped(l_vec2f_t a, l_vec2f_t b, float t);
 
+l_vec3f_t l_vec2f_toVec3f(l_vec2f_t v);
+
+l_vec4f_t l_vec2f_toVec4f(l_vec2f_t v);
+
 /*
 TODO MoveTowards	Calculate a position between the points specified by current 
 and target, moving no farther than the distance specified by maxDistanceDelta.
@@ -255,15 +308,9 @@ TODO SlerpUnclamped	Spherically interpolates between two vectors.
 TODO SmoothDamp	Gradually changes a vector towards a desired goal over time.
 */
 
-struct l_vec3f_t;
-typedef struct l_vec3f_t l_vec3f_t;
-
-/*A small data structure for storing 3D positions, rotations, scales, or lines.*/
-struct l_vec3f_t {
-  float x;
-  float y;
-  float z;
-};
+/*===========================================================================*/
+/*                                     VEC3F                                 */
+/*===========================================================================*/
 
 /*shorthand for vector3 (0, 0, 0)*/
 extern const l_vec3f_t L_VEC3F_ZERO;
@@ -351,16 +398,13 @@ l_vec3f_t l_vec3f_max(l_vec3f_t a, l_vec3f_t b);
 vectors.*/
 l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b);
 
-struct l_vec4f_t;
-typedef struct l_vec4f_t l_vec4f_t;
+l_vec2f_t l_vec3f_toVec2f(l_vec3f_t v);
 
-/*A small data structure for storing 4D values*/
-struct l_vec4f_t {
-  float x;
-  float y;
-  float z;
-  float w;
-};
+l_vec4f_t l_vec3f_toVec4f(l_vec3f_t v);
+
+/*===========================================================================*/
+/*                                     VEC4F                                 */
+/*===========================================================================*/
 
 /*shorthand for vector4 (0, 0, 0, 0)*/
 extern const l_vec4f_t L_VEC4F_ZERO;
@@ -448,13 +492,13 @@ l_vec4f_t l_vec4f_max(l_vec4f_t a, l_vec4f_t b);
 vectors.*/
 l_vec4f_t l_vec4f_min(l_vec4f_t a, l_vec4f_t b);
 
-struct l_mat4_t;
-typedef struct l_mat4_t l_mat4_t;
+l_vec2f_t l_vec4f_toVec2f(l_vec4f_t v);
 
-/*A column major 4x4 matrix*/
-struct l_mat4_t {
-  float elements[16][16];
-};
+l_vec3f_t l_vec4f_toVec3f(l_vec4f_t v);
+
+/*===========================================================================*/
+/*                                     MAT4                                  */
+/*===========================================================================*/
 
 #if !defined(L_MAT4_IDENTITY)
 #define L_MAT4_IDENTITY (l_mat4_t){ .elements={{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},}};
