@@ -26,14 +26,14 @@ SOFTWARE.
 
 #include "lite.h"
 
-const l_vec4f_t L_VEC4F_ZERO     =  {.x =  0, .y =  0, .z =  0};
-const l_vec4f_t L_VEC4F_ONE	     =	{.x =  1, .y =  1, .z =  1};
-const l_vec4f_t L_VEC4F_UP       =  {.x =  0, .y =  1, .z =  0};
-const l_vec4f_t L_VEC4F_DOWN     =  {.x =  0, .y = -1, .z =  0};
-const l_vec4f_t L_VEC4F_LEFT     =  {.x = -1, .y =  0, .z =  0};
-const l_vec4f_t L_VEC4F_RIGHT	   =	{.x =  1, .y =  0, .z =  0};
-const l_vec4f_t L_VEC4F_FORWARD	 =  {.x =  0, .y =  0, .z =  1};
-const l_vec4f_t L_VEC4F_BACK     =	{.x =  0, .y =  0, .z = -1};
+const l_vec4f_t L_VEC4F_ZERO     =  {.x =  0, .y =  0, .z =  0, .w = 1.0};
+const l_vec4f_t L_VEC4F_ONE	     =	{.x =  1, .y =  1, .z =  1, .w = 1.0};
+const l_vec4f_t L_VEC4F_UP       =  {.x =  0, .y =  1, .z =  0, .w = 1.0};
+const l_vec4f_t L_VEC4F_DOWN     =  {.x =  0, .y = -1, .z =  0, .w = 1.0};
+const l_vec4f_t L_VEC4F_LEFT     =  {.x = -1, .y =  0, .z =  0, .w = 1.0};
+const l_vec4f_t L_VEC4F_RIGHT	   =	{.x =  1, .y =  0, .z =  0, .w = 1.0};
+const l_vec4f_t L_VEC4F_FORWARD	 =  {.x =  0, .y =  0, .z =  1, .w = 1.0};
+const l_vec4f_t L_VEC4F_BACK     =	{.x =  0, .y =  0, .z = -1, .w = 1.0};
 
 float l_vec4f_magnitude(l_vec4f_t v){
   return sqrt(l_vec4f_sqrmagnitude(v));

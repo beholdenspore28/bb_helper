@@ -55,8 +55,8 @@ l_mat4_t l_mat4_add(const l_mat4_t a, const l_mat4_t b){
 
 l_mat4_t l_mat4_subtract(const l_mat4_t min, const l_mat4_t sub){
   l_mat4_t dif = L_MAT4_IDENTITY;
-  size_t j = 0;
   size_t i = 0;
+  size_t j = 0;
   for (i = 0; i < 4; i++){
     for ( j = 0; j < 4; j++){
       dif.elements[i][j] = min.elements[i][j] - sub.elements[i][j];

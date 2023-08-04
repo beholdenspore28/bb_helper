@@ -32,6 +32,7 @@ one asked for this and there is probably someone out there who has already done
 what I am trying to do here. The main goal for me is to learn the 
 inner-workings of the code most people take for granted. This will allow me to 
 completely understand all of the code that I use in my projects.
+
 ------------------------------------------------------------------------------*/
 
 #if !defined(LITE_H)
@@ -141,9 +142,6 @@ float l_noise_perlin2d(float x, float y, float persistance, int octaves);
 
 /*
 General floating point math functions
-TODO    DeltaAngle	Calculates the shortest difference between two          
-        given angles 
-        given in degrees.
 TODO    LerpAngle	Same as Lerp but makes sure the values interpolate correctly 
         when they wrap around 360 degrees.
 TODO    MoveTowards	Moves a value current towards target.
@@ -196,13 +194,20 @@ equal. Returns true if the absolute value of "a" minus the absolute value of
 "b" is smaller than "tolerance".*/
 bool l_mathf_aproxequal(float a, float b, float tolerance);
 
+/*Interpolation using cosine*/
 float l_mathf_cosInterpolate(float a, float b, float t);
 
+/*Returns a point along the sigmoid (logistic) curve*/
 float l_mathf_sigmoid(float n);
 
+/*Ensures a number will stay between a certain range. Unlike clamp, the number will wrap back around to 0 when it is greater than "length"*/
 float l_mathf_loop(float n, const float length);
 
+/*Ensures a number will stay between a certain range. Unlike clamp, the number will bounce back and fourth between 0 and "length"*/
 float l_mathf_pingpong(float n, const float length);
+
+/*Returns the smallest possible difference between angle "a" and angle "b"*/
+float l_mathf_AngleDelta(const float a, const float b);
 
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
@@ -280,8 +285,10 @@ l_vec2f_t l_vec2f_lerp(l_vec2f_t a, l_vec2f_t b, float t);
 Returns a point at "t"% of the way between "a" and "b".*/
 l_vec2f_t l_vec2f_lerpclamped(l_vec2f_t a, l_vec2f_t b, float t);
 
+/*Converts a 2 dimensional vector to a 3 dimensional one*/
 l_vec3f_t l_vec2f_toVec3f(l_vec2f_t v);
 
+/*Converts a 2 dimensional vector to a 4 dimensional one*/
 l_vec4f_t l_vec2f_toVec4f(l_vec2f_t v);
 
 /*
@@ -398,8 +405,10 @@ l_vec3f_t l_vec3f_max(l_vec3f_t a, l_vec3f_t b);
 vectors.*/
 l_vec3f_t l_vec3f_min(l_vec3f_t a, l_vec3f_t b);
 
+/*Converts a 3 dimensional vector to a 2 dimensional one*/
 l_vec2f_t l_vec3f_toVec2f(l_vec3f_t v);
 
+/*Converts a 3 dimensional vector to a 4 dimensional one*/
 l_vec4f_t l_vec3f_toVec4f(l_vec3f_t v);
 
 /*===========================================================================*/
@@ -466,9 +475,6 @@ The returned vector will point in the same direction as
 the given vector "v".*/
 l_vec4f_t l_vec4f_scale(l_vec4f_t v, float scalar);
 
-/*Returns a vector parallel to both "a" and "b".*/
-l_vec4f_t l_vec4f_cross(l_vec4f_t a, l_vec4f_t b);
-
 /*For normalized vectors Dot returns 1 if they point in 
 exactly the same direction, -1 if they point in completely opposite directions 
 and zero if the vectors are perpendicular.*/
@@ -492,8 +498,10 @@ l_vec4f_t l_vec4f_max(l_vec4f_t a, l_vec4f_t b);
 vectors.*/
 l_vec4f_t l_vec4f_min(l_vec4f_t a, l_vec4f_t b);
 
+/*Converts a 4 dimensional vector to a 2 dimensional one*/
 l_vec2f_t l_vec4f_toVec2f(l_vec4f_t v);
 
+/*Converts a 4 dimensional vector to a 3 dimensional one*/
 l_vec3f_t l_vec4f_toVec3f(l_vec4f_t v);
 
 /*===========================================================================*/

@@ -81,7 +81,7 @@ l_vec3f_t l_vec3f_cross(l_vec3f_t a, l_vec3f_t b){
 }
 
 float l_vec3f_dot(l_vec3f_t a, l_vec3f_t b){
-  return (a.x * b.x) + (a.y * b.y) +(a.z * b.z);
+  return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 }
 
 l_vec3f_t l_vec3f_lerp(l_vec3f_t a, l_vec3f_t b, float t){

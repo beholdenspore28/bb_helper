@@ -357,5 +357,6 @@ int main(int argc,char **argv){
   l_vec3f_t vec = l_vec3f_scale(L_VEC3F_ONE, 5.0f);
   l_mat4_t translation = l_mat4_translateVec3(vec);
   l_mat4_printf(translation, "VEC3 (5,5,5) TRANS");
+
   return EXIT_SUCCESS; 
 }
