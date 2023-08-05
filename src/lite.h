@@ -207,7 +207,7 @@ float l_mathf_loop(float n, const float length);
 float l_mathf_pingpong(float n, const float length);
 
 /*Returns the smallest possible difference between angle "a" and angle "b"*/
-float l_mathf_AngleDelta(const float a, const float b);
+float l_mathf_angleDelta(const float a, const float b);
 
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
