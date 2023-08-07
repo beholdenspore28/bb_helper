@@ -515,11 +515,7 @@ l_vec3f_t l_vec4f_toVec3f(l_vec4f_t v);
 /*Adds a 4x4 matrix to another 4x4 matrix.*/
 l_mat4_t l_mat4_add(l_mat4_t a, l_mat4_t b);
 
-/*Returns the difference between two 4x4 matrices.
-Pass the l_mat4_t you wish to store said difference into the "dif" parameter.
-min = minuend.
-sub = subtrahend.
-dif = difference.*/
+/*Returns the difference between two 4x4 matrices.*/
 l_mat4_t l_mat4_subtract(l_mat4_t min, l_mat4_t sub);
 
 /*Prints a formatted l_mat4_t to the console.*/

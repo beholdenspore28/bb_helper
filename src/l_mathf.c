@@ -79,7 +79,6 @@ float l_mathf_pingpong(float n, const float length){
   return fabs(n - length);
 }
 
-
 float l_mathf_angleDelta(const float a, const float b){
   float delta = l_mathf_loop((b - a), 360.0f);
   if (delta > 180.0f){
