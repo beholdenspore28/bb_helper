@@ -44,6 +44,7 @@ completely understand all of the code that I use in my projects.
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <assert.h>
 
 /*===========================================================================*/
 /*                                     TYPES                                 */
@@ -152,7 +153,7 @@ TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a
         desired goal angle over time.
 TODO    SmoothStep	Interpolates between min and max with smoothing at the 
         limits.
------------------------------------------------------------------------------*/
+*/
 
 /*===========================================================================*/
 /*                                     MATHF                                 */

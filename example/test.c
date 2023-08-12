@@ -320,18 +320,19 @@ void writeNoiseFile1D(){
 int main(int argc,char **argv){
   printf("rev up those fryers!\n");
   /*
-  testMathf();
   testNoise1();
   testNoise2();
+  */
+  writeNoiseFile1D();
+  writeNoiseFile2D();    
+  
+  testMathf();
   
   testvec2();
   testvec3();
   testvec4();
  
-  writeNoiseFile1D();
-  writeNoiseFile2D();    
   
-  */
   l_mat4_t a = { .elements={
     {1,2,3,4,},
     {5,6,7,8,},
@@ -356,7 +357,7 @@ int main(int argc,char **argv){
   
   l_vec3f_t vec = l_vec3f_scale(L_VEC3F_ONE, 5.0f);
   l_mat4_t translation = l_mat4_translateVec3(vec);
-  l_mat4_printf(translation, "VEC3 (5,5,5) TRANS");
+  l_mat4_printf(translation, "VEC3 (5,5,5) TRANSLATIION");
 
   return EXIT_SUCCESS; 
 }
