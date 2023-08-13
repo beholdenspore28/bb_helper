@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-------------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------*/
 
 /*------------------------------Project Vision----------------------------------
 
@@ -314,11 +314,18 @@ TODO SignedAngle	Calculates the signed angle between vectors from and to in
 relation to axis.
 TODO SlerpUnclamped	Spherically interpolates between two vectors.
 TODO SmoothDamp	Gradually changes a vector towards a desired goal over time.
+ 
+currentTilt = 0f;
+float smoothTime = 0.3f;
+float refTilt = 0f
+currentTilt = Mathf.SmoothDamp(currentTilt, tiltAmount*horizontalInput, ref refTilt, smoothTime);
+transform.localRotation = Quaternion.Euler(0, 0, currentTilt);
 */
 
 /*===========================================================================*/
 /*                                     VEC3F                                 */
 /*===========================================================================*/
+
 
 /*shorthand for vector3 (0, 0, 0)*/
 extern const l_vec3f_t L_VEC3F_ZERO;
@@ -491,11 +498,11 @@ l_vec4f_t l_vec4f_lerp(l_vec4f_t a, l_vec4f_t b, float t);
 Returns a point at "t"% of the way between "a" and "b".*/
 l_vec4f_t l_vec4f_lerpclamped(l_vec4f_t a, l_vec4f_t b, float t);
 
-/*Returns a vector that is made from the largest components of two 
+/*Returns a vector that is made from the largest components of two
 vectors.*/
 l_vec4f_t l_vec4f_max(l_vec4f_t a, l_vec4f_t b);
 
-/*Returns a vector that is made from the smallest components of two 
+/*Returns a vector that is made from the smallest components of two
 vectors.*/
 l_vec4f_t l_vec4f_min(l_vec4f_t a, l_vec4f_t b);
 
