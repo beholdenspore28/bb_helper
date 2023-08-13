@@ -342,10 +342,10 @@ int main(int argc,char **argv){
 	printf("rev up those fryers!\n");
 	/*
 	testNoise1();
-	*/
 	testNoise2();
 	writeNoiseFile1D();
 	writeNoiseFile2D();
+	*/
 
 	testMathf();
 	

@@ -77,7 +77,7 @@ void l_mat4_printf(l_mat4_t m, const char* label){
 	for (i = 0; i < 4; i++){
 		printf("|");
 		for (j = 0; j < 4; j++){
-			printf("%f ", m.elements[i][j]);
+			printf("%f ", m.elements[j][i]);
 		}
 		printf("\n");
 	}
@@ -136,18 +136,18 @@ l_mat4_t l_mat4_scale(l_mat4_t mat, const float scalar){
 
 l_mat4_t l_mat4_translateVec3(l_vec3f_t t){
 	l_mat4_t result = L_MAT4_IDENTITY;
-	result.elements[0][3] += t.x;
-	result.elements[1][3] += t.y;
-	result.elements[2][3] += t.z;
+	result.elements[3][0] += t.x;
+	result.elements[3][1] += t.y;
+	result.elements[3][2] += t.z;
 	return result;
 }
 
 l_mat4_t l_mat4_translateVec4(l_vec4f_t t){
 	l_mat4_t result = L_MAT4_IDENTITY;
-	result.elements[0][3] += t.x;
-	result.elements[1][3] += t.y;
-	result.elements[2][3] += t.z;
-	result.elements[2][3] += t.z;
+	result.elements[3][0] += t.x;
+	result.elements[3][1] += t.y;
+	result.elements[3][2] += t.z;
+	result.elements[3][3] += t.z;
 	return result;
 }
 

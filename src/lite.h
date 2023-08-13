@@ -173,14 +173,17 @@ float l_mathf_rad2deg(const float n);
 /*Converts "n" degrees into radians*/
 float l_mathf_deg2rad(const float n);
 
-/*Returns "n" confined to be greater than min and less than max*/
+/*Returns "n" clamped between min and max*/
 float l_mathf_clamp(float n, const float min, const float max);
+
+/*Returns "n" clamped between 0 and 1*/
+float l_mathf_clamp01(float n);
 
 /*Linearly interpolates between "a" and "b" by "t"*/
 float l_mathf_lerp(float a, float b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
-"t" is always clamped between 0 and 1.*/
+"t" is always clamped between 0 and 1 before performing the interpolation.*/
 float l_mathf_lerpclamped(float a, float b, float t);
 
 /*Returns the percentage of "n" from "min" to "max".*/
