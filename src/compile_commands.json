@@ -1,0 +1,36 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-std=c11",
+      "-g3",
+      "-O0",
+      "-gdwarf-4",
+      "-o",
+      "build/obj/./l-test.o",
+      "./l-test.c"
+    ],
+    "directory": "/home/benis/dev/code-dump/blib",
+    "file": "/home/benis/dev/code-dump/blib/l-test.c",
+    "output": "/home/benis/dev/code-dump/blib/build/obj/l-test.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-std=c11",
+      "-g3",
+      "-O0",
+      "-gdwarf-4",
+      "-o",
+      "build/obj/./l-3d-engine/src/l_texture.o",
+      "./l-3d-engine/src/l_texture.c"
+    ],
+    "directory": "/home/benis/dev/code-dump/blib",
+    "file": "/home/benis/dev/code-dump/blib/l-3d-engine/src/l_texture.c",
+    "output": "/home/benis/dev/code-dump/blib/build/obj/l-3d-engine/src/l_texture.o"
+  }
+]
