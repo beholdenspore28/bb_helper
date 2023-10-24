@@ -59,6 +59,7 @@ SOFTWARE.
 //initial capacity of a list
 #define B_ARRAYLIST_INIT_CAP 2
 #define B_ARRAYLIST_GROWTH_FACTOR 1.5f
+#define BLIB_ARRAYLIST_TYPE int
 
 // typedef struct blib_arrayList {
 // 	int* data; 
@@ -73,7 +74,7 @@ SOFTWARE.
 // void blib_arrayList_print(blib_arrayList_t* list);
 
 typedef struct blib_arrayList {
-	void* data; 
+	BLIB_ARRAYLIST_TYPE* data; 
 	size_t elementSize;
 	unsigned long length;
 	unsigned long capacity;

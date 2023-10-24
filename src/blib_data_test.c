@@ -37,7 +37,7 @@ void blib_arrayList_example(){
 	blib_arrayList_pop(myList);
 	blib_arrayList_push(myList, 2);
 	blib_arrayList_push(myList, 3);
-	// blib_arrayList_print(myList);
+	blib_arrayList_print(myList);
 	blib_arrayList_free(myList);
 }
 

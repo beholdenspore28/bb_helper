@@ -156,17 +156,24 @@ blib_fileBuffer_t blib_fileBuffer_read(const char *filename){
 
 //TODO add blib_arrayList_print() again
 
+void blib_arrayList_print(blib_arrayList_t* list){
+	for(int i = 0; i < list->length; i++){
+		printf("data %d %d\n", i, list->data[i]);
+	}
+}
+
 //Allocate a new list to the heap
 //Returns a pointer to the newly allocated list.
 blib_arrayList_t* blib_arrayList_alloc(size_t elementSize){
 	blib_arrayList_t* newList = 
 		(blib_arrayList_t*) malloc(sizeof(blib_arrayList_t));
-
+	
 	newList->capacity = B_ARRAYLIST_INIT_CAP;
 	newList->elementSize = elementSize;
 
 	newList->data = 
-		(void*) malloc(sizeof(newList->elementSize) * B_ARRAYLIST_INIT_CAP);
+		(BLIB_ARRAYLIST_TYPE*) malloc(sizeof(newList->elementSize) * 
+			B_ARRAYLIST_INIT_CAP);
 
 	return newList;
 }
