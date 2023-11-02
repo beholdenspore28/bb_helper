@@ -1,0 +1,70 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-std=c11",
+      "-g3",
+      "-O0",
+      "-gdwarf-4",
+      "-o",
+      "build/obj/src/blib_math.o",
+      "src/blib_math.c"
+    ],
+    "directory": "/home/benis/code/blib",
+    "file": "/home/benis/code/blib/src/blib_math.c",
+    "output": "/home/benis/code/blib/build/obj/src/blib_math.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-std=c11",
+      "-g3",
+      "-O0",
+      "-gdwarf-4",
+      "-o",
+      "build/obj/src/blib_data_test.o",
+      "src/blib_data_test.c"
+    ],
+    "directory": "/home/benis/code/blib",
+    "file": "/home/benis/code/blib/src/blib_data_test.c",
+    "output": "/home/benis/code/blib/build/obj/src/blib_data_test.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-std=c11",
+      "-g3",
+      "-O0",
+      "-gdwarf-4",
+      "-o",
+      "build/obj/src/blib_data.o",
+      "src/blib_data.c"
+    ],
+    "directory": "/home/benis/code/blib",
+    "file": "/home/benis/code/blib/src/blib_data.c",
+    "output": "/home/benis/code/blib/build/obj/src/blib_data.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-std=c11",
+      "-g3",
+      "-O0",
+      "-gdwarf-4",
+      "-o",
+      "build/obj/src/blib_file.o",
+      "src/blib_file.c"
+    ],
+    "directory": "/home/benis/code/blib",
+    "file": "/home/benis/code/blib/src/blib_file.c",
+    "output": "/home/benis/code/blib/build/obj/src/blib_file.o"
+  }
+]

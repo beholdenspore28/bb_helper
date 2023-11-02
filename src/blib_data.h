@@ -101,27 +101,5 @@ blib_linkedList_t* blib_linkedList_alloc();
 void blib_linkedList_print(blib_linkedList_t* list);
 void blib_linkedList_free(blib_linkedList_t* list);
 void blib_linkedList_append(blib_linkedList_t* list, int data);
-
-/*=============================== FILE_BUFFER ===============================*/
-
-#if !defined(B_FILE_BUFFER_CHUNK_SIZE)
-/*Number of chars before buffer must be expanded*/
-#define B_FILE_BUFFER_CHUNK_SIZE (64 /* chars */) 
-#endif /*B_FILE_BUFFER_CHUNK_SIZE*/
-
-#if !defined(B_FILE_BUFFER_GROWTH)
-/*Scalar to multiply chunk size when expanding*/
-#define B_FILE_BUFFER_GROWTH (4 /* times */)
-#endif /*B_FILE_BUFFER_GROWTH*/
-
-typedef struct{
-	size_t len;
-	char *text;
-	bool error: 1;
-}blib_fileBuffer_t;
-
-void blib_fileBuffer_close(blib_fileBuffer_t file);
-blib_fileBuffer_t blib_fileBuffer_read(const char *filename);
-
 /*===========================================================================*/
 #endif /*BLIB_DATA_H*/

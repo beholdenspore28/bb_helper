@@ -67,47 +67,11 @@ void blib_linkedList_append(blib_linkedList_t* list, int data){
 	}
 }
 
-/*=============================== FILE BUFFER ===============================*/
-
-void blib_fileBuffer_close(blib_fileBuffer_t file){
-	free(file.text);
-}
-
-blib_fileBuffer_t blib_fileBuffer_read(const char *filename){
-	FILE *file = fopen(filename, "r");
-	if (file == NULL) {
-		blib_fileBuffer_t ret;
-		ret.error = true;
-		return ret;
-	}
-
-	size_t alloc = B_FILE_BUFFER_CHUNK_SIZE * B_FILE_BUFFER_GROWTH;
-	char *buf = (char *) malloc(alloc);
-	size_t len = 0;
-	while (!feof(file)){
-		if (alloc - len >= B_FILE_BUFFER_CHUNK_SIZE + 1){
-			alloc += B_FILE_BUFFER_CHUNK_SIZE;
-			alloc *= B_FILE_BUFFER_GROWTH;
-			buf = (char *) realloc((void *) buf, alloc);
-		}
-		int got = fread((void *) &buf[len], 1, B_FILE_BUFFER_CHUNK_SIZE, file);
-		len += got;
-		if (got != B_FILE_BUFFER_CHUNK_SIZE){
-			break;
-		}
-	}
-
-	buf[len] = '\0';
-	fclose(file);
-	blib_fileBuffer_t ret;
-	ret.text = buf;
-	ret.len = len;
-	ret.error = false;
-	return ret;
-}
-
 /*=============================== ARRAY LIST ================================*/
 
+// THIS COMMENT IS OLD
+// this implementation is incompatible with multiple different types.
+// it only works for int
 // void blib_arrayList_print(blib_arrayList_t* list){
 // 	for(int i = 0; i < list->length; i++){
 // 		printf("data %d %d\n", i, list->data[i]);
