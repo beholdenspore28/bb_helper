@@ -177,7 +177,7 @@ struct blib_vec3f_t{
   float z;
 };
 
-struct blip_vec4f_t;
+struct blib_vec4f_t;
 typedef struct blib_vec4f_t blib_vec4f_t;
 
 /*A small data structure for storing 4D values*/

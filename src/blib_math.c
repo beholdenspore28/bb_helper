@@ -185,14 +185,14 @@ float blib_mathf_angleDelta(const float a, const float b){
 /*===========================================================================*/
 
 const blib_vec2f_t L_VEC2F_ZERO     =  {.x =  0, .y =  0};
-const blib_vec2f_t L_VEC2F_ONE	     =	{.x =  1, .y =  1};
+const blib_vec2f_t L_VEC2F_ONE	    =  {.x =  1, .y =  1};
 const blib_vec2f_t L_VEC2F_UP       =  {.x =  0, .y =  1};
 const blib_vec2f_t L_VEC2F_DOWN     =  {.x =  0, .y = -1};
 const blib_vec2f_t L_VEC2F_LEFT     =  {.x = -1, .y =  0};
-const blib_vec2f_t L_VEC2F_RIGHT	   =	{.x =  1, .y =  0};
+const blib_vec2f_t L_VEC2F_RIGHT	=  {.x =  1, .y =  0};
 
 float blib_vec2f_magnitude(blib_vec2f_t v){
-return sqrt(blib_vec2f_sqrmagnitude(v));
+	return sqrt(blib_vec2f_sqrmagnitude(v));
 }
 
 float blib_vec2f_sqrmagnitude(blib_vec2f_t v){
