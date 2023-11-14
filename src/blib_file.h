@@ -25,7 +25,6 @@ struct blib_fileBuffer_t{
 #endif
 
 void blib_fileBuffer_close(blib_fileBuffer_t file);
-
 blib_fileBuffer_t blib_fileBuffer_read(const char *filename);
 
 #endif /*BLIB_FILE_H*/
