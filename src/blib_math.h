@@ -35,20 +35,6 @@ SOFTWARE.
 #include <stdbool.h>
 #include <assert.h>
 
-/*===========================================================================*/
-/*                                     TYPES                                 */
-/*===========================================================================*/
-            
-
-
-/*===========================================================================*/
-/*                                     FILE                                  */
-/*===========================================================================*/
-
-/*===========================================================================*/
-/*                                     NOISE                                 */
-/*===========================================================================*/
-
 /*Returns completely raw, random, single-dimensional noise values*/
 float blib_noise_1d(int x);
 
@@ -88,16 +74,14 @@ TODO    SmoothStep	Interpolates between min and max with smoothing at the
         limits.
 */
 
-/*===========================================================================*/
-/*                                     MATHF                                 */
-/*===========================================================================*/
+//MATHF
 
-#if !defined(L_PI)
-#define L_PI 3.14159265358
+#if !defined(BLIB_PI)
+#define BLIB_PI 3.14159265358
 #endif
 
-#if !defined(L_TAU)
-#define L_TAU 6.28318530718
+#if !defined(BLIB_TAU)
+#define BLIB_TAU 6.28318530718
 #endif
 
 /*Converts "n" radians into degrees.*/
@@ -152,10 +136,6 @@ float blib_mathf_angleDelta(const float a, const float b);
 /*TODO vec2f_min()*/
 /*TODO vec2f_max()*/
 
-/*===========================================================================*/
-/*                              VECTOR TYPES                                 */
-/*===========================================================================*/
-
 struct blib_vec2f_t;
 typedef struct blib_vec2f_t blib_vec2f_t;
 
@@ -188,27 +168,23 @@ struct blib_vec4f_t{
   float w;
 };
 
-/*===========================================================================*/
-/*                                     VEC2F                                 */
-/*===========================================================================*/
-
 /*shorthand for vector2 (0, 0)*/
-extern const blib_vec2f_t L_VEC2F_ZERO;
+extern const blib_vec2f_t BLIB_VEC2F_ZERO;
 
 /*shorthand for vector2 (1, 1)*/
-extern const blib_vec2f_t L_VEC2F_ONE;
+extern const blib_vec2f_t BLIB_VEC2F_ONE;
 
 /*shorthand for vector2 (0, 1)*/
-extern const blib_vec2f_t L_VEC2F_UP;
+extern const blib_vec2f_t BLIB_VEC2F_UP;
 
 /*shorthand for vector2 (0,-1)*/
-extern const blib_vec2f_t L_VEC2F_DOWN;
+extern const blib_vec2f_t BLIB_VEC2F_DOWN;
 
 /*shorthand for vector2 (-1,0)*/
-extern const blib_vec2f_t L_VEC2F_LEFT;
+extern const blib_vec2f_t BLIB_VEC2F_LEFT;
 
 /*shorthand for vector2 (1, 0)*/
-extern const blib_vec2f_t L_VEC2F_RIGHT;
+extern const blib_vec2f_t BLIB_VEC2F_RIGHT;
 
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use blib_vec2f_sqrmagnitude()
@@ -299,34 +275,30 @@ ref refTilt, smoothTime);
 transform.localRotation = Quaternion.Euler(0, 0, currentTilt);
 */
 
-/*===========================================================================*/
-/*                                     VEC3F                                 */
-/*===========================================================================*/
-
 
 /*shorthand for vector3 (0, 0, 0)*/
-extern const blib_vec3f_t L_VEC3F_ZERO;
+extern const blib_vec3f_t BLIB_VEC3F_ZERO;
 
 /*shorthand for vector3 (0, 1, 0)*/
-extern const blib_vec3f_t L_VEC3F_UP;
+extern const blib_vec3f_t BLIB_VEC3F_UP;
 
 /*shorthand for vector3 (0,-1, 0)*/
-extern const blib_vec3f_t L_VEC3F_DOWN;
+extern const blib_vec3f_t BLIB_VEC3F_DOWN;
 
 /*shorthand for vector3 (-1,0, 0)*/
-extern const blib_vec3f_t L_VEC3F_LEFT;
+extern const blib_vec3f_t BLIB_VEC3F_LEFT;
 
 /*shorthand for vector3 (1, 0, 0)*/
-extern const blib_vec3f_t L_VEC3F_RIGHT;
+extern const blib_vec3f_t BLIB_VEC3F_RIGHT;
 
 /*shorthand for vector3 (0, 0, 1)*/
-extern const blib_vec3f_t L_VEC3F_FORWARD;
+extern const blib_vec3f_t BLIB_VEC3F_FORWARD;
 
 /*shorthand for vector3 (0, 0,-1)*/
-extern const blib_vec3f_t L_VEC3F_BACK;
+extern const blib_vec3f_t BLIB_VEC3F_BACK;
 
 /*shorthand for vector3 (1, 1, 1)*/
-extern const blib_vec3f_t L_VEC3F_ONE;
+extern const blib_vec3f_t BLIB_VEC3F_ONE;
 
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use blib_vec3f_sqrmagnitude()
@@ -396,33 +368,29 @@ blib_vec2f_t blib_vec3f_toVec2f(blib_vec3f_t v);
 /*Converts a 3 dimensional vector to a 4 dimensional one*/
 blib_vec4f_t blib_vec3f_toVec4f(blib_vec3f_t v);
 
-/*===========================================================================*/
-/*                                     VEC4F                                 */
-/*===========================================================================*/
-
 /*shorthand for vector4 (0, 0, 0, 0)*/
-extern const blib_vec4f_t L_VEC4F_ZERO;
+extern const blib_vec4f_t BLIB_VEC4F_ZERO;
 
 /*shorthand for vector4 (0, 1, 0, 1)*/
-extern const blib_vec4f_t L_VEC4F_UP;
+extern const blib_vec4f_t BLIB_VEC4F_UP;
 
 /*shorthand for vector4 (0,-1, 0, 1)*/
-extern const blib_vec4f_t L_VEC4F_DOWN;
+extern const blib_vec4f_t BLIB_VEC4F_DOWN;
 
 /*shorthand for vector4 (-1,0, 0, 1)*/
-extern const blib_vec4f_t L_VEC4F_LEFT;
+extern const blib_vec4f_t BLIB_VEC4F_LEFT;
 
 /*shorthand for vector4 (1, 0, 0, 1)*/
-extern const blib_vec4f_t L_VEC4F_RIGHT;
+extern const blib_vec4f_t BLIB_VEC4F_RIGHT;
 
 /*shorthand for vector4 (0, 0, 1, 1)*/
-extern const blib_vec4f_t L_VEC4F_FORWARD;
+extern const blib_vec4f_t BLIB_VEC4F_FORWARD;
 
 /*shorthand for vector4 (0, 0,-1, 1)*/
-extern const blib_vec4f_t L_VEC4F_BACK;
+extern const blib_vec4f_t BLIB_VEC4F_BACK;
 
 /*shorthand for vector4 (1, 1, 1, 1)*/
-extern const blib_vec4f_t L_VEC4F_ONE;
+extern const blib_vec4f_t BLIB_VEC4F_ONE;
 
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use blib_vec4f_sqrmagnitude()
@@ -489,12 +457,8 @@ blib_vec2f_t blib_vec4f_toVec2f(blib_vec4f_t v);
 /*Converts a 4 dimensional vector to a 3 dimensional one*/
 blib_vec3f_t blib_vec4f_toVec3f(blib_vec4f_t v);
 
-/*===========================================================================*/
-/*                                     MAT4                                  */
-/*===========================================================================*/
-
-#if !defined(L_MAT4_IDENTITY)
-#define L_MAT4_IDENTITY (blib_mat4_t){ .elements={{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},}};
+#if !defined(BLIB_MAT4_IDENTITY)
+#define BLIB_MAT4_IDENTITY (blib_mat4_t){ .elements={{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},}};
 #endif
 
 struct blib_mat4_t;
@@ -502,7 +466,7 @@ typedef struct blib_mat4_t blib_mat4_t;
 
 /*A column major 4x4 matrix*/
 struct blib_mat4_t{
-  float elements[16][16];
+  float elements[4][4];
 };
 
 /*Adds a 4x4 matrix to another 4x4 matrix.*/
