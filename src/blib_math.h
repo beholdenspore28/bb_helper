@@ -460,11 +460,13 @@ typedef struct blib_mat4_t blib_mat4_t;
 
 /*A column major 4x4 matrix*/
 struct blib_mat4_t{
-  float elements[4][4];
+  float elements[16];
 };
 
 extern const blib_mat4_t BLIB_MAT4_IDENTITY;
 
+/*Perspective transformation used for calculating depth*/
+blib_mat4_t	blib_mat4_perspective(float fov, float aspect, float near, float far);
 /*Adds a 4x4 matrix to another 4x4 matrix.*/
 blib_mat4_t blib_mat4_add(blib_mat4_t a, blib_mat4_t b);
 

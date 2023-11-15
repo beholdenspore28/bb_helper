@@ -29,35 +29,48 @@
 
 const blib_mat4_t BLIB_MAT4_IDENTITY = (blib_mat4_t){
 	.elements={
-		{1.0f,0.0f,0.0f,0.0f},
-		{0.0f,1.0f,0.0f,0.0f},
-		{0.0f,0.0f,1.0f,0.0f},
-		{0.0f,0.0f,0.0f,1.0f},
+		1.0f,0.0f,0.0f,0.0f,
+		0.0f,1.0f,0.0f,0.0f,
+		0.0f,0.0f,1.0f,0.0f,
+		0.0f,0.0f,0.0f,1.0f
 	}
 };
 
 void blib_mat4_printf(blib_mat4_t m, const char* label){
 	size_t i = 0;
-	size_t j = 0;
-	printf("---------------------------------------------\n");
+	printf("--------------------------------\n");
 	printf("MATRIX4: %s\n", label);
-	for (i = 0; i < 4; i++){
-		for (j = 0; j < 4; j++){
-			printf("%f ", m.elements[j][i]);
-		}
-		printf("\n");
+	for (i = 0; i < 16; i++) {
+		if (i == 4 || i == 8 || i == 12) printf("\n");
+		printf("i%i\t%f\t",i,m.elements[i]);
 	}
-	printf("---------------------------------------------\n");
+	// printf("I-0\t%f\t", m.elements[0]);
+	// printf("I-4\t%f\t", m.elements[4]);
+	// printf("I-8\t%f\t", m.elements[8]);
+	// printf("I-12\t%f\t", m.elements[12]);
+	// printf("\n");
+	// printf("I-1\t%f\t", m.elements[1]);
+	// printf("I-5\t%f\t", m.elements[5]);
+	// printf("I-9\t%f\t", m.elements[9]);
+	// printf("I-13\t%f\t", m.elements[13]);
+	// printf("\n");
+	// printf("I-2\t%f\t", m.elements[2]);
+	// printf("I-6\t%f\t", m.elements[6]);
+	// printf("I-10\t%f\t", m.elements[10]);
+	// printf("I-14\t%f\t", m.elements[14]);
+	// printf("\n");
+	// printf("I-3\t%f\t", m.elements[3]);
+	// printf("I-7\t%f\t", m.elements[7]);
+	// printf("I-11\t%f\t", m.elements[11]);
+	// printf("I-15\t%f\t", m.elements[15]);
+	// printf("\n");
 }
 
 blib_mat4_t blib_mat4_add(const blib_mat4_t a, const blib_mat4_t b){
 	blib_mat4_t sum = BLIB_MAT4_IDENTITY;
-	size_t j = 0;
 	size_t i = 0;
-	for (i = 0; i < 4; i++){
-		for ( j = 0; j < 4; j++){
-			sum.elements[i][j] = a.elements[i][j] + b.elements[i][j];
-		}
+	for (i = 0; i < 16; i++) {
+		sum.elements[i] = a.elements[i] + b.elements[i];
 	}
 	return sum;
 }
@@ -65,59 +78,104 @@ blib_mat4_t blib_mat4_add(const blib_mat4_t a, const blib_mat4_t b){
 blib_mat4_t blib_mat4_subtract(const blib_mat4_t min, const blib_mat4_t sub){
 	blib_mat4_t dif = BLIB_MAT4_IDENTITY;
 	size_t i = 0;
-	size_t j = 0;
-	for (i = 0; i < 4; i++){
-		for ( j = 0; j < 4; j++){
-			dif.elements[i][j] = min.elements[i][j] - sub.elements[i][j];
-		}
+	for (i = 0; i < 16; i++) {
+		dif.elements[i] = min.elements[i] - sub.elements[i];
 	}
 	return dif;
 }
 
-blib_mat4_t blib_mat4_multiply(const blib_mat4_t a, const blib_mat4_t b){
-	blib_mat4_t result;
 
-
-
-	return result;
+blib_mat4_t	blib_mat4_perspective(float fov, float aspect, float near, float far) {
+	//TODO
+	return BLIB_MAT4_IDENTITY;
 }
 
-blib_vec4f_t blib_vec4f_linear_combine(blib_vec4f_t l, blib_mat4_t r){
-	blib_vec4f_t result;
-	result.x = l.x * r.elements[0][0];
-	result.y = l.x * r.elements[0][1];
-	result.z = l.x * r.elements[0][2];
-	result.w = l.x * r.elements[0][3];
+blib_mat4_t blib_mat4_multiply(const blib_mat4_t a, const blib_mat4_t b){
+	float b0 = b.elements[0];
+	float b1 = b.elements[1];
+	float b2 = b.elements[2];
+	float b3 = b.elements[3];
 
-	result.x += l.y * r.elements[1][0];
-	result.y += l.y * r.elements[1][1];
-	result.z += l.y * r.elements[1][2];
-	result.w += l.y * r.elements[1][3];
+	float b4 = b.elements[4];
+	float b5 = b.elements[5];
+	float b6 = b.elements[6];
+	float b7 = b.elements[7];
+	
+	float b8 = b.elements[8];
+	float b9 = b.elements[9];
+	float b10 = b.elements[10];
+	float b11 = b.elements[11];
+	
+	float b12 = b.elements[12];
+	float b13 = b.elements[13];
+	float b14 = b.elements[14];
+	float b15 = b.elements[15];
 
-	result.x += l.z* r.elements[2][0];
-	result.y += l.z* r.elements[2][1];
-	result.z += l.z* r.elements[2][2];
-	result.w += l.z* r.elements[2][3];
+	float a0 = a.elements[0];
+	float a1 = a.elements[1];
+	float a2 = a.elements[2];
+	float a3 = a.elements[3];
 
-	result.x += l.w * r.elements[3][0];
-	result.y += l.w * r.elements[3][1];
-	result.z += l.w * r.elements[3][2];
-	result.w += l.w * r.elements[3][3];
-	return result;
+	float a4 = a.elements[4];
+	float a5 = a.elements[5];
+	float a6 = a.elements[6];
+	float a7 = a.elements[7];
+	
+	float a8 = a.elements[8];
+	float a9 = a.elements[9];
+	float a10 = a.elements[10];
+	float a11 = a.elements[11];
+	
+	float a12 = a.elements[12];
+	float a13 = a.elements[13];
+	float a14 = a.elements[14];
+	float a15 = a.elements[15];
+
+	/*
+		0,  4,  8,  12
+		1,  5,  9,  13
+		2,  6,  10, 14
+		3,  7,  11, 15
+	 */
+
+return (blib_mat4_t) {
+		.elements = {
+			//column 0
+			a0 * b0 + a4 * b1 + a8 * b2 + a12 * b3,
+			a0 * b1 + a1 * b5 + a2 * b9 + a3 * b13,
+			a0 * b2 + a1 * b6 + a2 * b10 + a3 * b14,
+			a0 * b3 + a1 * b7 + a2 * b11 + a3 * b15, 
+			//column 1
+			a4 * b0 + a5 * b4 + a6 * b8 + a7 * b12,
+			a4 * b1 + a5 * b5 + a6 * b9 + a7 * b13,
+			a4 * b2 + a5 * b6 + a6 * b10 + a7 * b14,
+			a4 * b3 + a5 * b7 + a6 * b11 + a7 * b15,
+			//column 2
+			a8 * b0 + a9 * b4 + a10 * b8 + a11 * b12,
+			a8 * b1 + a9 * b5 + a10 * b9 + a11 * b13,
+			a8 * b2 + a9 * b6 + a10 * b10 + a11 * b14,
+			a8 * b3 + a9 * b7 + a10 * b11 + a11 * b15,
+			//column 3
+			a12 * b0 + a13 * b4 + a14 * b8 + a15 * b12,
+			a12 * b1 + a13 * b5 + a14 * b9 + a15 * b13,
+			a12 * b2 + a13 * b6 + a14 * b10 + a15 * b14,
+			a12 * b3 + a13 * b7 + a14 * b11 + a15 * b15
+		}
+	};
 }
 
 blib_mat4_t blib_mat4_scale(const blib_vec3f_t scale){
 	blib_mat4_t mat = BLIB_MAT4_IDENTITY;
-	mat.elements[0][0] = scale.x;
-	mat.elements[1][1] = scale.y;
-	mat.elements[2][2] = scale.z;
+	mat.elements[0] = scale.x;
+	mat.elements[5] = scale.y;
+	mat.elements[10] = scale.z;
 	return mat;
 }
 
 blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis){
 	/*TODO to make this compatible with rh 
 	coordinate system, just invert the angle!*/
-		blib_mat4_t Result = BLIB_MAT4_IDENTITY;
+		blib_mat4_t result = BLIB_MAT4_IDENTITY;
 
     axis = blib_vec3f_normalize(axis);
 
@@ -125,35 +183,35 @@ blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis){
     float cosTheta = cosf(angle);
     float cosValue = 1.0f - cosTheta;
 
-    Result.elements[0][0] = (axis.x * axis.x * cosValue) + cosTheta;
-    Result.elements[0][1] = (axis.x * axis.y * cosValue) + (axis.z * sinTheta);
-    Result.elements[0][2] = (axis.x * axis.z * cosValue) - (axis.y * sinTheta);
+    result.elements[0] = (axis.x * axis.x * cosValue) + cosTheta;
+    result.elements[4] = (axis.x * axis.y * cosValue) + (axis.z * sinTheta);
+    result.elements[8] = (axis.x * axis.z * cosValue) - (axis.y * sinTheta);
 
-    Result.elements[1][0] = (axis.y * axis.x * cosValue) - (axis.z * sinTheta);
-    Result.elements[1][1] = (axis.y * axis.y * cosValue) + cosTheta;
-    Result.elements[1][2] = (axis.y * axis.z * cosValue) + (axis.x * sinTheta);
+    result.elements[1] = (axis.y * axis.x * cosValue) - (axis.z * sinTheta);
+    result.elements[5] = (axis.y * axis.y * cosValue) + cosTheta;
+    result.elements[9] = (axis.y * axis.z * cosValue) + (axis.x * sinTheta);
 
-    Result.elements[2][0] = (axis.z * axis.x * cosValue) + (axis.y * sinTheta);
-    Result.elements[2][1] = (axis.z * axis.y * cosValue) - (axis.x * sinTheta);
-    Result.elements[2][2] = (axis.z * axis.z * cosValue) + cosTheta;
+    result.elements[2] = (axis.z * axis.x * cosValue) + (axis.y * sinTheta);
+    result.elements[6] = (axis.z * axis.y * cosValue) - (axis.x * sinTheta);
+    result.elements[10] = (axis.z * axis.z * cosValue) + cosTheta;
 
-    return Result;
+    return result;
 }
 
 blib_mat4_t blib_mat4_translateVec3(blib_vec3f_t t){
 	blib_mat4_t result = BLIB_MAT4_IDENTITY;
-	result.elements[3][0] += t.x;
-	result.elements[3][1] += t.y;
-	result.elements[3][2] += t.z;
+	result.elements[3] += t.x;
+	result.elements[7] += t.y;
+	result.elements[11] += t.z;
 	return result;
 }
 
 blib_mat4_t blib_mat4_translateVec4(blib_vec4f_t t){
 	blib_mat4_t result = BLIB_MAT4_IDENTITY;
-	result.elements[3][0] += t.x;
-	result.elements[3][1] += t.y;
-	result.elements[3][2] += t.z;
-	result.elements[3][3] += t.z;
+	result.elements[12] += t.x;
+	result.elements[13] += t.y;
+	result.elements[14] += t.z;
+	result.elements[15] += t.w;
 	return result;
 }
 
