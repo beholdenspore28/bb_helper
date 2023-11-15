@@ -74,8 +74,6 @@ TODO    SmoothStep	Interpolates between min and max with smoothing at the
         limits.
 */
 
-//MATHF
-
 #if !defined(BLIB_PI)
 #define BLIB_PI 3.14159265358
 #endif
@@ -457,10 +455,6 @@ blib_vec2f_t blib_vec4f_toVec2f(blib_vec4f_t v);
 /*Converts a 4 dimensional vector to a 3 dimensional one*/
 blib_vec3f_t blib_vec4f_toVec3f(blib_vec4f_t v);
 
-#if !defined(BLIB_MAT4_IDENTITY)
-#define BLIB_MAT4_IDENTITY (blib_mat4_t){ .elements={{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1},}};
-#endif
-
 struct blib_mat4_t;
 typedef struct blib_mat4_t blib_mat4_t;
 
@@ -468,6 +462,8 @@ typedef struct blib_mat4_t blib_mat4_t;
 struct blib_mat4_t{
   float elements[4][4];
 };
+
+extern const blib_mat4_t BLIB_MAT4_IDENTITY;
 
 /*Adds a 4x4 matrix to another 4x4 matrix.*/
 blib_mat4_t blib_mat4_add(blib_mat4_t a, blib_mat4_t b);
@@ -479,7 +475,10 @@ blib_mat4_t blib_mat4_subtract(blib_mat4_t min, blib_mat4_t sub);
 void blib_mat4_printf(blib_mat4_t m, const char* label);
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
-blib_mat4_t blib_mat4_scale(blib_mat4_t mat, float scalar);
+blib_mat4_t blib_mat4_scale(const blib_vec3f_t scale);
+
+/*Returns a rotation matrix around "axis" by "angle"*/
+blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis);
 
 /*Translates a vector to a 4x4 matrix*/
 blib_mat4_t blib_mat4_translateVec3(blib_vec3f_t t);

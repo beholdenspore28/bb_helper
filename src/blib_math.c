@@ -25,20 +25,29 @@
 	-----------------------------------------------------------------------------*/
 
 #include "blib_math.h"
+#include <math.h>
+
+const blib_mat4_t BLIB_MAT4_IDENTITY = (blib_mat4_t){
+	.elements={
+		{1.0f,0.0f,0.0f,0.0f},
+		{0.0f,1.0f,0.0f,0.0f},
+		{0.0f,0.0f,1.0f,0.0f},
+		{0.0f,0.0f,0.0f,1.0f},
+	}
+};
 
 void blib_mat4_printf(blib_mat4_t m, const char* label){
 	size_t i = 0;
 	size_t j = 0;
-	printf("=======================================================\n");
+	printf("---------------------------------------------\n");
 	printf("MATRIX4: %s\n", label);
 	for (i = 0; i < 4; i++){
-		printf("|");
 		for (j = 0; j < 4; j++){
 			printf("%f ", m.elements[j][i]);
 		}
 		printf("\n");
 	}
-	printf("=======================================================\n");
+	printf("---------------------------------------------\n");
 }
 
 blib_mat4_t blib_mat4_add(const blib_mat4_t a, const blib_mat4_t b){
@@ -66,29 +75,69 @@ blib_mat4_t blib_mat4_subtract(const blib_mat4_t min, const blib_mat4_t sub){
 }
 
 blib_mat4_t blib_mat4_multiply(const blib_mat4_t a, const blib_mat4_t b){
-	blib_mat4_t p = BLIB_MAT4_IDENTITY;
-	size_t i = 0;
-	size_t j = 0;
-	size_t k = 0;
-	for ( i = 0; i < 4; i++){
-		for (j = 0; j < 4; j++){
-			for(k = 0; k < 4; k++){
-				p.elements[i][j] += a.elements[i][k] * b.elements[k][j];
-			}
-		}
-	}
-	return p;
+	blib_mat4_t result;
+
+
+
+	return result;
 }
 
-blib_mat4_t blib_mat4_scale(blib_mat4_t mat, const float scalar){
-	size_t i = 0;
-	size_t j = 0;
-	for (i = 0; i < 4; i++){
-		for (j = 0; j < 4; j++){
-			mat.elements[i][j] *= scalar;
-		}
-	}
+blib_vec4f_t blib_vec4f_linear_combine(blib_vec4f_t l, blib_mat4_t r){
+	blib_vec4f_t result;
+	result.x = l.x * r.elements[0][0];
+	result.y = l.x * r.elements[0][1];
+	result.z = l.x * r.elements[0][2];
+	result.w = l.x * r.elements[0][3];
+
+	result.x += l.y * r.elements[1][0];
+	result.y += l.y * r.elements[1][1];
+	result.z += l.y * r.elements[1][2];
+	result.w += l.y * r.elements[1][3];
+
+	result.x += l.z* r.elements[2][0];
+	result.y += l.z* r.elements[2][1];
+	result.z += l.z* r.elements[2][2];
+	result.w += l.z* r.elements[2][3];
+
+	result.x += l.w * r.elements[3][0];
+	result.y += l.w * r.elements[3][1];
+	result.z += l.w * r.elements[3][2];
+	result.w += l.w * r.elements[3][3];
+	return result;
+}
+
+blib_mat4_t blib_mat4_scale(const blib_vec3f_t scale){
+	blib_mat4_t mat = BLIB_MAT4_IDENTITY;
+	mat.elements[0][0] = scale.x;
+	mat.elements[1][1] = scale.y;
+	mat.elements[2][2] = scale.z;
 	return mat;
+}
+
+blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis){
+	/*TODO to make this compatible with rh 
+	coordinate system, just invert the angle!*/
+		blib_mat4_t Result = BLIB_MAT4_IDENTITY;
+
+    axis = blib_vec3f_normalize(axis);
+
+    float sinTheta = sinf(angle);
+    float cosTheta = cosf(angle);
+    float cosValue = 1.0f - cosTheta;
+
+    Result.elements[0][0] = (axis.x * axis.x * cosValue) + cosTheta;
+    Result.elements[0][1] = (axis.x * axis.y * cosValue) + (axis.z * sinTheta);
+    Result.elements[0][2] = (axis.x * axis.z * cosValue) - (axis.y * sinTheta);
+
+    Result.elements[1][0] = (axis.y * axis.x * cosValue) - (axis.z * sinTheta);
+    Result.elements[1][1] = (axis.y * axis.y * cosValue) + cosTheta;
+    Result.elements[1][2] = (axis.y * axis.z * cosValue) + (axis.x * sinTheta);
+
+    Result.elements[2][0] = (axis.z * axis.x * cosValue) + (axis.y * sinTheta);
+    Result.elements[2][1] = (axis.z * axis.y * cosValue) - (axis.x * sinTheta);
+    Result.elements[2][2] = (axis.z * axis.z * cosValue) + cosTheta;
+
+    return Result;
 }
 
 blib_mat4_t blib_mat4_translateVec3(blib_vec3f_t t){
