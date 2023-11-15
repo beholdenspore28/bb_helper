@@ -42,8 +42,9 @@ void blib_mat4_printf(blib_mat4_t m, const char* label){
 	printf("MATRIX4: %s\n", label);
 	for (i = 0; i < 16; i++) {
 		if (i == 4 || i == 8 || i == 12) printf("\n");
-		printf("i%i\t%f\t",i,m.elements[i]);
+		printf("i%li\t%f\t",i,m.elements[i]);
 	}
+	printf("\n");
 	// printf("I-0\t%f\t", m.elements[0]);
 	// printf("I-4\t%f\t", m.elements[4]);
 	// printf("I-8\t%f\t", m.elements[8]);
@@ -84,10 +85,23 @@ blib_mat4_t blib_mat4_subtract(const blib_mat4_t min, const blib_mat4_t sub){
 	return dif;
 }
 
-
+	/*
+		0,  4,  8,  12
+		1,  5,  9,  13
+		2,  6,  10, 14
+		3,  7,  11, 15
+	 */
 blib_mat4_t	blib_mat4_perspective(float fov, float aspect, float near, float far) {
-	//TODO
-	return BLIB_MAT4_IDENTITY;
+	blib_mat4_t result = {0};
+	float Cotangent = 1.0f / tanf(fov / 2.0f);
+	result.elements[0] = Cotangent / aspect;
+	result.elements[5] = Cotangent;
+	result.elements[11] = -1.0f;
+
+	result.elements[10] = (far) / (near - far);
+	result.elements[14] = (near * far) / (near - far);
+
+	return result;
 }
 
 blib_mat4_t blib_mat4_multiply(const blib_mat4_t a, const blib_mat4_t b){
@@ -245,7 +259,8 @@ float blib_mathf_norm(float n, float min, float max){
 	return (n - min) / (max - min);
 }
 
-float blib_mathf_map(float n, float fromMin, float fromMax, float toMin, float toMax){
+float blib_mathf_map(
+		float n, float fromMin, float fromMax, float toMin, float toMax){
 	return blib_mathf_lerp(blib_mathf_norm(n, fromMin, fromMax), toMin, toMax);
 }
 
@@ -309,7 +324,8 @@ blib_vec2f_t blib_vec2f_add(blib_vec2f_t a, blib_vec2f_t b){
 			.y=a.y+b.y};
 }
 
-blib_vec2f_t blib_vec2f_subtract(blib_vec2f_t minuend, blib_vec2f_t subtrahend){
+blib_vec2f_t blib_vec2f_subtract(
+		blib_vec2f_t minuend, blib_vec2f_t subtrahend){
 	return (blib_vec2f_t){
 		.x=minuend.x-subtrahend.x,
 			.y=minuend.y-subtrahend.y};
@@ -351,14 +367,14 @@ blib_vec4f_t blib_vec2f_toVec4f(blib_vec2f_t v){
 	return (blib_vec4f_t){.x=v.x, .y=v.y, .z=0.0f, .w=1.0f};
 }
 
-const blib_vec3f_t BLIB_VEC3F_ZERO     =  {.x =  0, .y =  0, .z =  0};
-const blib_vec3f_t BLIB_VEC3F_ONE	     =	{.x =  1, .y =  1, .z =  1};
-const blib_vec3f_t BLIB_VEC3F_UP       =  {.x =  0, .y =  1, .z =  0};
-const blib_vec3f_t BLIB_VEC3F_DOWN     =  {.x =  0, .y = -1, .z =  0};
-const blib_vec3f_t BLIB_VEC3F_LEFT     =  {.x = -1, .y =  0, .z =  0};
-const blib_vec3f_t BLIB_VEC3F_RIGHT	   =	{.x =  1, .y =  0, .z =  0};
-const blib_vec3f_t BLIB_VEC3F_FORWARD	 =  {.x =  0, .y =  0, .z =  1};
-const blib_vec3f_t BLIB_VEC3F_BACK     =	{.x =  0, .y =  0, .z = -1};
+const blib_vec3f_t BLIB_VEC3F_ZERO     =  {.x =  0.0f, .y =  0.0f, .z =  0.0f};
+const blib_vec3f_t BLIB_VEC3F_ONE	     =	{.x =  1.0f, .y =  1.0f, .z =  1.0f};
+const blib_vec3f_t BLIB_VEC3F_UP       =  {.x =  0.0f, .y =  1.0f, .z =  0.0f};
+const blib_vec3f_t BLIB_VEC3F_DOWN     =  {.x =  0.0f, .y = -1.0f, .z =  0.0f};
+const blib_vec3f_t BLIB_VEC3F_LEFT     =  {.x = -1.0f, .y =  0.0f, .z =  0.0f};
+const blib_vec3f_t BLIB_VEC3F_RIGHT	   =	{.x =  1.0f, .y =  0.0f, .z =  0.0f};
+const blib_vec3f_t BLIB_VEC3F_FORWARD	 =  {.x =  0.0f, .y =  0.0f, .z =  1.0f};
+const blib_vec3f_t BLIB_VEC3F_BACK     =	{.x =  0.0f, .y =  0.0f, .z = -1.0f};
 
 float blib_vec3f_magnitude(blib_vec3f_t v){
 	return sqrt(blib_vec3f_sqrmagnitude(v));
@@ -380,7 +396,8 @@ blib_vec3f_t blib_vec3f_add(blib_vec3f_t a, blib_vec3f_t b){
 			.z=a.z+b.z};
 }
 
-blib_vec3f_t blib_vec3f_subtract(blib_vec3f_t minuend, blib_vec3f_t subtrahend){
+blib_vec3f_t blib_vec3f_subtract(
+		blib_vec3f_t minuend, blib_vec3f_t subtrahend){
 	return (blib_vec3f_t){
 		.x=minuend.x-subtrahend.x,
 			.y=minuend.y-subtrahend.y,
@@ -453,14 +470,14 @@ blib_vec4f_t blib_vec3f_toVec4f(blib_vec3f_t v){
 	return (blib_vec4f_t){.x=v.x, .y=v.y, .z=v.z, .w=1.0f};
 }
 
-const blib_vec4f_t BLIB_VEC4F_ZERO     =  {.x =  0, .y =  0, .z =  0, .w = 1.0};
-const blib_vec4f_t BLIB_VEC4F_ONE	     =	{.x =  1, .y =  1, .z =  1, .w = 1.0};
-const blib_vec4f_t BLIB_VEC4F_UP       =  {.x =  0, .y =  1, .z =  0, .w = 1.0};
-const blib_vec4f_t BLIB_VEC4F_DOWN     =  {.x =  0, .y = -1, .z =  0, .w = 1.0};
-const blib_vec4f_t BLIB_VEC4F_LEFT     =  {.x = -1, .y =  0, .z =  0, .w = 1.0};
-const blib_vec4f_t BLIB_VEC4F_RIGHT	   =	{.x =  1, .y =  0, .z =  0, .w = 1.0};
-const blib_vec4f_t BLIB_VEC4F_FORWARD	 =  {.x =  0, .y =  0, .z =  1, .w = 1.0};
-const blib_vec4f_t BLIB_VEC4F_BACK     =	{.x =  0, .y =  0, .z = -1, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_ZERO =		{.x =  0, .y =  0, .z =  0, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_ONE =			{.x =  1, .y =  1, .z =  1, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_UP =			{.x =  0, .y =  1, .z =  0, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_DOWN =		{.x =  0, .y = -1, .z =  0, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_LEFT =		{.x = -1, .y =  0, .z =  0, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_RIGHT =		{.x =  1, .y =  0, .z =  0, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_FORWARD =	{.x =  0, .y =  0, .z =  1, .w = 1.0};
+const blib_vec4f_t BLIB_VEC4F_BACK =		{.x =  0, .y =  0, .z = -1, .w = 1.0};
 
 float blib_vec4f_magnitude(blib_vec4f_t v){
 	return sqrt(blib_vec4f_sqrmagnitude(v));
