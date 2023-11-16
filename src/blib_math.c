@@ -1,31 +1,45 @@
 /*----------------------------------LEGAL--------------------------------------
 
-	MIT License
+MIT License
 
-	Copyright (c) 2023 Benjamin Joseph Brooks
+Copyright (c) 2023 Benjamin Joseph Brooks
 
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-	-----------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------*/
 
 #include "blib_math.h"
 #include <math.h>
+
+/* 
+row major
+0,  1,  2,  3
+4,  5,  6,  7
+8,  9,  10, 11
+12,  13,  14, 15
+ 
+column major
+0,  4,  8,  12
+1,  5,  9,  13
+2,  6,  10, 14
+3,  7,  11, 15
+*/
 
 const blib_mat4_t BLIB_MAT4_IDENTITY = (blib_mat4_t){
 	.elements={
@@ -88,22 +102,14 @@ blib_mat4_t blib_mat4_subtract(const blib_mat4_t min, const blib_mat4_t sub){
 	return dif;
 }
 
-	/*
-		0,  4,  8,  12
-		1,  5,  9,  13
-		2,  6,  10, 14
-		3,  7,  11, 15
-	 */
 blib_mat4_t	blib_mat4_perspective(float fov, float aspect, float near, float far) {
 	blib_mat4_t result = BLIB_MAT4_IDENTITY;
 	float Cotangent = (1.0f / tanf(fov / 2.0f));
 	result.elements[0] = (Cotangent / aspect);
 	result.elements[5] = Cotangent;
-	result.elements[11] = 1.0f; //negate for lh coords
-	
 	result.elements[10] = -((near + far) / (near - far)); //negate for lh coords
+	result.elements[11] = 1.0f; //negate for lh coords
 	result.elements[14] = ((2.0f * near * far) / (near - far));
-
 	return result;
 }
 
@@ -148,19 +154,6 @@ blib_mat4_t blib_mat4_multiply(const blib_mat4_t a, const blib_mat4_t b){
 	float a14 = a.elements[14];
 	float a15 = a.elements[15];
 
-	/* 
-	  row major
-		0,  1,  2,  3
-		4,  5,  6,  7
-		8,  9,  10, 11
-		12,  13,  14, 15
-	  
-		column major
-		0,  4,  8,  12
-		1,  5,  9,  13
-		2,  6,  10, 14
-		3,  7,  11, 15
-	 */
 
 return (blib_mat4_t) {
 		.elements = {
