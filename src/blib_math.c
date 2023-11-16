@@ -37,7 +37,6 @@ const blib_mat4_t BLIB_MAT4_IDENTITY = (blib_mat4_t){
 };
 
 void blib_mat4_printf(blib_mat4_t m, const char* label){
-	size_t i = 0;
 	printf("--------------------------------\n");
 	printf("MATRIX4: %s\n", label);
 
