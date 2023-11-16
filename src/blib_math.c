@@ -100,9 +100,9 @@ blib_mat4_t	blib_mat4_perspective(float fov, float aspect, float near, float far
 	float Cotangent = (1.0f / tanf(fov / 2.0f));
 	result.elements[0] = (Cotangent / aspect);
 	result.elements[5] = Cotangent;
-	result.elements[11] = -1.0f;
+	result.elements[11] = 1.0f; //negate for lh coords
 	
-	result.elements[10] = ((near + far) / (near - far));
+	result.elements[10] = -((near + far) / (near - far)); //negate for lh coords
 	result.elements[14] = ((2.0f * near * far) / (near - far));
 
 	return result;
