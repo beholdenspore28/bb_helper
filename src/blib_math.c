@@ -40,31 +40,35 @@ void blib_mat4_printf(blib_mat4_t m, const char* label){
 	size_t i = 0;
 	printf("--------------------------------\n");
 	printf("MATRIX4: %s\n", label);
-	for (i = 0; i < 16; i++) {
-		if (i == 4 || i == 8 || i == 12) printf("\n");
-		printf("i%li\t%f\t",i,m.elements[i]);
-	}
+
+	//use this for row major printing
+	// for (i = 0; i < 16; i++) {
+	// 	if (i == 4 || i == 8 || i == 12) printf("\n");
+	// 	printf("i%li\t%f\t",i,m.elements[i]);
+	// }
+	
+	//use this for column major printing
 	printf("\n");
-	// printf("I-0\t%f\t", m.elements[0]);
-	// printf("I-4\t%f\t", m.elements[4]);
-	// printf("I-8\t%f\t", m.elements[8]);
-	// printf("I-12\t%f\t", m.elements[12]);
-	// printf("\n");
-	// printf("I-1\t%f\t", m.elements[1]);
-	// printf("I-5\t%f\t", m.elements[5]);
-	// printf("I-9\t%f\t", m.elements[9]);
-	// printf("I-13\t%f\t", m.elements[13]);
-	// printf("\n");
-	// printf("I-2\t%f\t", m.elements[2]);
-	// printf("I-6\t%f\t", m.elements[6]);
-	// printf("I-10\t%f\t", m.elements[10]);
-	// printf("I-14\t%f\t", m.elements[14]);
-	// printf("\n");
-	// printf("I-3\t%f\t", m.elements[3]);
-	// printf("I-7\t%f\t", m.elements[7]);
-	// printf("I-11\t%f\t", m.elements[11]);
-	// printf("I-15\t%f\t", m.elements[15]);
-	// printf("\n");
+	printf("I-0\t%f\t", m.elements[0]);
+	printf("I-4\t%f\t", m.elements[4]);
+	printf("I-8\t%f\t", m.elements[8]);
+	printf("I-12\t%f\t", m.elements[12]);
+	printf("\n");
+	printf("I-1\t%f\t", m.elements[1]);
+	printf("I-5\t%f\t", m.elements[5]);
+	printf("I-9\t%f\t", m.elements[9]);
+	printf("I-13\t%f\t", m.elements[13]);
+	printf("\n");
+	printf("I-2\t%f\t", m.elements[2]);
+	printf("I-6\t%f\t", m.elements[6]);
+	printf("I-10\t%f\t", m.elements[10]);
+	printf("I-14\t%f\t", m.elements[14]);
+	printf("\n");
+	printf("I-3\t%f\t", m.elements[3]);
+	printf("I-7\t%f\t", m.elements[7]);
+	printf("I-11\t%f\t", m.elements[11]);
+	printf("I-15\t%f\t", m.elements[15]);
+	printf("\n");
 }
 
 blib_mat4_t blib_mat4_add(const blib_mat4_t a, const blib_mat4_t b){
@@ -92,14 +96,14 @@ blib_mat4_t blib_mat4_subtract(const blib_mat4_t min, const blib_mat4_t sub){
 		3,  7,  11, 15
 	 */
 blib_mat4_t	blib_mat4_perspective(float fov, float aspect, float near, float far) {
-	blib_mat4_t result = {0};
-	float Cotangent = 1.0f / tanf(fov / 2.0f);
-	result.elements[0] = Cotangent / aspect;
+	blib_mat4_t result = BLIB_MAT4_IDENTITY;
+	float Cotangent = (1.0f / tanf(fov / 2.0f));
+	result.elements[0] = (Cotangent / aspect);
 	result.elements[5] = Cotangent;
 	result.elements[11] = -1.0f;
-
-	result.elements[10] = (far) / (near - far);
-	result.elements[14] = (near * far) / (near - far);
+	
+	result.elements[10] = ((near + far) / (near - far));
+	result.elements[14] = ((2.0f * near * far) / (near - far));
 
 	return result;
 }
@@ -145,7 +149,14 @@ blib_mat4_t blib_mat4_multiply(const blib_mat4_t a, const blib_mat4_t b){
 	float a14 = a.elements[14];
 	float a15 = a.elements[15];
 
-	/*
+	/* 
+	  row major
+		0,  1,  2,  3
+		4,  5,  6,  7
+		8,  9,  10, 11
+		12,  13,  14, 15
+	  
+		column major
 		0,  4,  8,  12
 		1,  5,  9,  13
 		2,  6,  10, 14
@@ -198,15 +209,15 @@ blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis){
     float cosValue = 1.0f - cosTheta;
 
     result.elements[0] = (axis.x * axis.x * cosValue) + cosTheta;
-    result.elements[4] = (axis.x * axis.y * cosValue) + (axis.z * sinTheta);
-    result.elements[8] = (axis.x * axis.z * cosValue) - (axis.y * sinTheta);
+    result.elements[1] = (axis.x * axis.y * cosValue) + (axis.z * sinTheta);
+    result.elements[2] = (axis.x * axis.z * cosValue) - (axis.y * sinTheta);
 
-    result.elements[1] = (axis.y * axis.x * cosValue) - (axis.z * sinTheta);
+    result.elements[4] = (axis.y * axis.x * cosValue) - (axis.z * sinTheta);
     result.elements[5] = (axis.y * axis.y * cosValue) + cosTheta;
-    result.elements[9] = (axis.y * axis.z * cosValue) + (axis.x * sinTheta);
+    result.elements[6] = (axis.y * axis.z * cosValue) + (axis.x * sinTheta);
 
-    result.elements[2] = (axis.z * axis.x * cosValue) + (axis.y * sinTheta);
-    result.elements[6] = (axis.z * axis.y * cosValue) - (axis.x * sinTheta);
+    result.elements[8] = (axis.z * axis.x * cosValue) + (axis.y * sinTheta);
+    result.elements[9] = (axis.z * axis.y * cosValue) - (axis.x * sinTheta);
     result.elements[10] = (axis.z * axis.z * cosValue) + cosTheta;
 
     return result;
@@ -214,9 +225,9 @@ blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis){
 
 blib_mat4_t blib_mat4_translateVec3(blib_vec3f_t t){
 	blib_mat4_t result = BLIB_MAT4_IDENTITY;
-	result.elements[3] += t.x;
-	result.elements[7] += t.y;
-	result.elements[11] += t.z;
+	result.elements[12] += t.x;
+	result.elements[13] += t.y;
+	result.elements[14] += t.z;
 	return result;
 }
 
