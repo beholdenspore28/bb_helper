@@ -61,27 +61,26 @@ void blib_mat4_printf(blib_mat4_t m, const char* label){
 	// }
 	
 	//use this for column major printing
+	printf("[0](%f) ", m.elements[0]);
+	printf("[4](%f) ", m.elements[4]);
+	printf("[8](%f) ", m.elements[8]);
+	printf("[12](%f) ", m.elements[12]);
 	printf("\n");
-	printf("I-0\t%f\t", m.elements[0]);
-	printf("I-4\t%f\t", m.elements[4]);
-	printf("I-8\t%f\t", m.elements[8]);
-	printf("I-12\t%f\t", m.elements[12]);
+	printf("[1](%f) ", m.elements[1]);
+	printf("[5](%f) ", m.elements[5]);
+	printf("[9](%f) ", m.elements[9]);
+	printf("[13](%f) ", m.elements[13]);
 	printf("\n");
-	printf("I-1\t%f\t", m.elements[1]);
-	printf("I-5\t%f\t", m.elements[5]);
-	printf("I-9\t%f\t", m.elements[9]);
-	printf("I-13\t%f\t", m.elements[13]);
+	printf("[2](%f) ", m.elements[2]);
+	printf("[6](%f) ", m.elements[6]);
+	printf("[10](%f) ", m.elements[10]);
+	printf("[14](%f) ", m.elements[14]);
 	printf("\n");
-	printf("I-2\t%f\t", m.elements[2]);
-	printf("I-6\t%f\t", m.elements[6]);
-	printf("I-10\t%f\t", m.elements[10]);
-	printf("I-14\t%f\t", m.elements[14]);
-	printf("\n");
-	printf("I-3\t%f\t", m.elements[3]);
-	printf("I-7\t%f\t", m.elements[7]);
-	printf("I-11\t%f\t", m.elements[11]);
-	printf("I-15\t%f\t", m.elements[15]);
-	printf("\n");
+	printf("[3](%f) ", m.elements[3]);
+	printf("[7](%f) ", m.elements[7]);
+	printf("[11](%f) ", m.elements[11]);
+	printf("[15](%f) ", m.elements[15]);
+	printf("\n--------------------------------\n");
 }
 
 blib_mat4_t blib_mat4_add(const blib_mat4_t a, const blib_mat4_t b){
