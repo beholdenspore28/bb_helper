@@ -237,6 +237,14 @@ float blib_mathf_deg2rad(const float n){
 	return n * (BLIB_PI/180.0f);
 }
 
+float blib_mathf_wrapAngle(float a){
+	a = fmod(a, 2*BLIB_PI);
+	if (a < 0){
+		a+=2*BLIB_PI;
+	}
+	return a;
+}
+
 float blib_mathf_clamp(float n, const float min, const float max){
 	n = n < min ? min : n;
 	return n > max ? max : n;

@@ -88,6 +88,8 @@ float blib_mathf_rad2deg(const float n);
 /*Converts "n" degrees into radians*/
 float blib_mathf_deg2rad(const float n);
 
+float blib_mathf_wrapAngle(float a);
+
 /*Returns "n" clamped between min and max*/
 float blib_mathf_clamp(float n, const float min, const float max);
 
