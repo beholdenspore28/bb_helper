@@ -305,13 +305,6 @@ blib_vec2f_t blib_vec2f_negate(blib_vec2f_t v) {
 	return (blib_vec2f_t) {.x= -v.x, .y= -v.y};
 }
 
-blib_vec3f_t blib_vec3f_negate(blib_vec3f_t v) {
-	return (blib_vec3f_t) {.x= -v.x, .y= -v.y, .z= -v.z};
-}
-blib_vec4f_t blib_vec4f_negate(blib_vec4f_t v) {
-	return (blib_vec4f_t) {.x= -v.x, .y= -v.y, .z= -v.z, .w= -v.w};
-}
-
 float blib_vec2f_magnitude(blib_vec2f_t v){
 	return sqrt(blib_vec2f_sqrmagnitude(v));
 }
@@ -386,6 +379,10 @@ const blib_vec3f_t BLIB_VEC3F_LEFT     =  {.x = -1.0f, .y =  0.0f, .z =  0.0f};
 const blib_vec3f_t BLIB_VEC3F_RIGHT	   =	{.x =  1.0f, .y =  0.0f, .z =  0.0f};
 const blib_vec3f_t BLIB_VEC3F_FORWARD	 =  {.x =  0.0f, .y =  0.0f, .z =  1.0f};
 const blib_vec3f_t BLIB_VEC3F_BACK     =	{.x =  0.0f, .y =  0.0f, .z = -1.0f};
+
+blib_vec3f_t blib_vec3f_negate(blib_vec3f_t v) {
+	return (blib_vec3f_t) {.x= -v.x, .y= -v.y, .z= -v.z};
+}
 
 float blib_vec3f_magnitude(blib_vec3f_t v){
 	return sqrt(blib_vec3f_sqrmagnitude(v));
@@ -489,6 +486,10 @@ const blib_vec4f_t BLIB_VEC4F_LEFT =		{.x = -1, .y =  0, .z =  0, .w = 1.0};
 const blib_vec4f_t BLIB_VEC4F_RIGHT =		{.x =  1, .y =  0, .z =  0, .w = 1.0};
 const blib_vec4f_t BLIB_VEC4F_FORWARD =	{.x =  0, .y =  0, .z =  1, .w = 1.0};
 const blib_vec4f_t BLIB_VEC4F_BACK =		{.x =  0, .y =  0, .z = -1, .w = 1.0};
+
+blib_vec4f_t blib_vec4f_negate(blib_vec4f_t v) {
+	return (blib_vec4f_t) {.x= -v.x, .y= -v.y, .z= -v.z, .w= -v.w};
+}
 
 float blib_vec4f_magnitude(blib_vec4f_t v){
 	return sqrt(blib_vec4f_sqrmagnitude(v));
