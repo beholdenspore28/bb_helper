@@ -301,6 +301,17 @@ const blib_vec2f_t BLIB_VEC2F_DOWN     =  {.x =  0, .y = -1};
 const blib_vec2f_t BLIB_VEC2F_LEFT     =  {.x = -1, .y =  0};
 const blib_vec2f_t BLIB_VEC2F_RIGHT	=  {.x =  1, .y =  0};
 
+blib_vec2f_t blib_vec2f_negate(blib_vec2f_t v) {
+	return (blib_vec2f_t) {.x= -v.x, .y= -v.y};
+}
+
+blib_vec3f_t blib_vec3f_negate(blib_vec3f_t v) {
+	return (blib_vec3f_t) {.x= -v.x, .y= -v.y, .z= -v.z};
+}
+blib_vec4f_t blib_vec4f_negate(blib_vec4f_t v) {
+	return (blib_vec4f_t) {.x= -v.x, .y= -v.y, .z= -v.z, .w= -v.w};
+}
+
 float blib_vec2f_magnitude(blib_vec2f_t v){
 	return sqrt(blib_vec2f_sqrmagnitude(v));
 }
