@@ -193,8 +193,6 @@ blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis){
 	coordinate system, just invert the angle!*/
 		blib_mat4_t result = BLIB_MAT4_IDENTITY;
 
-    axis = blib_vec3f_normalize(axis);
-
     float sinTheta = sinf(angle);
     float cosTheta = cosf(angle);
     float cosValue = 1.0f - cosTheta;
@@ -585,7 +583,8 @@ blib_vec3f_t blib_vec4f_toVec3f(blib_vec4f_t v){
 
 float blib_noise_1d(int x){
 	x = (x<<13) ^ x;
-	return ( 1.0 - ( (x * (x * x * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0);
+	return ( 1.0 - ( (x * (x * x * 15731 + 789221) +
+					1376312589) & 0x7FFFFFFF) / 1073741824.0);
 }
 
 float blib_noise_smoothed1d(float x){
