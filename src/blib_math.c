@@ -192,6 +192,8 @@ blib_mat4_t blib_mat4_rotate(const float angle, blib_vec3f_t axis){
 	/*TODO to make this compatible with rh 
 	coordinate system, just invert the angle!*/
 		blib_mat4_t result = BLIB_MAT4_IDENTITY;
+		
+		axis = blib_vec3f_normalize(axis);
 
     float sinTheta = sinf(angle);
     float cosTheta = cosf(angle);
