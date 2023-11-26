@@ -323,6 +323,7 @@ float blib_vec2f_sqrmagnitude(blib_vec2f_t v){
 
 blib_vec2f_t blib_vec2f_normalize(blib_vec2f_t v){
 	float m = blib_vec2f_magnitude(v);
+	if (m == 0) return BLIB_VEC2F_ZERO;
 	return (blib_vec2f_t){.x=v.x/m, .y=v.y/m};
 }
 
@@ -402,6 +403,7 @@ float blib_vec3f_sqrmagnitude(blib_vec3f_t v){
 
 blib_vec3f_t blib_vec3f_normalize(blib_vec3f_t v){
 	float m = blib_vec3f_magnitude(v);
+	if (m == 0) return BLIB_VEC3F_ZERO;
 	return (blib_vec3f_t){.x=v.x/m, .y=v.y/m, .z=v.z/m};
 }
 
@@ -509,6 +511,7 @@ float blib_vec4f_sqrmagnitude(blib_vec4f_t v){
 
 blib_vec4f_t blib_vec4f_normalize(blib_vec4f_t v){
 	float m = blib_vec4f_magnitude(v);
+	if (m == 0) return BLIB_VEC4F_ZERO;
 	return (blib_vec4f_t){
 		.x = v.x / m, 
 			.y = v.y / m, 
