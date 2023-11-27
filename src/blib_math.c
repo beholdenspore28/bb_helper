@@ -341,6 +341,10 @@ const blib_vec2f_t BLIB_VEC2F_DOWN     =  {.x =  0, .y = -1};
 const blib_vec2f_t BLIB_VEC2F_LEFT     =  {.x = -1, .y =  0};
 const blib_vec2f_t BLIB_VEC2F_RIGHT	=  {.x =  1, .y =  0};
 
+void blib_vec2f_printf(const blib_vec2f_t v, const char* label){
+	printf("%s [%f, %f]\n", label, v.x, v.y);
+}
+
 blib_vec2f_t blib_vec2f_negate(blib_vec2f_t v) {
 	return (blib_vec2f_t) {.x= -v.x, .y= -v.y};
 }
@@ -420,6 +424,10 @@ const blib_vec3f_t BLIB_VEC3F_LEFT     =  {.x = -1.0f, .y =  0.0f, .z =  0.0f};
 const blib_vec3f_t BLIB_VEC3F_RIGHT	   =	{.x =  1.0f, .y =  0.0f, .z =  0.0f};
 const blib_vec3f_t BLIB_VEC3F_FORWARD	 =  {.x =  0.0f, .y =  0.0f, .z =  1.0f};
 const blib_vec3f_t BLIB_VEC3F_BACK     =	{.x =  0.0f, .y =  0.0f, .z = -1.0f};
+
+void blib_vec3f_printf(const blib_vec3f_t v, const char* label){
+	printf("%s [%f, %f, %f]\n", label, v.x, v.y, v.z);
+}
 
 blib_vec3f_t blib_vec3f_negate(blib_vec3f_t v) {
 	return (blib_vec3f_t) {.x= -v.x, .y= -v.y, .z= -v.z};
@@ -528,6 +536,10 @@ const blib_vec4f_t BLIB_VEC4F_LEFT =		{.x = -1, .y =  0, .z =  0, .w = 1.0};
 const blib_vec4f_t BLIB_VEC4F_RIGHT =		{.x =  1, .y =  0, .z =  0, .w = 1.0};
 const blib_vec4f_t BLIB_VEC4F_FORWARD =	{.x =  0, .y =  0, .z =  1, .w = 1.0};
 const blib_vec4f_t BLIB_VEC4F_BACK =		{.x =  0, .y =  0, .z = -1, .w = 1.0};
+
+void blib_vec4f_printf(const blib_vec4f_t v, const char* label){
+	printf("%s [%f, %f, %f, %f]\n", label, v.x, v.y, v.z, v.w);
+}
 
 blib_vec4f_t blib_vec4f_negate(blib_vec4f_t v) {
 	return (blib_vec4f_t) {.x= -v.x, .y= -v.y, .z= -v.z, .w= -v.w};
