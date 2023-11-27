@@ -27,6 +27,36 @@ SOFTWARE.
 #include "blib_math.h"
 #include <math.h>
 
+blib_mat4_t blib_mat4_lookAt(
+		blib_vec3f_t eye, blib_vec3f_t center, blib_vec3f_t up){
+	blib_vec3f_t f = blib_vec3f_normalize(blib_vec3f_subtract(eye, center));
+	blib_vec3f_t s = blib_vec3f_normalize(blib_vec3f_cross(f,up));
+	blib_vec3f_t u = blib_vec3f_cross(s,f);
+	
+	blib_mat4_t ret = BLIB_MAT4_IDENTITY;
+	ret.elements[0] = s.x;
+	ret.elements[1] = u.x;
+	ret.elements[2] = -f.x;
+	ret.elements[3] = 0.0f;
+
+	ret.elements[4] = s.y;
+	ret.elements[5] = u.y;
+	ret.elements[6] = -f.y;
+	ret.elements[7] = 0.0f;
+
+	ret.elements[8] = s.z;
+	ret.elements[9] = u.z;
+	ret.elements[10] = -f.z;
+	ret.elements[11] = 0.0f;
+
+	ret.elements[12] = -blib_vec3f_dot(s, eye);
+	ret.elements[13] = -blib_vec3f_dot(u, eye);
+	ret.elements[14] = blib_vec3f_dot(f, eye);
+	ret.elements[15] = 1.0f;
+
+	return ret;
+}
+
 /* 
 row major
 0,  1,  2,  3

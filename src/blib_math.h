@@ -467,6 +467,9 @@ struct blib_mat4_t{
 
 extern const blib_mat4_t BLIB_MAT4_IDENTITY;
 
+/**/
+blib_mat4_t blib_mat4_lookAt(
+		blib_vec3f_t eye, blib_vec3f_t center, blib_vec3f_t up);
 /*Perspective transformation used for calculating depth*/
 blib_mat4_t	blib_mat4_perspective(float fov, float aspect, float near, float far);
 /*Adds a 4x4 matrix to another 4x4 matrix.*/
