@@ -186,6 +186,10 @@ extern const blib_vec2f_t BLIB_VEC2F_LEFT;
 /*shorthand for vector2 (1, 0)*/
 extern const blib_vec2f_t BLIB_VEC2F_RIGHT;
 
+/*Returns a vector that points in the opposite direction of the given vector "v".
+The vector returned has a magnitude identical to the given vector "v"*/
+blib_vec2f_t blib_vec2f_negate(blib_vec2f_t v);
+
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use blib_vec2f_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
@@ -300,6 +304,10 @@ extern const blib_vec3f_t BLIB_VEC3F_BACK;
 /*shorthand for vector3 (1, 1, 1)*/
 extern const blib_vec3f_t BLIB_VEC3F_ONE;
 
+/*Returns a vector that points in the opposite direction of the given vector "v".
+The vector returned has a magnitude identical to the given vector "v"*/
+blib_vec3f_t blib_vec3f_negate(blib_vec3f_t v);
+
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use blib_vec3f_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
@@ -391,6 +399,10 @@ extern const blib_vec4f_t BLIB_VEC4F_BACK;
 
 /*shorthand for vector4 (1, 1, 1, 1)*/
 extern const blib_vec4f_t BLIB_VEC4F_ONE;
+
+/*Returns a vector that points in the opposite direction of the given vector "v".
+The vector returned has a magnitude identical to the given vector "v"*/
+blib_vec4f_t blib_vec4f_negate(blib_vec4f_t v);
 
 /*Returns the actual length of a vector "v". 
 This uses a square root operation. Use blib_vec4f_sqrmagnitude()
