@@ -71,8 +71,8 @@ column major
 */
 
 const blib_mat4_t BLIB_MAT4_IDENTITY =
-    (blib_mat4_t){.elements = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                               0.0f, 0.0f, 1.0f}};
+    (blib_mat4_t){.elements = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+                               0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f}};
 
 void blib_mat4_printf(blib_mat4_t m, const char *label) {
   printf("--------------------------------\n");
@@ -177,19 +177,26 @@ blib_mat4_t blib_mat4_multiply(const blib_mat4_t a, const blib_mat4_t b) {
   float a14 = a.elements[14];
   float a15 = a.elements[15];
 
-  return (blib_mat4_t){
-      .elements = {// column 0
-                   a0 * b0 + a4 * b1 + a8 * b2 + a12 * b3, a0 * b1 + a1 * b5 + a2 * b9 + a3 * b13,
-                   a0 * b2 + a1 * b6 + a2 * b10 + a3 * b14, a0 * b3 + a1 * b7 + a2 * b11 + a3 * b15,
-                   // column 1
-                   a4 * b0 + a5 * b4 + a6 * b8 + a7 * b12, a4 * b1 + a5 * b5 + a6 * b9 + a7 * b13,
-                   a4 * b2 + a5 * b6 + a6 * b10 + a7 * b14, a4 * b3 + a5 * b7 + a6 * b11 + a7 * b15,
-                   // column 2
-                   a8 * b0 + a9 * b4 + a10 * b8 + a11 * b12, a8 * b1 + a9 * b5 + a10 * b9 + a11 * b13,
-                   a8 * b2 + a9 * b6 + a10 * b10 + a11 * b14, a8 * b3 + a9 * b7 + a10 * b11 + a11 * b15,
-                   // column 3
-                   a12 * b0 + a13 * b4 + a14 * b8 + a15 * b12, a12 * b1 + a13 * b5 + a14 * b9 + a15 * b13,
-                   a12 * b2 + a13 * b6 + a14 * b10 + a15 * b14, a12 * b3 + a13 * b7 + a14 * b11 + a15 * b15}};
+  return (blib_mat4_t){.elements = {// column 0
+                                    a0 * b0 + a4 * b1 + a8 * b2 + a12 * b3,
+                                    a0 * b1 + a1 * b5 + a2 * b9 + a3 * b13,
+                                    a0 * b2 + a1 * b6 + a2 * b10 + a3 * b14,
+                                    a0 * b3 + a1 * b7 + a2 * b11 + a3 * b15,
+                                    // column 1
+                                    a4 * b0 + a5 * b4 + a6 * b8 + a7 * b12,
+                                    a4 * b1 + a5 * b5 + a6 * b9 + a7 * b13,
+                                    a4 * b2 + a5 * b6 + a6 * b10 + a7 * b14,
+                                    a4 * b3 + a5 * b7 + a6 * b11 + a7 * b15,
+                                    // column 2
+                                    a8 * b0 + a9 * b4 + a10 * b8 + a11 * b12,
+                                    a8 * b1 + a9 * b5 + a10 * b9 + a11 * b13,
+                                    a8 * b2 + a9 * b6 + a10 * b10 + a11 * b14,
+                                    a8 * b3 + a9 * b7 + a10 * b11 + a11 * b15,
+                                    // column 3
+                                    a12 * b0 + a13 * b4 + a14 * b8 + a15 * b12,
+                                    a12 * b1 + a13 * b5 + a14 * b9 + a15 * b13,
+                                    a12 * b2 + a13 * b6 + a14 * b10 + a15 * b14,
+                                    a12 * b3 + a13 * b7 + a14 * b11 + a15 * b15}};
 }
 
 blib_mat4_t blib_mat4_scale(const blib_vec3f_t scale) {
@@ -267,7 +274,9 @@ float blib_mathf_clamp01(float n) {
 
 float blib_mathf_lerp(float a, float b, float t) { return a + (b - a) * t; }
 
-float blib_mathf_lerpclamped(float a, float b, float t) { return a + (b - a) * blib_mathf_clamp01(t); }
+float blib_mathf_lerpclamped(float a, float b, float t) {
+  return a + (b - a) * blib_mathf_clamp01(t);
+}
 
 float blib_mathf_norm(float n, float min, float max) { return (n - min) / (max - min); }
 
@@ -275,7 +284,9 @@ float blib_mathf_map(float n, float fromMin, float fromMax, float toMin, float t
   return blib_mathf_lerp(blib_mathf_norm(n, fromMin, fromMax), toMin, toMax);
 }
 
-bool blib_mathf_aproxequal(float a, float b, float tolerance) { return (fabs(a - b) < tolerance); }
+bool blib_mathf_aproxequal(float a, float b, float tolerance) {
+  return (fabs(a - b) < tolerance);
+}
 
 float blib_mathf_cosInterpolate(float a, float b, float t) {
   float f = (1.0f - cos(t * BLIB_PI)) * 0.5f;
@@ -308,9 +319,13 @@ const blib_vec2f_t BLIB_VEC2F_DOWN = {.x = 0, .y = -1};
 const blib_vec2f_t BLIB_VEC2F_LEFT = {.x = -1, .y = 0};
 const blib_vec2f_t BLIB_VEC2F_RIGHT = {.x = 1, .y = 0};
 
-void blib_vec2f_printf(const blib_vec2f_t v, const char *label) { printf("%s [%f, %f]\n", label, v.x, v.y); }
+void blib_vec2f_printf(const blib_vec2f_t v, const char *label) {
+  printf("%s [%f, %f]\n", label, v.x, v.y);
+}
 
-blib_vec2f_t blib_vec2f_negate(blib_vec2f_t v) { return (blib_vec2f_t){.x = -v.x, .y = -v.y}; }
+blib_vec2f_t blib_vec2f_negate(blib_vec2f_t v) {
+  return (blib_vec2f_t){.x = -v.x, .y = -v.y};
+}
 
 float blib_vec2f_magnitude(blib_vec2f_t v) { return sqrt(blib_vec2f_sqrmagnitude(v)); }
 
@@ -339,7 +354,9 @@ blib_vec2f_t blib_vec2f_scale(blib_vec2f_t v, float scalar) {
   return (blib_vec2f_t){.x = v.x * scalar, .y = v.y * scalar};
 }
 
-float blib_vec2f_dot(blib_vec2f_t a, blib_vec2f_t b) { return (a.x * b.x) + (a.y * b.y); }
+float blib_vec2f_dot(blib_vec2f_t a, blib_vec2f_t b) {
+  return (a.x * b.x) + (a.y * b.y);
+}
 
 blib_vec2f_t blib_vec2f_lerp(blib_vec2f_t a, blib_vec2f_t b, float t) {
   return (blib_vec2f_t){
@@ -359,7 +376,9 @@ blib_vec2f_t blib_vec2f_lerpclamped(blib_vec2f_t a, blib_vec2f_t b, float t) {
   };
 }
 
-blib_vec3f_t blib_vec2f_toVec3f(blib_vec2f_t v) { return (blib_vec3f_t){.x = v.x, .y = v.y, .z = 0.0f}; }
+blib_vec3f_t blib_vec2f_toVec3f(blib_vec2f_t v) {
+  return (blib_vec3f_t){.x = v.x, .y = v.y, .z = 0.0f};
+}
 
 blib_vec4f_t blib_vec2f_toVec4f(blib_vec2f_t v) {
   return (blib_vec4f_t){.x = v.x, .y = v.y, .z = 0.0f, .w = 1.0f};
@@ -378,11 +397,15 @@ void blib_vec3f_printf(const blib_vec3f_t v, const char *label) {
   printf("%s [%f, %f, %f]\n", label, v.x, v.y, v.z);
 }
 
-blib_vec3f_t blib_vec3f_negate(blib_vec3f_t v) { return (blib_vec3f_t){.x = -v.x, .y = -v.y, .z = -v.z}; }
+blib_vec3f_t blib_vec3f_negate(blib_vec3f_t v) {
+  return (blib_vec3f_t){.x = -v.x, .y = -v.y, .z = -v.z};
+}
 
 float blib_vec3f_magnitude(blib_vec3f_t v) { return sqrt(blib_vec3f_sqrmagnitude(v)); }
 
-float blib_vec3f_sqrmagnitude(blib_vec3f_t v) { return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z)); }
+float blib_vec3f_sqrmagnitude(blib_vec3f_t v) {
+  return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
+}
 
 blib_vec3f_t blib_vec3f_normalize(blib_vec3f_t v) {
   float m = blib_vec3f_magnitude(v);
@@ -396,8 +419,9 @@ blib_vec3f_t blib_vec3f_add(blib_vec3f_t a, blib_vec3f_t b) {
 }
 
 blib_vec3f_t blib_vec3f_subtract(blib_vec3f_t minuend, blib_vec3f_t subtrahend) {
-  return (blib_vec3f_t){
-      .x = minuend.x - subtrahend.x, .y = minuend.y - subtrahend.y, .z = minuend.z - subtrahend.z};
+  return (blib_vec3f_t){.x = minuend.x - subtrahend.x,
+                        .y = minuend.y - subtrahend.y,
+                        .z = minuend.z - subtrahend.z};
 }
 
 float blib_vec3f_distance(blib_vec3f_t a, blib_vec3f_t b) {
@@ -409,11 +433,14 @@ blib_vec3f_t blib_vec3f_scale(blib_vec3f_t v, float scalar) {
 }
 
 blib_vec3f_t blib_vec3f_cross(blib_vec3f_t a, blib_vec3f_t b) {
-  return (blib_vec3f_t){
-      .x = (a.y * b.z) - (a.z * b.y), .y = -((a.x * b.z) - (a.z * b.x)), .z = (a.x * b.y) - (a.y * b.x)};
+  return (blib_vec3f_t){.x = (a.y * b.z) - (a.z * b.y),
+                        .y = -((a.x * b.z) - (a.z * b.x)),
+                        .z = (a.x * b.y) - (a.y * b.x)};
 }
 
-float blib_vec3f_dot(blib_vec3f_t a, blib_vec3f_t b) { return (a.x * b.x) + (a.y * b.y) + (a.z * b.z); }
+float blib_vec3f_dot(blib_vec3f_t a, blib_vec3f_t b) {
+  return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
+}
 
 blib_vec3f_t blib_vec3f_lerp(blib_vec3f_t a, blib_vec3f_t b, float t) {
   return (blib_vec3f_t){
@@ -451,7 +478,9 @@ blib_vec3f_t blib_vec3f_min(blib_vec3f_t a, blib_vec3f_t b) {
   };
 }
 
-blib_vec2f_t blib_vec3f_toVec2f(blib_vec3f_t v) { return (blib_vec2f_t){.x = v.x, .y = v.y}; }
+blib_vec2f_t blib_vec3f_toVec2f(blib_vec3f_t v) {
+  return (blib_vec2f_t){.x = v.x, .y = v.y};
+}
 
 blib_vec4f_t blib_vec3f_toVec4f(blib_vec3f_t v) {
   return (blib_vec4f_t){.x = v.x, .y = v.y, .z = v.z, .w = 1.0f};
@@ -562,15 +591,20 @@ blib_vec4f_t blib_vec4f_min(blib_vec4f_t a, blib_vec4f_t b) {
   };
 }
 
-blib_vec2f_t blib_vec4f_toVec2f(blib_vec4f_t v) { return (blib_vec2f_t){.x = v.x, .y = v.y}; }
+blib_vec2f_t blib_vec4f_toVec2f(blib_vec4f_t v) {
+  return (blib_vec2f_t){.x = v.x, .y = v.y};
+}
 
-blib_vec3f_t blib_vec4f_toVec3f(blib_vec4f_t v) { return (blib_vec3f_t){.x = v.x, .y = v.y, .z = v.z}; }
+blib_vec3f_t blib_vec4f_toVec3f(blib_vec4f_t v) {
+  return (blib_vec3f_t){.x = v.x, .y = v.y, .z = v.z};
+}
 
 /*BEGIN SINGLE DIMENSIONAL*/
 
 float blib_noise_1d(int x) {
   x = (x << 13) ^ x;
-  return (1.0 - ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0);
+  return (1.0 -
+          ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0);
 }
 
 float blib_noise_smoothed1d(float x) {
@@ -612,15 +646,16 @@ float blib_noise_perlin1d(float x, float persistance, int octaves) {
 float blib_noise_2d(int x, int y) {
   int n = x + y * 57;
   n = (n << 13) ^ n;
-  return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0);
+  return (1.0 -
+          ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0);
 }
 
 float blib_noise_smoothed2d(float x, float y) {
-  float corners = (blib_noise_2d(x - 1, y - 1) + blib_noise_2d(x + 1, y - 1) + blib_noise_2d(x - 1, y + 1) +
-                   blib_noise_2d(x + 1, y + 1)) /
+  float corners = (blib_noise_2d(x - 1, y - 1) + blib_noise_2d(x + 1, y - 1) +
+                   blib_noise_2d(x - 1, y + 1) + blib_noise_2d(x + 1, y + 1)) /
                   16;
-  float sides = (blib_noise_2d(x - 1, y) + blib_noise_2d(x + 1, y) + blib_noise_2d(x, y - 1) +
-                 blib_noise_2d(x, y + 1)) /
+  float sides = (blib_noise_2d(x - 1, y) + blib_noise_2d(x + 1, y) +
+                 blib_noise_2d(x, y - 1) + blib_noise_2d(x, y + 1)) /
                 8;
 
   float center = blib_noise_2d(x, y) / 4;
