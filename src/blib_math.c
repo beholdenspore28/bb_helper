@@ -109,7 +109,7 @@ void blib_mat4_printf(blib_mat4_t m, const char *label) {
 
 blib_mat4_t blib_mat4_add(const blib_mat4_t a, const blib_mat4_t b) {
   blib_mat4_t sum = BLIB_MAT4_IDENTITY;
-  size_t i = 0;
+  int i = 0;
   for (i = 0; i < 16; i++) {
     sum.elements[i] = a.elements[i] + b.elements[i];
   }
@@ -118,7 +118,7 @@ blib_mat4_t blib_mat4_add(const blib_mat4_t a, const blib_mat4_t b) {
 
 blib_mat4_t blib_mat4_subtract(const blib_mat4_t min, const blib_mat4_t sub) {
   blib_mat4_t dif = BLIB_MAT4_IDENTITY;
-  size_t i = 0;
+  int i = 0;
   for (i = 0; i < 16; i++) {
     dif.elements[i] = min.elements[i] - sub.elements[i];
   }
@@ -625,7 +625,7 @@ float blib_noise_perlin1d(float x, float persistance, int octaves) {
   float total = 0.0f;
   int n = octaves - 1;
 
-  size_t i = 0;
+  int i = 0;
   float freq = 0.0f;
   float amp = 0.0f;
   for (i = 0; i < n; i++) {
@@ -686,7 +686,7 @@ float blib_noise_perlin2d(float x, float y, float persistance, int octaves) {
   float total = 0.0f;
   float n = octaves - 1;
 
-  size_t i = 0;
+  int i = 0;
   float freq = 0.0f;
   float amp = 0.0f;
   for (i = 0; i < n; i++) {
