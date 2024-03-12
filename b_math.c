@@ -148,101 +148,65 @@ Mat4_perspective (float fov, float aspect, float near, float far)
   return result;
 }
 
-//Vec4
-//LinearCombineV4M4 (Vec4 a, Mat4 b)
-//{
-//  Vec4 result;
-//  result.x = a.elements[0] * b.elements[0].x;
-//  result.y = a.elements[0] * b.elements[0].y;
-//  result.z = a.elements[0] * b.elements[0].z;
-//  result.w = a.elements[0] * b.elements[0].w;
+//Mat4 Mat4_multiply (const Mat4 a, const Mat4 b){
+//  return (Mat4){ .elements = { 
 //
-//  result.x += a.elements[1] * b.Columns[4].x;
-//  result.y += a.elements[1] * b.Columns[4].y;
-//  result.z += a.elements[1] * b.Columns[4].z;
-//  result.w += a.elements[1] * b.Columns[4].w;
+//		// column 0
+//    a.elements[0] * b.elements[0] + a.elements[4] * b.elements[1] + a.elements[8] * b.elements[2] + a.elements[12] * b.elements[3],
+//    a.elements[0] * b.elements[1] + a.elements[1] * b.elements[5] + a.elements[2] * b.elements[9] + a.elements[3] * b.elements[13],
+//    a.elements[0] * b.elements[2] + a.elements[1] * b.elements[6] + a.elements[2] * b.elements[10] + a.elements[3] * b.elements[14],
+//    a.elements[0] * b.elements[3] + a.elements[1] * b.elements[7] + a.elements[2] * b.elements[11] + a.elements[3] * b.elements[15],
 //
-//  result.x += a.elements[2] * b.Columns[8].x;
-//  result.y += a.elements[2] * b.Columns[8].y;
-//  result.z += a.elements[2] * b.Columns[8].z;
-//  result.w += a.elements[2] * b.Columns[8].w;
+//    // column 1
+//    a.elements[4] * b.elements[0] + a.elements[5] * b.elements[4] + a.elements[6] * b.elements[8] + a.elements[7] * b.elements[12],
+//    a.elements[4] * b.elements[1] + a.elements[5] * b.elements[5] + a.elements[6] * b.elements[9] + a.elements[7] * b.elements[13],
+//    a.elements[4] * b.elements[2] + a.elements[5] * b.elements[6] + a.elements[6] * b.elements[10] + a.elements[7] * b.elements[14],
+//    a.elements[4] * b.elements[3] + a.elements[5] * b.elements[7] + a.elements[6] * b.elements[11] + a.elements[7] * b.elements[15],
 //
-//  result.x += a.elements[3] * b.Columns[12].x;
-//  result.y += a.elements[3] * b.Columns[12].y;
-//  result.z += a.elements[3] * b.Columns[12].z;
-//  result.w += a.elements[3] * b.Columns[12].w;
+//    // column 2
+//    a.elements[8] * b.elements[0] + a.elements[9] * b.elements[4] + a.elements[10] * b.elements[8] + a.elements[11] * b.elements[12],
+//    a.elements[8] * b.elements[1] + a.elements[9] * b.elements[5] + a.elements[10] * b.elements[9] + a.elements[11] * b.elements[13],
+//    a.elements[8] * b.elements[2] + a.elements[9] * b.elements[6] + a.elements[10] * b.elements[10] + a.elements[11] * b.elements[14],
+//    a.elements[8] * b.elements[3] + a.elements[9] * b.elements[7] + a.elements[10] * b.elements[11] + a.elements[11] * b.elements[15],
 //
-//  return Result;
+//    // column 3
+//    a.elements[12] * b.elements[0] + a.elements[13] * b.elements[4] + a.elements[14] * b.elements[8] + a.elements[15] * b.elements[12],
+//    a.elements[12] * b.elements[1] + a.elements[13] * b.elements[5] + a.elements[14] * b.elements[9] + a.elements[15] * b.elements[13],
+//    a.elements[12] * b.elements[2] + a.elements[13] * b.elements[6] + a.elements[14] * b.elements[10] + a.elements[15] * b.elements[14],
+//    a.elements[12] * b.elements[3] + a.elements[13] * b.elements[7] + a.elements[14] * b.elements[11] + a.elements[15] * b.elements[15] }
+//	};
 //}
 
-Mat4
-Mat4_multiply (const Mat4 a, const Mat4 b)
-{
-  float b0 = b.elements[0];
-  float b1 = b.elements[1];
-  float b2 = b.elements[2];
-  float b3 = b.elements[3];
+Mat4 Mat4_multiply (const Mat4 a, const Mat4 b){
+  return (Mat4){ .elements = { 
 
-  float b4 = b.elements[4];
-  float b5 = b.elements[5];
-  float b6 = b.elements[6];
-  float b7 = b.elements[7];
+		// column 0
+    a.elements[0] * b.elements[0] + a.elements[4] * b.elements[1] + a.elements[8] * b.elements[2] + a.elements[12] * b.elements[3],
+    a.elements[0] * b.elements[1] + a.elements[1] * b.elements[5] + a.elements[2] * b.elements[9] + a.elements[3] * b.elements[13],
+    a.elements[0] * b.elements[2] + a.elements[1] * b.elements[6] + a.elements[2] * b.elements[10] + a.elements[3] * b.elements[14],
+    a.elements[0] * b.elements[3] + a.elements[1] * b.elements[7] + a.elements[2] * b.elements[11] + a.elements[3] * b.elements[15],
 
-  float b8 = b.elements[8];
-  float b9 = b.elements[9];
-  float b10 = b.elements[10];
-  float b11 = b.elements[11];
+    // column 1
+    a.elements[4] * b.elements[0] + a.elements[5] * b.elements[4] + a.elements[6] * b.elements[8] + a.elements[7] * b.elements[12],
+    a.elements[4] * b.elements[1] + a.elements[5] * b.elements[5] + a.elements[6] * b.elements[9] + a.elements[7] * b.elements[13],
+    a.elements[4] * b.elements[2] + a.elements[5] * b.elements[6] + a.elements[6] * b.elements[10] + a.elements[7] * b.elements[14],
+    a.elements[4] * b.elements[3] + a.elements[5] * b.elements[7] + a.elements[6] * b.elements[11] + a.elements[7] * b.elements[15],
 
-  float b12 = b.elements[12];
-  float b13 = b.elements[13];
-  float b14 = b.elements[14];
-  float b15 = b.elements[15];
+    // column 2
+    a.elements[8] * b.elements[0] + a.elements[9] * b.elements[4] + a.elements[10] * b.elements[8] + a.elements[11] * b.elements[12],
+    a.elements[8] * b.elements[1] + a.elements[9] * b.elements[5] + a.elements[10] * b.elements[9] + a.elements[11] * b.elements[13],
+    a.elements[8] * b.elements[2] + a.elements[9] * b.elements[6] + a.elements[10] * b.elements[10] + a.elements[11] * b.elements[14],
+    a.elements[8] * b.elements[3] + a.elements[9] * b.elements[7] + a.elements[10] * b.elements[11] + a.elements[11] * b.elements[15],
 
-  float a0 = a.elements[0];
-  float a1 = a.elements[1];
-  float a2 = a.elements[2];
-  float a3 = a.elements[3];
-
-  float a4 = a.elements[4];
-  float a5 = a.elements[5];
-  float a6 = a.elements[6];
-  float a7 = a.elements[7];
-
-  float a8 = a.elements[8];
-  float a9 = a.elements[9];
-  float a10 = a.elements[10];
-  float a11 = a.elements[11];
-
-  float a12 = a.elements[12];
-  float a13 = a.elements[13];
-  float a14 = a.elements[14];
-  float a15 = a.elements[15];
-
-  return (Mat4){ .elements = { // column 0
-                               a0 * b0 + a4 * b1 + a8 * b2 + a12 * b3,
-                               a0 * b1 + a1 * b5 + a2 * b9 + a3 * b13,
-                               a0 * b2 + a1 * b6 + a2 * b10 + a3 * b14,
-                               a0 * b3 + a1 * b7 + a2 * b11 + a3 * b15,
-                               // column 1
-                               a4 * b0 + a5 * b4 + a6 * b8 + a7 * b12,
-                               a4 * b1 + a5 * b5 + a6 * b9 + a7 * b13,
-                               a4 * b2 + a5 * b6 + a6 * b10 + a7 * b14,
-                               a4 * b3 + a5 * b7 + a6 * b11 + a7 * b15,
-                               // column 2
-                               a8 * b0 + a9 * b4 + a10 * b8 + a11 * b12,
-                               a8 * b1 + a9 * b5 + a10 * b9 + a11 * b13,
-                               a8 * b2 + a9 * b6 + a10 * b10 + a11 * b14,
-                               a8 * b3 + a9 * b7 + a10 * b11 + a11 * b15,
-                               // column 3
-                               a12 * b0 + a13 * b4 + a14 * b8 + a15 * b12,
-                               a12 * b1 + a13 * b5 + a14 * b9 + a15 * b13,
-                               a12 * b2 + a13 * b6 + a14 * b10 + a15 * b14,
-                               a12 * b3 + a13 * b7 + a14 * b11 + a15 * b15 } };
+    // column 3
+    a.elements[12] * b.elements[0] + a.elements[13] * b.elements[4] + a.elements[14] * b.elements[8] + a.elements[15] * b.elements[12],
+    a.elements[12] * b.elements[1] + a.elements[13] * b.elements[5] + a.elements[14] * b.elements[9] + a.elements[15] * b.elements[13],
+    a.elements[12] * b.elements[2] + a.elements[13] * b.elements[6] + a.elements[14] * b.elements[10] + a.elements[15] * b.elements[14],
+    a.elements[12] * b.elements[3] + a.elements[13] * b.elements[7] + a.elements[14] * b.elements[11] + a.elements[15] * b.elements[15] }
+	};
 }
 
-Mat4
-Mat4_scale (const Vec3 scale)
-{
+Mat4 Mat4_scale (const Vec3 scale){
   Mat4 mat = BLIB_MAT4_IDENTITY;
   mat.elements[0] = scale.x;
   mat.elements[5] = scale.y;
@@ -250,9 +214,7 @@ Mat4_scale (const Vec3 scale)
   return mat;
 }
 
-Mat4
-Mat4_rotate (const float angle, Vec3 axis)
-{
+Mat4 Mat4_rotate (const float angle, Vec3 axis){
   /*TODO to make this compatible with rh
   coordinate system, just invert the angle!*/
   Mat4 result = BLIB_MAT4_IDENTITY;
@@ -278,8 +240,7 @@ Mat4_rotate (const float angle, Vec3 axis)
   return result;
 }
 
-Mat4
-Mat4_translateVec3 (Vec3 t)
+Mat4 Mat4_translateVec3 (Vec3 t)
 {
   Mat4 result = BLIB_MAT4_IDENTITY;
   result.elements[12] += t.x;
@@ -288,9 +249,7 @@ Mat4_translateVec3 (Vec3 t)
   return result;
 }
 
-Mat4
-Mat4_translateVec4 (Vec4 t)
-{
+Mat4 Mat4_translateVec4 (Vec4 t) {
   Mat4 result = BLIB_MAT4_IDENTITY;
   result.elements[12] += t.x;
   result.elements[13] += t.y;
@@ -299,102 +258,71 @@ Mat4_translateVec4 (Vec4 t)
   return result;
 }
 
-float
-rad2deg (const float n)
-{
+float rad2deg (const float n) {
   return n * (180.0f / PI);
 }
 
-float
-deg2rad (const float n)
-{
+float deg2rad (const float n) {
   return n * (PI / 180.0f);
 }
 
-float
-wrapAngle (float a)
-{
+float wrapAngle (float a) {
   a = fmod (a, 2 * PI);
-  if (a < 0)
-    {
+  if (a < 0) {
       a += 2 * PI;
     }
   return a;
 }
 
-float
-clamp (float n, const float min, const float max)
-{
+float clamp (float n, const float min, const float max){
   n = n < min ? min : n;
   return n > max ? max : n;
 }
 
-float
-clamp01 (float n)
-{
+float clamp01 (float n) {
   n = n < 0 ? 0 : n;
   return n > 1 ? 1 : n;
 }
 
-float
-lerp (float a, float b, float t)
-{
+float lerp (float a, float b, float t) {
   return a + (b - a) * t;
 }
 
-float
-lerpclamped (float a, float b, float t)
-{
+float lerpclamped (float a, float b, float t) {
   return a + (b - a) * clamp01 (t);
 }
 
-float
-norm (float n, float min, float max)
-{
+float norm (float n, float min, float max) {
   return (n - min) / (max - min);
 }
 
-float
-map (float n, float fromMin, float fromMax, float toMin, float toMax)
-{
+float map (float n, float fromMin, float fromMax, float toMin, float toMax) {
   return lerp (norm (n, fromMin, fromMax), toMin, toMax);
 }
 
-bool
-aproxequal (float a, float b, float tolerance)
-{
+bool aproxequal (float a, float b, float tolerance) {
   return (fabs (a - b) < tolerance);
 }
 
-float
-cosInterpolate (float a, float b, float t)
-{
+float cosInterpolate (float a, float b, float t) {
   float f = (1.0f - cos (t * PI)) * 0.5f;
   return a * (1.0 - f) + b * f;
 }
 
-float
-sigmoid (float n)
-{
+float sigmoid (float n) {
   return (1 / (1 + pow (2.71828182846, -n)));
 }
 
-float
-loop (float n, const float length)
-{
+float loop (float n, const float length) {
   return clamp (n - floor (n / length) * length, 0.0f, length);
 }
 
-float
-pingpong (float n, const float length)
-{
+float pingpong (float n, const float length) {
   n = loop (n, length * 2.0f);
   return fabs (n - length);
 }
 
-float
-angleDelta (const float a, const float b)
-{
+float angleDelta (const float a, const float b) {
   float delta = loop ((b - a), 360.0f);
   if (delta > 180.0f)
     {
@@ -410,82 +338,58 @@ const Vec2 BLIB_VEC2F_DOWN = { .x = 0, .y = -1 };
 const Vec2 BLIB_VEC2F_LEFT = { .x = -1, .y = 0 };
 const Vec2 BLIB_VEC2F_RIGHT = { .x = 1, .y = 0 };
 
-void
-Vec2_printf (const Vec2 v, const char *label)
-{
+void Vec2_printf (const Vec2 v, const char *label) {
   printf ("%s [%f, %f]\n", label, v.x, v.y);
 }
 
-Vec2
-Vec2_negate (Vec2 v)
-{
+Vec2 Vec2_negate (Vec2 v) {
   return (Vec2){ .x = -v.x, .y = -v.y };
 }
 
-float
-Vec2_magnitude (Vec2 v)
-{
+float Vec2_magnitude (Vec2 v) {
   return sqrt (Vec2_sqrmagnitude (v));
 }
 
-float
-Vec2_sqrmagnitude (Vec2 v)
-{
+float Vec2_sqrmagnitude (Vec2 v) {
   return ((v.x * v.x) + (v.y * v.y));
 }
 
-Vec2
-Vec2_normalize (Vec2 v)
-{
+Vec2 Vec2_normalize (Vec2 v) {
   float m = Vec2_magnitude (v);
   if (m == 0)
     return BLIB_VEC2F_ZERO;
   return (Vec2){ .x = v.x / m, .y = v.y / m };
 }
 
-float
-Vec2_distance (Vec2 a, Vec2 b)
-{
+float Vec2_distance (Vec2 a, Vec2 b) {
   return Vec2_magnitude (Vec2_subtract (b, a));
 }
 
-Vec2
-Vec2_add (Vec2 a, Vec2 b)
-{
+Vec2 Vec2_add (Vec2 a, Vec2 b) {
   return (Vec2){ .x = a.x + b.x, .y = a.y + b.y };
 }
 
-Vec2
-Vec2_subtract (Vec2 minuend, Vec2 subtrahend)
-{
+Vec2 Vec2_subtract (Vec2 minuend, Vec2 subtrahend) {
   return (Vec2){ .x = minuend.x - subtrahend.x,
                       .y = minuend.y - subtrahend.y };
 }
 
-Vec2
-Vec2_scale (Vec2 v, float scalar)
-{
+Vec2 Vec2_scale (Vec2 v, float scalar) {
   return (Vec2){ .x = v.x * scalar, .y = v.y * scalar };
 }
 
-float
-Vec2_dot (Vec2 a, Vec2 b)
-{
+float Vec2_dot (Vec2 a, Vec2 b) {
   return (a.x * b.x) + (a.y * b.y);
 }
 
-Vec2
-Vec2_lerp (Vec2 a, Vec2 b, float t)
-{
+Vec2 Vec2_lerp (Vec2 a, Vec2 b, float t) {
   return (Vec2){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
   };
 }
 
-Vec2
-Vec2_lerpclamped (Vec2 a, Vec2 b, float t)
-{
+Vec2 Vec2_lerpclamped (Vec2 a, Vec2 b, float t) {
   /*clamp n between 0 and 1*/
   t = t < 0.0f ? 0.0f : t;
   t = t > 1.0f ? 1.0f : t;
@@ -496,15 +400,11 @@ Vec2_lerpclamped (Vec2 a, Vec2 b, float t)
   };
 }
 
-Vec3
-Vec2oVec3f (Vec2 v)
-{
+Vec3 Vec2oVec3f (Vec2 v) {
   return (Vec3){ .x = v.x, .y = v.y, .z = 0.0f };
 }
 
-Vec4
-Vec2oVec4f (Vec2 v)
-{
+Vec4 Vec2oVec4f (Vec2 v) {
   return (Vec4){ .x = v.x, .y = v.y, .z = 0.0f, .w = 1.0f };
 }
 
@@ -517,83 +417,59 @@ const Vec3 BLIB_VEC3F_RIGHT = { .x = 1.0f, .y = 0.0f, .z = 0.0f };
 const Vec3 BLIB_VEC3F_FORWARD = { .x = 0.0f, .y = 0.0f, .z = 1.0f };
 const Vec3 BLIB_VEC3F_BACK = { .x = 0.0f, .y = 0.0f, .z = -1.0f };
 
-void
-Vec3_printf (const Vec3 v, const char *label)
-{
+void Vec3_printf (const Vec3 v, const char *label) {
   printf ("%s [%f, %f, %f]\n", label, v.x, v.y, v.z);
 }
 
-Vec3
-Vec3_negate (Vec3 v)
-{
+Vec3 Vec3_negate (Vec3 v) {
   return (Vec3){ .x = -v.x, .y = -v.y, .z = -v.z };
 }
 
-float
-Vec3_magnitude (Vec3 v)
-{
+float Vec3_magnitude (Vec3 v) {
   return sqrt (Vec3_sqrmagnitude (v));
 }
 
-float
-Vec3_sqrmagnitude (Vec3 v)
-{
+float Vec3_sqrmagnitude (Vec3 v) {
   return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
 }
 
-Vec3
-Vec3_normalize (Vec3 v)
-{
+Vec3 Vec3_normalize (Vec3 v) {
   float m = Vec3_magnitude (v);
   if (m == 0)
     return BLIB_VEC3F_ZERO;
   return (Vec3){ .x = v.x / m, .y = v.y / m, .z = v.z / m };
 }
 
-Vec3
-Vec3_add (Vec3 a, Vec3 b)
-{
+Vec3 Vec3_add (Vec3 a, Vec3 b) {
   return (Vec3){ .x = a.x + b.x, .y = a.y + b.y, .z = a.z + b.z };
 }
 
-Vec3
-Vec3_subtract (Vec3 minuend, Vec3 subtrahend)
-{
+Vec3 Vec3_subtract (Vec3 minuend, Vec3 subtrahend) {
   return (Vec3){ .x = minuend.x - subtrahend.x,
                       .y = minuend.y - subtrahend.y,
                       .z = minuend.z - subtrahend.z };
 }
 
-float
-Vec3_distance (Vec3 a, Vec3 b)
-{
+float Vec3_distance (Vec3 a, Vec3 b) {
   return Vec3_magnitude (Vec3_subtract (b, a));
 }
 
-Vec3
-Vec3_scale (Vec3 v, float scalar)
-{
+Vec3 Vec3_scale (Vec3 v, float scalar) {
   return (
       Vec3){ .x = v.x * scalar, .y = v.y * scalar, .z = v.z * scalar };
 }
 
-Vec3
-Vec3_cross (Vec3 a, Vec3 b)
-{
+Vec3 Vec3_cross (Vec3 a, Vec3 b) {
   return (Vec3){ .x = (a.y * b.z) - (a.z * b.y),
                       .y = -((a.x * b.z) - (a.z * b.x)),
                       .z = (a.x * b.y) - (a.y * b.x) };
 }
 
-float
-Vec3_dot (Vec3 a, Vec3 b)
-{
+float Vec3_dot (Vec3 a, Vec3 b) {
   return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 }
 
-Vec3
-Vec3_lerp (Vec3 a, Vec3 b, float t)
-{
+Vec3 Vec3_lerp (Vec3 a, Vec3 b, float t) {
   return (Vec3){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
@@ -601,9 +477,7 @@ Vec3_lerp (Vec3 a, Vec3 b, float t)
   };
 }
 
-Vec3
-Vec3_lerpclamped (Vec3 a, Vec3 b, float n)
-{
+Vec3 Vec3_lerpclamped (Vec3 a, Vec3 b, float n) {
   /*clamp n between 0 and 1*/
   n = n < 0.0f ? 0.0f : n;
   n = n > 1.0f ? 1.0f : n;
@@ -615,9 +489,7 @@ Vec3_lerpclamped (Vec3 a, Vec3 b, float n)
   };
 }
 
-Vec3
-Vec3_max (Vec3 a, Vec3 b)
-{
+Vec3 Vec3_max (Vec3 a, Vec3 b) {
   return (Vec3){
     .x = a.x >= b.x ? a.x : b.x,
     .y = a.y >= b.y ? a.y : b.y,
@@ -625,9 +497,7 @@ Vec3_max (Vec3 a, Vec3 b)
   };
 }
 
-Vec3
-Vec3_min (Vec3 a, Vec3 b)
-{
+Vec3 Vec3_min (Vec3 a, Vec3 b) {
   return (Vec3){
     .x = a.x <= b.x ? a.x : b.x,
     .y = a.y <= b.y ? a.y : b.y,
@@ -635,15 +505,11 @@ Vec3_min (Vec3 a, Vec3 b)
   };
 }
 
-Vec2
-Vec3oVec2f (Vec3 v)
-{
+Vec2 Vec3oVec2f (Vec3 v) {
   return (Vec2){ .x = v.x, .y = v.y };
 }
 
-Vec4
-Vec3oVec4f (Vec3 v)
-{
+Vec4 Vec3oVec4f (Vec3 v) {
   return (Vec4){ .x = v.x, .y = v.y, .z = v.z, .w = 1.0f };
 }
 
@@ -656,42 +522,30 @@ const Vec4 BLIB_VEC4F_RIGHT = { .x = 1, .y = 0, .z = 0, .w = 1.0 };
 const Vec4 BLIB_VEC4F_FORWARD = { .x = 0, .y = 0, .z = 1, .w = 1.0 };
 const Vec4 BLIB_VEC4F_BACK = { .x = 0, .y = 0, .z = -1, .w = 1.0 };
 
-void
-vec4f_printf (const Vec4 v, const char *label)
-{
+void vec4f_printf (const Vec4 v, const char *label) {
   printf ("%s [%f, %f, %f, %f]\n", label, v.x, v.y, v.z, v.w);
 }
 
-Vec4
-vec4f_negate (Vec4 v)
-{
+Vec4 vec4f_negate (Vec4 v) {
   return (Vec4){ .x = -v.x, .y = -v.y, .z = -v.z, .w = -v.w };
 }
 
-float
-vec4f_magnitude (Vec4 v)
-{
+float vec4f_magnitude (Vec4 v) {
   return sqrt (Vec4_sqrmagnitude (v));
 }
 
-float
-Vec4_sqrmagnitude (Vec4 v)
-{
+float Vec4_sqrmagnitude (Vec4 v) {
   return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w));
 }
 
-Vec4
-vec4f_normalize (Vec4 v)
-{
+Vec4 vec4f_normalize (Vec4 v) {
   float m = vec4f_magnitude (v);
   if (m == 0)
     return BLIB_VEC4F_ZERO;
   return (Vec4){ .x = v.x / m, .y = v.y / m, .z = v.z / m, .w = v.w / m };
 }
 
-Vec4
-vec4f_add (Vec4 a, Vec4 b)
-{
+Vec4 vec4f_add (Vec4 a, Vec4 b) {
   return (Vec4){
     .x = a.x + b.x,
     .y = a.y + b.y,
@@ -700,9 +554,7 @@ vec4f_add (Vec4 a, Vec4 b)
   };
 }
 
-Vec4
-vec4f_subtract (Vec4 minuend, Vec4 subtrahend)
-{
+Vec4 vec4f_subtract (Vec4 minuend, Vec4 subtrahend) {
   return (Vec4){
     .x = minuend.x - subtrahend.x,
     .y = minuend.y - subtrahend.y,
@@ -711,15 +563,11 @@ vec4f_subtract (Vec4 minuend, Vec4 subtrahend)
   };
 }
 
-float
-vec4f_distance (Vec4 a, Vec4 b)
-{
+float vec4f_distance (Vec4 a, Vec4 b) {
   return vec4f_magnitude (vec4f_subtract (b, a));
 }
 
-Vec4
-vec4f_scale (Vec4 v, float scalar)
-{
+Vec4 vec4f_scale (Vec4 v, float scalar) {
   return (Vec4){
     .x = v.x * scalar,
     .y = v.y * scalar,
@@ -728,15 +576,11 @@ vec4f_scale (Vec4 v, float scalar)
   };
 }
 
-float
-vec4f_dot (Vec4 a, Vec4 b)
-{
+float vec4f_dot (Vec4 a, Vec4 b) {
   return (a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w);
 }
 
-Vec4
-vec4f_lerp (Vec4 a, Vec4 b, float t)
-{
+Vec4 vec4f_lerp (Vec4 a, Vec4 b, float t) {
   return (Vec4){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
@@ -745,9 +589,7 @@ vec4f_lerp (Vec4 a, Vec4 b, float t)
   };
 }
 
-Vec4
-vec4f_lerpclamped (Vec4 a, Vec4 b, float n)
-{
+Vec4 vec4f_lerpclamped (Vec4 a, Vec4 b, float n) {
   /*clamp n between 0 and 1*/
   n = n < 0.0f ? 0.0f : n;
   n = n > 1.0f ? 1.0f : n;
@@ -760,9 +602,7 @@ vec4f_lerpclamped (Vec4 a, Vec4 b, float n)
   };
 }
 
-Vec4
-vec4f_max (Vec4 a, Vec4 b)
-{
+Vec4 vec4f_max (Vec4 a, Vec4 b) {
   return (Vec4){
     .x = a.x >= b.x ? a.x : b.x,
     .y = a.y >= b.y ? a.y : b.y,
@@ -771,9 +611,7 @@ vec4f_max (Vec4 a, Vec4 b)
   };
 }
 
-Vec4
-vec4f_min (Vec4 a, Vec4 b)
-{
+Vec4 vec4f_min (Vec4 a, Vec4 b) {
   return (Vec4){
     .x = a.x <= b.x ? a.x : b.x,
     .y = a.y <= b.y ? a.y : b.y,
@@ -782,38 +620,28 @@ vec4f_min (Vec4 a, Vec4 b)
   };
 }
 
-Vec2
-Vec4oVec2f (Vec4 v)
-{
+Vec2 Vec4oVec2f (Vec4 v) {
   return (Vec2){ .x = v.x, .y = v.y };
 }
 
-Vec3
-Vec4oVec3f (Vec4 v)
-{
+Vec3 Vec4oVec3f (Vec4 v) {
   return (Vec3){ .x = v.x, .y = v.y, .z = v.z };
 }
 
 /*BEGIN SINGLE DIMENSIONAL*/
 
-float
-noise_1d (int x)
-{
+float noise_1d (int x) {
   x = (x << 13) ^ x;
   return (1.0
           - ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7FFFFFFF)
                 / 1073741824.0);
 }
 
-float
-noise_smoothed1d (float x)
-{
+float noise_smoothed1d (float x) {
   return noise_1d (x) / 2 + noise_1d (x - 1) / 4 + noise_1d (x + 1) / 4;
 }
 
-float
-noise_interpolated1d (float x)
-{
+float noise_interpolated1d (float x) {
   int integer_X = (int)x;
   float fractional_X = x - integer_X;
   float v1 = noise_smoothed1d (integer_X);
@@ -821,9 +649,7 @@ noise_interpolated1d (float x)
   return cosInterpolate (v1, v2, fractional_X);
 }
 
-float
-noise_perlin1d (float x, float persistance, int octaves)
-{
+float noise_perlin1d (float x, float persistance, int octaves) {
   persistance *= 0.5f;
   persistance = clamp (persistance, 0.0f, 1.0f);
   float total = 0.0f;
@@ -848,9 +674,7 @@ noise_perlin1d (float x, float persistance, int octaves)
 
 /*BEGIN TWO DIMENSIONAL*/
 
-float
-noise_2d (int x, int y)
-{
+float noise_2d (int x, int y) {
   int n = x + y * 57;
   n = (n << 13) ^ n;
   return (1.0
@@ -858,9 +682,7 @@ noise_2d (int x, int y)
                 / 1073741824.0);
 }
 
-float
-noise_smoothed2d (float x, float y)
-{
+float noise_smoothed2d (float x, float y) {
   float corners = (noise_2d (x - 1, y - 1) + noise_2d (x + 1, y - 1)
                    + noise_2d (x - 1, y + 1) + noise_2d (x + 1, y + 1))
                   / 16;
@@ -872,9 +694,7 @@ noise_smoothed2d (float x, float y)
   return corners + sides + center;
 }
 
-float
-noise_interpolated2d (float x, float y)
-{
+float noise_interpolated2d (float x, float y) {
   int integer_X = (int)x;
   float fractional_X = x - integer_X;
 
@@ -892,9 +712,7 @@ noise_interpolated2d (float x, float y)
   return cosInterpolate (i1, i2, fractional_Y);
 }
 
-float
-noise_perlin2d (float x, float y, float persistance, int octaves)
-{
+float noise_perlin2d (float x, float y, float persistance, int octaves) {
   persistance *= 0.5f;
   persistance = clamp (persistance, 0.0f, 1.0f);
   float total = 0.0f;
