@@ -286,10 +286,10 @@ Returns a point at "t"% of the way between "a" and "b".*/
 Vec2 Vec2_lerpclamped (Vec2 a, Vec2 b, float t);
 
 /*Converts a 2 dimensional vector to a 3 dimensional one*/
-Vec3 Vec2_toVec3f (Vec2 v);
+Vec3 Vec2_toVec3 (Vec2 v);
 
 /*Converts a 2 dimensional vector to a 4 dimensional one*/
-Vec4 Vec2_toVec4f (Vec2 v);
+Vec4 Vec2_toVec4 (Vec2 v);
 
 /*
 TODO MoveTowards	Calculate a position between the points specified by
@@ -417,10 +417,10 @@ vectors.*/
 Vec3 Vec3_min (Vec3 a, Vec3 b);
 
 /*Converts a 3 dimensional vector to a 2 dimensional one*/
-Vec2 Vec3_toVec2f (Vec3 v);
+Vec2 Vec3_toVec2 (Vec3 v);
 
 /*Converts a 3 dimensional vector to a 4 dimensional one*/
-Vec4 Vec3_toVec4f (Vec3 v);
+Vec4 Vec3_toVec4 (Vec3 v);
 
 ///*shorthand for vector4 (0, 0, 0, 0)*/
 // extern const Vec4 BLIB_VEC4F_ZERO;
@@ -513,14 +513,13 @@ vectors.*/
 Vec4 Vec4_min (Vec4 a, Vec4 b);
 
 /*Converts a 4 dimensional vector to a 2 dimensional one*/
-Vec2 Vec4_toVec2f (Vec4 v);
+Vec2 Vec4_toVec2 (Vec4 v);
 
 /*Converts a 4 dimensional vector to a 3 dimensional one*/
-Vec3 Vec4_toVec3f (Vec4 v);
+Vec3 Vec4_toVec3 (Vec4 v);
 
 /*A column major 4x4 matrix*/
-typedef struct
-{
+typedef struct{
   float elements[16];
 } Mat4;
 
@@ -552,5 +551,8 @@ Mat4 Mat4_translateVec4 (Vec4 t);
 
 /*Multiplies a 4x4 matrix with another 4x4 matrix*/
 Mat4 Mat4_multiply (const Mat4 a, const Mat4 b);
+
+/*Multiplies a 4x4 matrix with a 4 dimensional vector*/
+Vec4 Mat4_multiplyVec4(Vec4 Left, Mat4 Right);
 
 #endif /*B_MATH_H*/

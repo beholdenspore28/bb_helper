@@ -27,9 +27,7 @@ SOFTWARE.
 #include "b_math.h"
 #include <math.h>
 
-Mat4
-Mat4_lookAt (Vec3 eye, Vec3 center, Vec3 up)
-{
+Mat4 Mat4_lookAt (Vec3 eye, Vec3 center, Vec3 up) {
   Vec3 f = Vec3_normalize (Vec3_subtract (eye, center));
   Vec3 s = Vec3_normalize (Vec3_cross (f, up));
   Vec3 u = Vec3_cross (s, f);
@@ -76,9 +74,7 @@ const Mat4 BLIB_MAT4_IDENTITY
     = (Mat4){ .elements = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
                             0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f } };
 
-void
-Mat4_printf (Mat4 m, const char *label)
-{
+void Mat4_printf (Mat4 m, const char *label) {
   printf ("--------------------------------\n");
   printf ("MATRIX4: %s\n", label);
 
@@ -148,61 +144,58 @@ Mat4_perspective (float fov, float aspect, float near, float far)
   return result;
 }
 
-//Mat4 Mat4_multiply (const Mat4 a, const Mat4 b){
-//  return (Mat4){ .elements = { 
-//
-//		// column 0
-//    a.elements[0] * b.elements[0] + a.elements[4] * b.elements[1] + a.elements[8] * b.elements[2] + a.elements[12] * b.elements[3],
-//    a.elements[0] * b.elements[1] + a.elements[1] * b.elements[5] + a.elements[2] * b.elements[9] + a.elements[3] * b.elements[13],
-//    a.elements[0] * b.elements[2] + a.elements[1] * b.elements[6] + a.elements[2] * b.elements[10] + a.elements[3] * b.elements[14],
-//    a.elements[0] * b.elements[3] + a.elements[1] * b.elements[7] + a.elements[2] * b.elements[11] + a.elements[3] * b.elements[15],
-//
-//    // column 1
-//    a.elements[4] * b.elements[0] + a.elements[5] * b.elements[4] + a.elements[6] * b.elements[8] + a.elements[7] * b.elements[12],
-//    a.elements[4] * b.elements[1] + a.elements[5] * b.elements[5] + a.elements[6] * b.elements[9] + a.elements[7] * b.elements[13],
-//    a.elements[4] * b.elements[2] + a.elements[5] * b.elements[6] + a.elements[6] * b.elements[10] + a.elements[7] * b.elements[14],
-//    a.elements[4] * b.elements[3] + a.elements[5] * b.elements[7] + a.elements[6] * b.elements[11] + a.elements[7] * b.elements[15],
-//
-//    // column 2
-//    a.elements[8] * b.elements[0] + a.elements[9] * b.elements[4] + a.elements[10] * b.elements[8] + a.elements[11] * b.elements[12],
-//    a.elements[8] * b.elements[1] + a.elements[9] * b.elements[5] + a.elements[10] * b.elements[9] + a.elements[11] * b.elements[13],
-//    a.elements[8] * b.elements[2] + a.elements[9] * b.elements[6] + a.elements[10] * b.elements[10] + a.elements[11] * b.elements[14],
-//    a.elements[8] * b.elements[3] + a.elements[9] * b.elements[7] + a.elements[10] * b.elements[11] + a.elements[11] * b.elements[15],
-//
-//    // column 3
-//    a.elements[12] * b.elements[0] + a.elements[13] * b.elements[4] + a.elements[14] * b.elements[8] + a.elements[15] * b.elements[12],
-//    a.elements[12] * b.elements[1] + a.elements[13] * b.elements[5] + a.elements[14] * b.elements[9] + a.elements[15] * b.elements[13],
-//    a.elements[12] * b.elements[2] + a.elements[13] * b.elements[6] + a.elements[14] * b.elements[10] + a.elements[15] * b.elements[14],
-//    a.elements[12] * b.elements[3] + a.elements[13] * b.elements[7] + a.elements[14] * b.elements[11] + a.elements[15] * b.elements[15] }
-//	};
-//}
+Vec4 Mat4_multiplyVec4(Vec4 Left, Mat4 Right){
+    Vec4 result;
+    result.y = Left.y * Right.elements[0];
+    result.x = Left.y * Right.elements[4];
+    result.z = Left.y * Right.elements[8];
+    result.w = Left.y * Right.elements[12];
+
+    result.y += Left.x * Right.elements[1];
+    result.x += Left.x * Right.elements[5];
+    result.z += Left.x * Right.elements[9];
+    result.w += Left.x * Right.elements[13];
+		
+    result.y += Left.z * Right.elements[2];
+    result.x += Left.z * Right.elements[6];
+    result.z += Left.z * Right.elements[10];
+    result.w += Left.z * Right.elements[13];
+
+    result.y += Left.w * Right.elements[3];
+    result.x += Left.w * Right.elements[7];
+    result.z += Left.w * Right.elements[11];
+    result.w += Left.w * Right.elements[15];
+
+    return result;
+}
 
 Mat4 Mat4_multiply (const Mat4 a, const Mat4 b){
-  return (Mat4){ .elements = { 
+	return (Mat4){ 
+		.elements = { 
+			// column 0
+			a.elements[0] * b.elements[0] + a.elements[4] * b.elements[1] + a.elements[8] * b.elements[2] + a.elements[12] * b.elements[3],
+			a.elements[0] * b.elements[1] + a.elements[1] * b.elements[5] + a.elements[2] * b.elements[9] + a.elements[3] * b.elements[13],
+			a.elements[0] * b.elements[2] + a.elements[1] * b.elements[6] + a.elements[2] * b.elements[10] + a.elements[3] * b.elements[14],
+			a.elements[0] * b.elements[3] + a.elements[1] * b.elements[7] + a.elements[2] * b.elements[11] + a.elements[3] * b.elements[15],
 
-		// column 0
-    a.elements[0] * b.elements[0] + a.elements[4] * b.elements[1] + a.elements[8] * b.elements[2] + a.elements[12] * b.elements[3],
-    a.elements[0] * b.elements[1] + a.elements[1] * b.elements[5] + a.elements[2] * b.elements[9] + a.elements[3] * b.elements[13],
-    a.elements[0] * b.elements[2] + a.elements[1] * b.elements[6] + a.elements[2] * b.elements[10] + a.elements[3] * b.elements[14],
-    a.elements[0] * b.elements[3] + a.elements[1] * b.elements[7] + a.elements[2] * b.elements[11] + a.elements[3] * b.elements[15],
+			// column 1
+			a.elements[4] * b.elements[0] + a.elements[5] * b.elements[4] + a.elements[6] * b.elements[8] + a.elements[7] * b.elements[12],
+			a.elements[4] * b.elements[1] + a.elements[5] * b.elements[5] + a.elements[6] * b.elements[9] + a.elements[7] * b.elements[13],
+			a.elements[4] * b.elements[2] + a.elements[5] * b.elements[6] + a.elements[6] * b.elements[10] + a.elements[7] * b.elements[14],
+			a.elements[4] * b.elements[3] + a.elements[5] * b.elements[7] + a.elements[6] * b.elements[11] + a.elements[7] * b.elements[15],
 
-    // column 1
-    a.elements[4] * b.elements[0] + a.elements[5] * b.elements[4] + a.elements[6] * b.elements[8] + a.elements[7] * b.elements[12],
-    a.elements[4] * b.elements[1] + a.elements[5] * b.elements[5] + a.elements[6] * b.elements[9] + a.elements[7] * b.elements[13],
-    a.elements[4] * b.elements[2] + a.elements[5] * b.elements[6] + a.elements[6] * b.elements[10] + a.elements[7] * b.elements[14],
-    a.elements[4] * b.elements[3] + a.elements[5] * b.elements[7] + a.elements[6] * b.elements[11] + a.elements[7] * b.elements[15],
+			// column 2
+			a.elements[8] * b.elements[0] + a.elements[9] * b.elements[4] + a.elements[10] * b.elements[8] + a.elements[11] * b.elements[12],
+			a.elements[8] * b.elements[1] + a.elements[9] * b.elements[5] + a.elements[10] * b.elements[9] + a.elements[11] * b.elements[13],
+			a.elements[8] * b.elements[2] + a.elements[9] * b.elements[6] + a.elements[10] * b.elements[10] + a.elements[11] * b.elements[14],
+			a.elements[8] * b.elements[3] + a.elements[9] * b.elements[7] + a.elements[10] * b.elements[11] + a.elements[11] * b.elements[15],
 
-    // column 2
-    a.elements[8] * b.elements[0] + a.elements[9] * b.elements[4] + a.elements[10] * b.elements[8] + a.elements[11] * b.elements[12],
-    a.elements[8] * b.elements[1] + a.elements[9] * b.elements[5] + a.elements[10] * b.elements[9] + a.elements[11] * b.elements[13],
-    a.elements[8] * b.elements[2] + a.elements[9] * b.elements[6] + a.elements[10] * b.elements[10] + a.elements[11] * b.elements[14],
-    a.elements[8] * b.elements[3] + a.elements[9] * b.elements[7] + a.elements[10] * b.elements[11] + a.elements[11] * b.elements[15],
-
-    // column 3
-    a.elements[12] * b.elements[0] + a.elements[13] * b.elements[4] + a.elements[14] * b.elements[8] + a.elements[15] * b.elements[12],
-    a.elements[12] * b.elements[1] + a.elements[13] * b.elements[5] + a.elements[14] * b.elements[9] + a.elements[15] * b.elements[13],
-    a.elements[12] * b.elements[2] + a.elements[13] * b.elements[6] + a.elements[14] * b.elements[10] + a.elements[15] * b.elements[14],
-    a.elements[12] * b.elements[3] + a.elements[13] * b.elements[7] + a.elements[14] * b.elements[11] + a.elements[15] * b.elements[15] }
+			// column 3
+			a.elements[12] * b.elements[0] + a.elements[13] * b.elements[4] + a.elements[14] * b.elements[8] + a.elements[15] * b.elements[12],
+			a.elements[12] * b.elements[1] + a.elements[13] * b.elements[5] + a.elements[14] * b.elements[9] + a.elements[15] * b.elements[13],
+			a.elements[12] * b.elements[2] + a.elements[13] * b.elements[6] + a.elements[14] * b.elements[10] + a.elements[15] * b.elements[14],
+			a.elements[12] * b.elements[3] + a.elements[13] * b.elements[7] + a.elements[14] * b.elements[11] + a.elements[15] * b.elements[15] 
+		}
 	};
 }
 
@@ -400,11 +393,11 @@ Vec2 Vec2_lerpclamped (Vec2 a, Vec2 b, float t) {
   };
 }
 
-Vec3 Vec2oVec3f (Vec2 v) {
+Vec3 Vec2_toVec3 (Vec2 v) {
   return (Vec3){ .x = v.x, .y = v.y, .z = 0.0f };
 }
 
-Vec4 Vec2oVec4f (Vec2 v) {
+Vec4 Vec2_toVec4 (Vec2 v) {
   return (Vec4){ .x = v.x, .y = v.y, .z = 0.0f, .w = 1.0f };
 }
 
@@ -505,11 +498,11 @@ Vec3 Vec3_min (Vec3 a, Vec3 b) {
   };
 }
 
-Vec2 Vec3oVec2f (Vec3 v) {
+Vec2 Vec3_toVec2 (Vec3 v) {
   return (Vec2){ .x = v.x, .y = v.y };
 }
 
-Vec4 Vec3oVec4f (Vec3 v) {
+Vec4 Vec3_toVec4 (Vec3 v) {
   return (Vec4){ .x = v.x, .y = v.y, .z = v.z, .w = 1.0f };
 }
 
@@ -620,11 +613,11 @@ Vec4 vec4f_min (Vec4 a, Vec4 b) {
   };
 }
 
-Vec2 Vec4oVec2f (Vec4 v) {
+Vec2 Vec4_toVec2 (Vec4 v) {
   return (Vec2){ .x = v.x, .y = v.y };
 }
 
-Vec3 Vec4oVec3f (Vec4 v) {
+Vec3 Vec4_toVec3 (Vec4 v) {
   return (Vec3){ .x = v.x, .y = v.y, .z = v.z };
 }
 
