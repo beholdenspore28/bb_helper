@@ -133,163 +133,160 @@ float pingpong (float n, const float length);
 /*Returns the smallest possible difference between angle "a" and angle "b"*/
 float angleDelta (const float a, const float b);
 
-/*TODO Vec2_min()*/
-/*TODO Vec2_max()*/
+/*TODO vec2_min()*/
+/*TODO vec2_max()*/
 
 /*A small data structure for storing 2D positions, rotations, scales,
  * or lines.*/
-typedef struct
-{
+typedef struct {
   float x;
   float y;
-} Vec2;
+} vec2;
 
 /*A small data structure for storing 3D positions, rotations, scales,
  * or lines.*/
-typedef struct
-{
+typedef struct {
   float x;
   float y;
   float z;
-} Vec3;
+} vec3;
 
 /*A small data structure for storing 4D values*/
-typedef struct
-{
+typedef struct {
   float x;
   float y;
   float z;
   float w;
-} Vec4;
+} vec4;
 
 #define VEC2_ZERO                                                             \
-  (Vec2) { 0.0f, 0.0f }
+  (vec2) { 0.0f, 0.0f }
 #define VEC2_ONE                                                              \
-  (Vec2) { 1.0f, 1.0f }
+  (vec2) { 1.0f, 1.0f }
 #define VEC2_UP                                                               \
-  (Vec2) { 0.0f, 1.0f }
+  (vec2) { 0.0f, 1.0f }
 #define VEC2_DOWN                                                             \
-  (Vec2) { 0.0f, -1.0f }
+  (vec2) { 0.0f, -1.0f }
 #define VEC2_LEFT                                                             \
-  (Vec2) { -1.0f, 0.0f }
+  (vec2) { -1.0f, 0.0f }
 #define VEC2_RIGHT                                                            \
-  (Vec2) { 1.0f, 0.0f }
+  (vec2) { 1.0f, 0.0f }
 
 #define VEC3_ZERO                                                             \
-  (Vec3) { 0.0f, 0.0f, 0.0f }
+  (vec3) { 0.0f, 0.0f, 0.0f }
 #define VEC3_ONE                                                              \
-  (Vec3) { 1.0f, 1.0f, 1.0f }
+  (vec3) { 1.0f, 1.0f, 1.0f }
 #define VEC3_UP                                                               \
-  (Vec3) { 0.0f, 1.0f, 0.0f }
+  (vec3) { 0.0f, 1.0f, 0.0f }
 #define VEC3_DOWN                                                             \
-  (Vec3) { 0.0f, -1.0f, 0.0f }
+  (vec3) { 0.0f, -1.0f, 0.0f }
 #define VEC3_LEFT                                                             \
-  (Vec3) { -1.0f, 0.0f, 0.0f }
+  (vec3) { -1.0f, 0.0f, 0.0f }
 #define VEC3_RIGHT                                                            \
-  (Vec3) { 1.0f, 0.0f, 0.0f }
+  (vec3) { 1.0f, 0.0f, 0.0f }
 #define VEC3_FORWARD                                                          \
-  (Vec3) { 0.0f, 0.0f, 1.0f }
+  (vec3) { 0.0f, 0.0f, 1.0f }
 #define VEC3_BACK                                                             \
-  (Vec3) { 0.0f, 0.0f, -1.0f }
+  (vec3) { 0.0f, 0.0f, -1.0f }
 
 #define VEC4_ZERO                                                             \
-  (Vec4) { 0.0f, 0.0f, 0.0f, 1.0f }
+  (vec4) { 0.0f, 0.0f, 0.0f, 1.0f }
 #define VEC4_ONE                                                              \
-  (Vec4) { 1.0f, 1.0f, 1.0f, 1.0f }
+  (vec4) { 1.0f, 1.0f, 1.0f, 1.0f }
 #define VEC4_UP                                                               \
-  (Vec4) { 0.0f, 1.0f, 0.0f, 1.0f }
+  (vec4) { 0.0f, 1.0f, 0.0f, 1.0f }
 #define VEC4_DOWN                                                             \
-  (Vec4) { 0.0f, -1.0f, 0.0f, 1.0f }
+  (vec4) { 0.0f, -1.0f, 0.0f, 1.0f }
 #define VEC4_LEFT                                                             \
-  (Vec4) { -1.0f, 0.0f, 0.0f, 1.0f }
+  (vec4) { -1.0f, 0.0f, 0.0f, 1.0f }
 #define VEC4_RIGHT                                                            \
-  (Vec4) { 1.0f, 0.0f, 0.0f, 1.0f }
+  (vec4) { 1.0f, 0.0f, 0.0f, 1.0f }
 #define VEC4_FORWARD                                                          \
-  (Vec4) { 0.0f, 0.0f, 1.0f, 1.0f }
+  (vec4) { 0.0f, 0.0f, 1.0f, 1.0f }
 #define VEC4_BACK                                                             \
-  (Vec4) { 0.0f, 0.0f, -1.0f, 1.0f }
+  (vec4) { 0.0f, 0.0f, -1.0f, 1.0f }
 
 ///*shorthand for vector2 (0, 0)*/
-// extern const Vec2 BLIB_VEC2F_ZERO;
+// extern const vec2 VEC2F_ZERO;
 //
 ///*shorthand for vector2 (1, 1)*/
-// extern const Vec2 BLIB_VEC2F_ONE;
+// extern const vec2 VEC2F_ONE;
 //
 ///*shorthand for vector2 (0, 1)*/
-// extern const Vec2 BLIB_VEC2F_UP;
+// extern const vec2 VEC2F_UP;
 //
 ///*shorthand for vector2 (0,-1)*/
-// extern const Vec2 BLIB_VEC2F_DOWN;
+// extern const vec2 VEC2F_DOWN;
 //
 ///*shorthand for vector2 (-1,0)*/
-// extern const Vec2 BLIB_VEC2F_LEFT;
+// extern const vec2 VEC2F_LEFT;
 //
 ///*shorthand for vector2 (1, 0)*/
-// extern const Vec2 BLIB_VEC2F_RIGHT;
+// extern const vec2 VEC2F_RIGHT;
 
 /*Prints a vector "v" using printf*/
-void Vec2_printf (const Vec2 v, const char *label);
+void vec2_printf (const vec2 v, const char *label);
 
 /*Returns a vector that points in the opposite direction of the given vector
 "v". The vector returned has a magnitude identical to the given vector "v"*/
-Vec2 Vec2_negate (Vec2 v);
+vec2 vec2_negate (vec2 v);
 
 /*Returns the actual length of a vector "v".
-This uses a square root operation. Use Vec2_sqrmagnitude()
+This uses a square root operation. Use vec2_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-float Vec2_magnitude (Vec2 v);
+float vec2_magnitude (vec2 v);
 
 /*A more performant way of getting the relative length of a
 vector "v". This saves a square root operation making it more
-performant than Vec2_magnitude(). If all you have to do is
+performant than vec2_magnitude(). If all you have to do is
 compare a vectors length relatively, use this function instead of
-Vec2_magnitude()*/
-float Vec2_sqrmagnitude (Vec2 v);
+vec2_magnitude()*/
+float vec2_sqrmagnitude (vec2 v);
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points
 in the same direction as the given vector "v"*/
-Vec2 Vec2_normalize (Vec2 v);
+vec2 vec2_normalize (vec2 v);
 
 /*Returns the distance between point a and point b
 in units.*/
-float Vec2_distance (Vec2 a, Vec2 b);
+float vec2_distance (vec2 a, vec2 b);
 
 /*Adds a vector "a" to another vector "b"*/
-Vec2 Vec2_add (Vec2 a, Vec2 b);
+vec2 vec2_add (vec2 a, vec2 b);
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-Vec2 Vec2_subtract (Vec2 minuend, Vec2 subtrahend);
+vec2 vec2_subtract (vec2 minuend, vec2 subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 0.
 The returned vector will point in the same direction as
 the given vector "v".*/
-Vec2 Vec2_scale (Vec2 v, float scalar);
+vec2 vec2_scale (vec2 v, float scalar);
 
 /*For normalized vectors Dot returns 1 if they point in
 exactly the same direction, -1 if they point in completely opposite directions
 and zero if the vectors are perpendicular.*/
-float Vec2_dot (Vec2 a, Vec2 b);
+float vec2_dot (vec2 a, vec2 b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays
-between "a" and "b", use Vec3_lerpclamped() instead.
+between "a" and "b", use vec3_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-Vec2 Vec2_lerp (Vec2 a, Vec2 b, float t);
+vec2 vec2_lerp (vec2 a, vec2 b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-Vec2 Vec2_lerpclamped (Vec2 a, Vec2 b, float t);
+vec2 vec2_lerpclamped (vec2 a, vec2 b, float t);
 
 /*Converts a 2 dimensional vector to a 3 dimensional one*/
-Vec3 Vec2_toVec3 (Vec2 v);
+vec3 vec2_tovec3 (vec2 v);
 
 /*Converts a 2 dimensional vector to a 4 dimensional one*/
-Vec4 Vec2_toVec4 (Vec2 v);
+vec4 vec2_tovec4 (vec2 v);
 
 /*
 TODO MoveTowards	Calculate a position between the points specified by
@@ -318,241 +315,241 @@ TODO SmoothDamp	Gradually changes a vector towards a desired goal over time.
 currentTilt = 0f;
 float smoothTime = 0.3f;
 float refTilt = 0f
-currentTilt = Mathf.SmoothDamp(currentTilt, tiltAmount*horizontalInput,
+currentTilt = mathf.SmoothDamp(currentTilt, tiltAmount*horizontalInput,
 ref refTilt, smoothTime);
 transform.localRotation = Quaternion.Euler(0, 0, currentTilt);
 */
 
 ///*shorthand for vector3 (0, 0, 0)*/
-// extern const Vec3 BLIB_VEC3F_ZERO;
+// extern const vec3 VEC3F_ZERO;
 //
 ///*shorthand for vector3 (0, 1, 0)*/
-// extern const Vec3 BLIB_VEC3F_UP;
+// extern const vec3 VEC3F_UP;
 //
 ///*shorthand for vector3 (0,-1, 0)*/
-// extern const Vec3 BLIB_VEC3F_DOWN;
+// extern const vec3 VEC3F_DOWN;
 //
 ///*shorthand for vector3 (-1,0, 0)*/
-// extern const Vec3 BLIB_VEC3F_LEFT;
+// extern const vec3 VEC3F_LEFT;
 //
 ///*shorthand for vector3 (1, 0, 0)*/
-// extern const Vec3 BLIB_VEC3F_RIGHT;
+// extern const vec3 VEC3F_RIGHT;
 //
 ///*shorthand for vector3 (0, 0, 1)*/
-// extern const Vec3 BLIB_VEC3F_FORWARD;
+// extern const vec3 VEC3F_FORWARD;
 //
 ///*shorthand for vector3 (0, 0,-1)*/
-// extern const Vec3 BLIB_VEC3F_BACK;
+// extern const vec3 VEC3F_BACK;
 //
 ///*shorthand for vector3 (1, 1, 1)*/
-// extern const Vec3 BLIB_VEC3F_ONE;
+// extern const vec3 VEC3F_ONE;
 
 /*Prints a vector "v" using printf*/
-void Vec3_printf (const Vec3 v, const char *label);
+void vec3_printf (const vec3 v, const char *label);
 
 /*Returns a vector that points in the opposite direction of the given vector
 "v". The vector returned has a magnitude identical to the given vector "v"*/
-Vec3 Vec3_negate (Vec3 v);
+vec3 vec3_negate (vec3 v);
 
 /*Returns the actual length of a vector "v".
-This uses a square root operation. Use Vec3_sqrmagnitude()
+This uses a square root operation. Use vec3_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-float Vec3_magnitude (Vec3 v);
+float vec3_magnitude (vec3 v);
 
 /*A more performant way of getting the relative length of a
 vector "v". This saves a square root operation making it more
-performant than Vec3_magnitude(). If all you have to do is
+performant than vec3_magnitude(). If all you have to do is
 compare a vectors length relatively, use this function instead of
-Vec3_magnitude()*/
-float Vec3_sqrmagnitude (Vec3 v);
+vec3_magnitude()*/
+float vec3_sqrmagnitude (vec3 v);
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points
 in the same direction as the given vector "v"*/
-Vec3 Vec3_normalize (Vec3 v);
+vec3 vec3_normalize (vec3 v);
 
 /*Returns the distance between point a and point b
 in units.*/
-float Vec3_distance (Vec3 a, Vec3 b);
+float vec3_distance (vec3 a, vec3 b);
 
 /*Adds a vector "a" to another vector "b"*/
-Vec3 Vec3_add (Vec3 a, Vec3 b);
+vec3 vec3_add (vec3 a, vec3 b);
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-Vec3 Vec3_subtract (Vec3 minuend, Vec3 subtrahend);
+vec3 vec3_subtract (vec3 minuend, vec3 subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 1.
 The returned vector will point in the same direction as
 the given vector "v".*/
-Vec3 Vec3_scale (Vec3 v, float scalar);
+vec3 vec3_scale (vec3 v, float scalar);
 
 /*Returns a vector parallel to both "a" and "b".*/
-Vec3 Vec3_cross (Vec3 a, Vec3 b);
+vec3 vec3_cross (vec3 a, vec3 b);
 
 /*For normalized vectors Dot returns 1 if they point in
 exactly the same direction, -1 if they point in completely opposite directions
 and zero if the vectors are perpendicular.*/
-float Vec3_dot (Vec3 a, Vec3 b);
+float vec3_dot (vec3 a, vec3 b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays
-between "a" and "b", use Vec2_lerpclamped() instead.
+between "a" and "b", use vec2_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-Vec3 Vec3_lerp (Vec3 a, Vec3 b, float t);
+vec3 vec3_lerp (vec3 a, vec3 b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-Vec3 Vec3_lerpclamped (Vec3 a, Vec3 b, float t);
+vec3 vec3_lerpclamped (vec3 a, vec3 b, float t);
 
 /*Returns a vector that is made from the largest components of two
 vectors.*/
-Vec3 Vec3_max (Vec3 a, Vec3 b);
+vec3 vec3_max (vec3 a, vec3 b);
 
 /*Returns a vector that is made from the smallest components of two
 vectors.*/
-Vec3 Vec3_min (Vec3 a, Vec3 b);
+vec3 vec3_min (vec3 a, vec3 b);
 
 /*Converts a 3 dimensional vector to a 2 dimensional one*/
-Vec2 Vec3_toVec2 (Vec3 v);
+vec2 vec3_tovec2 (vec3 v);
 
 /*Converts a 3 dimensional vector to a 4 dimensional one*/
-Vec4 Vec3_toVec4 (Vec3 v);
+vec4 vec3_tovec4 (vec3 v);
 
 ///*shorthand for vector4 (0, 0, 0, 0)*/
-// extern const Vec4 BLIB_VEC4F_ZERO;
+// extern const vec4 VEC4F_ZERO;
 //
 ///*shorthand for vector4 (0, 1, 0, 1)*/
-// extern const Vec4 BLIB_VEC4F_UP;
+// extern const vec4 VEC4F_UP;
 //
 ///*shorthand for vector4 (0,-1, 0, 1)*/
-// extern const Vec4 BLIB_VEC4F_DOWN;
+// extern const vec4 VEC4F_DOWN;
 //
 ///*shorthand for vector4 (-1,0, 0, 1)*/
-// extern const Vec4 BLIB_VEC4F_LEFT;
+// extern const vec4 VEC4F_LEFT;
 //
 ///*shorthand for vector4 (1, 0, 0, 1)*/
-// extern const Vec4 BLIB_VEC4F_RIGHT;
+// extern const vec4 VEC4F_RIGHT;
 //
 ///*shorthand for vector4 (0, 0, 1, 1)*/
-// extern const Vec4 BLIB_VEC4F_FORWARD;
+// extern const vec4 VEC4F_FORWARD;
 //
 ///*shorthand for vector4 (0, 0,-1, 1)*/
-// extern const Vec4 BLIB_VEC4F_BACK;
+// extern const vec4 VEC4F_BACK;
 //
 ///*shorthand for vector4 (1, 1, 1, 1)*/
-// extern const Vec4 BLIB_VEC4F_ONE;
+// extern const vec4 VEC4F_ONE;
 
 /*Prints a vector "v" using printf*/
-void Vec4_printf (const Vec4 v, const char *label);
+void vec4_printf (const vec4 v, const char *label);
 
 /*Returns a vector that points in the opposite direction of the given vector
 "v". The vector returned has a magnitude identical to the given vector "v"*/
-Vec4 Vec4_negate (Vec4 v);
+vec4 vec4_negate (vec4 v);
 
 /*Returns the actual length of a vector "v".
-This uses a square root operation. Use Vec4_sqrmagnitude()
+This uses a square root operation. Use vec4_sqrmagnitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-float Vec4_magnitude (Vec4 v);
+float vec4_magnitude (vec4 v);
 
 /*A more performant way of getting the relative length of a
 vector "v". This saves a square root operation making it more
-performant than Vec4_magnitude(). If all you have to do is
+performant than vec4_magnitude(). If all you have to do is
 compare a vectors length relatively, use this function instead of
-Vec4_magnitude()*/
-float Vec4_sqrmagnitude (Vec4 v);
+vec4_magnitude()*/
+float vec4_sqrmagnitude (vec4 v);
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points
 in the same direction as the given vector "v"*/
-Vec4 Vec4_normalize (Vec4 v);
+vec4 vec4_normalize (vec4 v);
 
 /*Returns the distance between point a and point b
 in units.*/
-float Vec4_distance (Vec4 a, Vec4 b);
+float vec4_distance (vec4 a, vec4 b);
 
 /*Adds a vector "a" to another vector "b"*/
-Vec4 Vec4_add (Vec4 a, Vec4 b);
+vec4 vec4_add (vec4 a, vec4 b);
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-Vec4 Vec4_subtract (Vec4 minuend, Vec4 subtrahend);
+vec4 vec4_subtract (vec4 minuend, vec4 subtrahend);
 
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 1.
 The returned vector will point in the same direction as
 the given vector "v".*/
-Vec4 Vec4_scale (Vec4 v, float scalar);
+vec4 vec4_scale (vec4 v, float scalar);
 
 /*For normalized vectors Dot returns 1 if they point in
 exactly the same direction, -1 if they point in completely opposite directions
 and zero if the vectors are perpendicular.*/
-float Vec4_dot (Vec4 a, Vec4 b);
+float vec4_dot (vec4 a, vec4 b);
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays
-between "a" and "b", use Vec2_lerpclamped() instead.
+between "a" and "b", use vec2_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-Vec4 Vec4_lerp (Vec4 a, Vec4 b, float t);
+vec4 vec4_lerp (vec4 a, vec4 b, float t);
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-Vec4 Vec4_lerpclamped (Vec4 a, Vec4 b, float t);
+vec4 vec4_lerpclamped (vec4 a, vec4 b, float t);
 
 /*Returns a vector that is made from the largest components of two
 vectors.*/
-Vec4 Vec4_max (Vec4 a, Vec4 b);
+vec4 vec4_max (vec4 a, vec4 b);
 
 /*Returns a vector that is made from the smallest components of two
 vectors.*/
-Vec4 Vec4_min (Vec4 a, Vec4 b);
+vec4 vec4_min (vec4 a, vec4 b);
 
 /*Converts a 4 dimensional vector to a 2 dimensional one*/
-Vec2 Vec4_toVec2 (Vec4 v);
+vec2 vec4_tovec2 (vec4 v);
 
 /*Converts a 4 dimensional vector to a 3 dimensional one*/
-Vec3 Vec4_toVec3 (Vec4 v);
+vec3 vec4_tovec3 (vec4 v);
 
 /*A column major 4x4 matrix*/
 typedef struct{
   float elements[16];
-} Mat4;
+} mat4;
 
-extern const Mat4 BLIB_MAT4_IDENTITY;
+extern const mat4 MAT4_IDENTITY;
 
-Mat4 Mat4_lookAt (Vec3 eye, Vec3 center, Vec3 up);
+mat4 mat4_lookAt (vec3 eye, vec3 center, vec3 up);
 /*Perspective transformation used for calculating depth*/
-Mat4 Mat4_perspective (float fov, float aspect, float near, float far);
+mat4 mat4_perspective (float fov, float aspect, float near, float far);
 /*Adds a 4x4 matrix to another 4x4 matrix.*/
-Mat4 Mat4_add (Mat4 a, Mat4 b);
+mat4 mat4_add (mat4 a, mat4 b);
 
 /*Returns the difference between two 4x4 matrices.*/
-Mat4 Mat4_subtract (Mat4 min, Mat4 sub);
+mat4 mat4_subtract (mat4 min, mat4 sub);
 
-/*Prints a formatted Mat4 to the console.*/
-void Mat4_printf (Mat4 m, const char *label);
+/*Prints a formatted mat4 to the console.*/
+void mat4_printf (mat4 m, const char *label);
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
-Mat4 Mat4_scale (const Vec3 scale);
+mat4 mat4_scale (const vec3 scale);
 
 /*Returns a rotation matrix around "axis" by "angle"*/
-Mat4 Mat4_rotate (const float angle, Vec3 axis);
+mat4 mat4_rotate (const float angle, vec3 axis);
 
 /*Translates a vector to a 4x4 matrix*/
-Mat4 Mat4_translateVec3 (Vec3 t);
+mat4 mat4_translatevec3 (vec3 t);
 
 /*Translates a vector to a 4x4 matrix*/
-Mat4 Mat4_translateVec4 (Vec4 t);
+mat4 mat4_translatevec4 (vec4 t);
 
 /*Multiplies a 4x4 matrix with another 4x4 matrix*/
-Mat4 Mat4_multiply (const Mat4 a, const Mat4 b);
+mat4 mat4_multiply (const mat4 a, const mat4 b);
 
 /*Multiplies a 4x4 matrix with a 4 dimensional vector*/
-Vec4 Mat4_multiplyVec4(Vec4 Left, Mat4 Right);
+vec4 mat4_multiplyvec4(vec4 Left, mat4 Right);
 
 #endif /*B_MATH_H*/

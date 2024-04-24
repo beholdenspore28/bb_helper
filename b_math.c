@@ -27,12 +27,12 @@ SOFTWARE.
 #include "b_math.h"
 #include <math.h>
 
-Mat4 Mat4_lookAt (Vec3 eye, Vec3 center, Vec3 up) {
-  Vec3 f = Vec3_normalize (Vec3_subtract (eye, center));
-  Vec3 s = Vec3_normalize (Vec3_cross (f, up));
-  Vec3 u = Vec3_cross (s, f);
+mat4 mat4_lookAt (vec3 eye, vec3 center, vec3 up) {
+  vec3 f = vec3_normalize (vec3_subtract (eye, center));
+  vec3 s = vec3_normalize (vec3_cross (f, up));
+  vec3 u = vec3_cross (s, f);
 
-  Mat4 ret = BLIB_MAT4_IDENTITY;
+  mat4 ret = MAT4_IDENTITY;
   ret.elements[0] = s.x;
   ret.elements[1] = u.x;
   ret.elements[2] = -f.x;
@@ -48,9 +48,9 @@ Mat4 Mat4_lookAt (Vec3 eye, Vec3 center, Vec3 up) {
   ret.elements[10] = -f.z;
   ret.elements[11] = 0.0f;
 
-  ret.elements[12] = -Vec3_dot (s, eye);
-  ret.elements[13] = -Vec3_dot (u, eye);
-  ret.elements[14] = Vec3_dot (f, eye);
+  ret.elements[12] = -vec3_dot (s, eye);
+  ret.elements[13] = -vec3_dot (u, eye);
+  ret.elements[14] = vec3_dot (f, eye);
   ret.elements[15] = 1.0f;
 
   return ret;
@@ -70,11 +70,11 @@ column major
 3,  7,  11, 15
 */
 
-const Mat4 BLIB_MAT4_IDENTITY
-    = (Mat4){ .elements = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+const mat4 MAT4_IDENTITY
+    = (mat4){ .elements = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
                             0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f } };
 
-void Mat4_printf (Mat4 m, const char *label) {
+void mat4_printf (mat4 m, const char *label) {
   printf ("--------------------------------\n");
   printf ("MATRIX4: %s\n", label);
 
@@ -107,10 +107,10 @@ void Mat4_printf (Mat4 m, const char *label) {
   printf ("\n--------------------------------\n");
 }
 
-Mat4
-Mat4_add (const Mat4 a, const Mat4 b)
+mat4
+mat4_add (const mat4 a, const mat4 b)
 {
-  Mat4 sum = BLIB_MAT4_IDENTITY;
+  mat4 sum = MAT4_IDENTITY;
   int i = 0;
   for (i = 0; i < 16; i++)
     {
@@ -119,10 +119,10 @@ Mat4_add (const Mat4 a, const Mat4 b)
   return sum;
 }
 
-Mat4
-Mat4_subtract (const Mat4 min, const Mat4 sub)
+mat4
+mat4_subtract (const mat4 min, const mat4 sub)
 {
-  Mat4 dif = BLIB_MAT4_IDENTITY;
+  mat4 dif = MAT4_IDENTITY;
   int i = 0;
   for (i = 0; i < 16; i++)
     {
@@ -131,10 +131,10 @@ Mat4_subtract (const Mat4 min, const Mat4 sub)
   return dif;
 }
 
-Mat4
-Mat4_perspective (float fov, float aspect, float near, float far)
+mat4
+mat4_perspective (float fov, float aspect, float near, float far)
 {
-  Mat4 result = BLIB_MAT4_IDENTITY;
+  mat4 result = MAT4_IDENTITY;
   float Cotangent = (1.0f / tanf (fov / 2.0f));
   result.elements[0] = (Cotangent / aspect);
   result.elements[5] = Cotangent;
@@ -144,8 +144,8 @@ Mat4_perspective (float fov, float aspect, float near, float far)
   return result;
 }
 
-Vec4 Mat4_multiplyVec4(Vec4 Left, Mat4 Right){
-    Vec4 result;
+vec4 mat4_multiplyvec4(vec4 Left, mat4 Right){
+    vec4 result;
     result.y = Left.y * Right.elements[0];
     result.x = Left.y * Right.elements[4];
     result.z = Left.y * Right.elements[8];
@@ -169,8 +169,8 @@ Vec4 Mat4_multiplyVec4(Vec4 Left, Mat4 Right){
     return result;
 }
 
-Mat4 Mat4_multiply (const Mat4 a, const Mat4 b){
-	return (Mat4){ 
+mat4 mat4_multiply (const mat4 a, const mat4 b){
+	return (mat4){ 
 		.elements = { 
 			// column 0
 			a.elements[0] * b.elements[0] + a.elements[4] * b.elements[1] + a.elements[8] * b.elements[2] + a.elements[12] * b.elements[3],
@@ -199,20 +199,20 @@ Mat4 Mat4_multiply (const Mat4 a, const Mat4 b){
 	};
 }
 
-Mat4 Mat4_scale (const Vec3 scale){
-  Mat4 mat = BLIB_MAT4_IDENTITY;
+mat4 mat4_scale (const vec3 scale){
+  mat4 mat = MAT4_IDENTITY;
   mat.elements[0] = scale.x;
   mat.elements[5] = scale.y;
   mat.elements[10] = scale.z;
   return mat;
 }
 
-Mat4 Mat4_rotate (const float angle, Vec3 axis){
+mat4 mat4_rotate (const float angle, vec3 axis){
   /*TODO to make this compatible with rh
   coordinate system, just invert the angle!*/
-  Mat4 result = BLIB_MAT4_IDENTITY;
+  mat4 result = MAT4_IDENTITY;
 
-  axis = Vec3_normalize (axis);
+  axis = vec3_normalize (axis);
 
   float sinTheta = sinf (angle);
   float cosTheta = cosf (angle);
@@ -233,17 +233,17 @@ Mat4 Mat4_rotate (const float angle, Vec3 axis){
   return result;
 }
 
-Mat4 Mat4_translateVec3 (Vec3 t)
+mat4 mat4_translatevec3 (vec3 t)
 {
-  Mat4 result = BLIB_MAT4_IDENTITY;
+  mat4 result = MAT4_IDENTITY;
   result.elements[12] += t.x;
   result.elements[13] += t.y;
   result.elements[14] += t.z;
   return result;
 }
 
-Mat4 Mat4_translateVec4 (Vec4 t) {
-  Mat4 result = BLIB_MAT4_IDENTITY;
+mat4 mat4_translatevec4 (vec4 t) {
+  mat4 result = MAT4_IDENTITY;
   result.elements[12] += t.x;
   result.elements[13] += t.y;
   result.elements[14] += t.z;
@@ -324,222 +324,222 @@ float angleDelta (const float a, const float b) {
   return delta;
 }
 
-const Vec2 BLIB_VEC2F_ZERO = { .x = 0, .y = 0 };
-const Vec2 BLIB_VEC2F_ONE = { .x = 1, .y = 1 };
-const Vec2 BLIB_VEC2F_UP = { .x = 0, .y = 1 };
-const Vec2 BLIB_VEC2F_DOWN = { .x = 0, .y = -1 };
-const Vec2 BLIB_VEC2F_LEFT = { .x = -1, .y = 0 };
-const Vec2 BLIB_VEC2F_RIGHT = { .x = 1, .y = 0 };
+const vec2 VEC2F_ZERO = { .x = 0, .y = 0 };
+const vec2 VEC2F_ONE = { .x = 1, .y = 1 };
+const vec2 VEC2F_UP = { .x = 0, .y = 1 };
+const vec2 VEC2F_DOWN = { .x = 0, .y = -1 };
+const vec2 VEC2F_LEFT = { .x = -1, .y = 0 };
+const vec2 VEC2F_RIGHT = { .x = 1, .y = 0 };
 
-void Vec2_printf (const Vec2 v, const char *label) {
+void vec2_printf (const vec2 v, const char *label) {
   printf ("%s [%f, %f]\n", label, v.x, v.y);
 }
 
-Vec2 Vec2_negate (Vec2 v) {
-  return (Vec2){ .x = -v.x, .y = -v.y };
+vec2 vec2_negate (vec2 v) {
+  return (vec2){ .x = -v.x, .y = -v.y };
 }
 
-float Vec2_magnitude (Vec2 v) {
-  return sqrt (Vec2_sqrmagnitude (v));
+float vec2_magnitude (vec2 v) {
+  return sqrt (vec2_sqrmagnitude (v));
 }
 
-float Vec2_sqrmagnitude (Vec2 v) {
+float vec2_sqrmagnitude (vec2 v) {
   return ((v.x * v.x) + (v.y * v.y));
 }
 
-Vec2 Vec2_normalize (Vec2 v) {
-  float m = Vec2_magnitude (v);
+vec2 vec2_normalize (vec2 v) {
+  float m = vec2_magnitude (v);
   if (m == 0)
-    return BLIB_VEC2F_ZERO;
-  return (Vec2){ .x = v.x / m, .y = v.y / m };
+    return VEC2F_ZERO;
+  return (vec2){ .x = v.x / m, .y = v.y / m };
 }
 
-float Vec2_distance (Vec2 a, Vec2 b) {
-  return Vec2_magnitude (Vec2_subtract (b, a));
+float vec2_distance (vec2 a, vec2 b) {
+  return vec2_magnitude (vec2_subtract (b, a));
 }
 
-Vec2 Vec2_add (Vec2 a, Vec2 b) {
-  return (Vec2){ .x = a.x + b.x, .y = a.y + b.y };
+vec2 vec2_add (vec2 a, vec2 b) {
+  return (vec2){ .x = a.x + b.x, .y = a.y + b.y };
 }
 
-Vec2 Vec2_subtract (Vec2 minuend, Vec2 subtrahend) {
-  return (Vec2){ .x = minuend.x - subtrahend.x,
+vec2 vec2_subtract (vec2 minuend, vec2 subtrahend) {
+  return (vec2){ .x = minuend.x - subtrahend.x,
                       .y = minuend.y - subtrahend.y };
 }
 
-Vec2 Vec2_scale (Vec2 v, float scalar) {
-  return (Vec2){ .x = v.x * scalar, .y = v.y * scalar };
+vec2 vec2_scale (vec2 v, float scalar) {
+  return (vec2){ .x = v.x * scalar, .y = v.y * scalar };
 }
 
-float Vec2_dot (Vec2 a, Vec2 b) {
+float vec2_dot (vec2 a, vec2 b) {
   return (a.x * b.x) + (a.y * b.y);
 }
 
-Vec2 Vec2_lerp (Vec2 a, Vec2 b, float t) {
-  return (Vec2){
+vec2 vec2_lerp (vec2 a, vec2 b, float t) {
+  return (vec2){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
   };
 }
 
-Vec2 Vec2_lerpclamped (Vec2 a, Vec2 b, float t) {
+vec2 vec2_lerpclamped (vec2 a, vec2 b, float t) {
   /*clamp n between 0 and 1*/
   t = t < 0.0f ? 0.0f : t;
   t = t > 1.0f ? 1.0f : t;
   /*perform lerp*/
-  return (Vec2){
+  return (vec2){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
   };
 }
 
-Vec3 Vec2_toVec3 (Vec2 v) {
-  return (Vec3){ .x = v.x, .y = v.y, .z = 0.0f };
+vec3 vec2_toVec3 (vec2 v) {
+  return (vec3){ .x = v.x, .y = v.y, .z = 0.0f };
 }
 
-Vec4 Vec2_toVec4 (Vec2 v) {
-  return (Vec4){ .x = v.x, .y = v.y, .z = 0.0f, .w = 1.0f };
+vec4 vec2_toVec4 (vec2 v) {
+  return (vec4){ .x = v.x, .y = v.y, .z = 0.0f, .w = 1.0f };
 }
 
-const Vec3 BLIB_VEC3F_ZERO = { .x = 0.0f, .y = 0.0f, .z = 0.0f };
-const Vec3 BLIB_VEC3F_ONE = { .x = 1.0f, .y = 1.0f, .z = 1.0f };
-const Vec3 BLIB_VEC3F_UP = { .x = 0.0f, .y = 1.0f, .z = 0.0f };
-const Vec3 BLIB_VEC3F_DOWN = { .x = 0.0f, .y = -1.0f, .z = 0.0f };
-const Vec3 BLIB_VEC3F_LEFT = { .x = -1.0f, .y = 0.0f, .z = 0.0f };
-const Vec3 BLIB_VEC3F_RIGHT = { .x = 1.0f, .y = 0.0f, .z = 0.0f };
-const Vec3 BLIB_VEC3F_FORWARD = { .x = 0.0f, .y = 0.0f, .z = 1.0f };
-const Vec3 BLIB_VEC3F_BACK = { .x = 0.0f, .y = 0.0f, .z = -1.0f };
+const vec3 VEC3F_ZERO = { .x = 0.0f, .y = 0.0f, .z = 0.0f };
+const vec3 VEC3F_ONE = { .x = 1.0f, .y = 1.0f, .z = 1.0f };
+const vec3 VEC3F_UP = { .x = 0.0f, .y = 1.0f, .z = 0.0f };
+const vec3 VEC3F_DOWN = { .x = 0.0f, .y = -1.0f, .z = 0.0f };
+const vec3 VEC3F_LEFT = { .x = -1.0f, .y = 0.0f, .z = 0.0f };
+const vec3 VEC3F_RIGHT = { .x = 1.0f, .y = 0.0f, .z = 0.0f };
+const vec3 VEC3F_FORWARD = { .x = 0.0f, .y = 0.0f, .z = 1.0f };
+const vec3 VEC3F_BACK = { .x = 0.0f, .y = 0.0f, .z = -1.0f };
 
-void Vec3_printf (const Vec3 v, const char *label) {
+void vec3_printf (const vec3 v, const char *label) {
   printf ("%s [%f, %f, %f]\n", label, v.x, v.y, v.z);
 }
 
-Vec3 Vec3_negate (Vec3 v) {
-  return (Vec3){ .x = -v.x, .y = -v.y, .z = -v.z };
+vec3 vec3_negate (vec3 v) {
+  return (vec3){ .x = -v.x, .y = -v.y, .z = -v.z };
 }
 
-float Vec3_magnitude (Vec3 v) {
-  return sqrt (Vec3_sqrmagnitude (v));
+float vec3_magnitude (vec3 v) {
+  return sqrt (vec3_sqrmagnitude (v));
 }
 
-float Vec3_sqrmagnitude (Vec3 v) {
+float vec3_sqrmagnitude (vec3 v) {
   return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
 }
 
-Vec3 Vec3_normalize (Vec3 v) {
-  float m = Vec3_magnitude (v);
+vec3 vec3_normalize (vec3 v) {
+  float m = vec3_magnitude (v);
   if (m == 0)
-    return BLIB_VEC3F_ZERO;
-  return (Vec3){ .x = v.x / m, .y = v.y / m, .z = v.z / m };
+    return VEC3F_ZERO;
+  return (vec3){ .x = v.x / m, .y = v.y / m, .z = v.z / m };
 }
 
-Vec3 Vec3_add (Vec3 a, Vec3 b) {
-  return (Vec3){ .x = a.x + b.x, .y = a.y + b.y, .z = a.z + b.z };
+vec3 vec3_add (vec3 a, vec3 b) {
+  return (vec3){ .x = a.x + b.x, .y = a.y + b.y, .z = a.z + b.z };
 }
 
-Vec3 Vec3_subtract (Vec3 minuend, Vec3 subtrahend) {
-  return (Vec3){ .x = minuend.x - subtrahend.x,
+vec3 vec3_subtract (vec3 minuend, vec3 subtrahend) {
+  return (vec3){ .x = minuend.x - subtrahend.x,
                       .y = minuend.y - subtrahend.y,
                       .z = minuend.z - subtrahend.z };
 }
 
-float Vec3_distance (Vec3 a, Vec3 b) {
-  return Vec3_magnitude (Vec3_subtract (b, a));
+float vec3_distance (vec3 a, vec3 b) {
+  return vec3_magnitude (vec3_subtract (b, a));
 }
 
-Vec3 Vec3_scale (Vec3 v, float scalar) {
+vec3 vec3_scale (vec3 v, float scalar) {
   return (
-      Vec3){ .x = v.x * scalar, .y = v.y * scalar, .z = v.z * scalar };
+      vec3){ .x = v.x * scalar, .y = v.y * scalar, .z = v.z * scalar };
 }
 
-Vec3 Vec3_cross (Vec3 a, Vec3 b) {
-  return (Vec3){ .x = (a.y * b.z) - (a.z * b.y),
+vec3 vec3_cross (vec3 a, vec3 b) {
+  return (vec3){ .x = (a.y * b.z) - (a.z * b.y),
                       .y = -((a.x * b.z) - (a.z * b.x)),
                       .z = (a.x * b.y) - (a.y * b.x) };
 }
 
-float Vec3_dot (Vec3 a, Vec3 b) {
+float vec3_dot (vec3 a, vec3 b) {
   return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 }
 
-Vec3 Vec3_lerp (Vec3 a, Vec3 b, float t) {
-  return (Vec3){
+vec3 vec3_lerp (vec3 a, vec3 b, float t) {
+  return (vec3){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
     .z = a.z + (b.z - a.z) * t,
   };
 }
 
-Vec3 Vec3_lerpclamped (Vec3 a, Vec3 b, float n) {
+vec3 vec3_lerpclamped (vec3 a, vec3 b, float n) {
   /*clamp n between 0 and 1*/
   n = n < 0.0f ? 0.0f : n;
   n = n > 1.0f ? 1.0f : n;
   /*perform lerp*/
-  return (Vec3){
+  return (vec3){
     .x = a.x + (b.x - a.x) * n,
     .y = a.y + (b.y - a.y) * n,
     .z = a.z + (b.z - a.z) * n,
   };
 }
 
-Vec3 Vec3_max (Vec3 a, Vec3 b) {
-  return (Vec3){
+vec3 vec3_max (vec3 a, vec3 b) {
+  return (vec3){
     .x = a.x >= b.x ? a.x : b.x,
     .y = a.y >= b.y ? a.y : b.y,
     .z = a.z >= b.z ? a.z : b.z,
   };
 }
 
-Vec3 Vec3_min (Vec3 a, Vec3 b) {
-  return (Vec3){
+vec3 vec3_min (vec3 a, vec3 b) {
+  return (vec3){
     .x = a.x <= b.x ? a.x : b.x,
     .y = a.y <= b.y ? a.y : b.y,
     .z = a.z <= b.z ? a.z : b.z,
   };
 }
 
-Vec2 Vec3_toVec2 (Vec3 v) {
-  return (Vec2){ .x = v.x, .y = v.y };
+vec2 vec3_toVec2 (vec3 v) {
+  return (vec2){ .x = v.x, .y = v.y };
 }
 
-Vec4 Vec3_toVec4 (Vec3 v) {
-  return (Vec4){ .x = v.x, .y = v.y, .z = v.z, .w = 1.0f };
+vec4 vec3_toVec4 (vec3 v) {
+  return (vec4){ .x = v.x, .y = v.y, .z = v.z, .w = 1.0f };
 }
 
-const Vec4 BLIB_VEC4F_ZERO = { .x = 0, .y = 0, .z = 0, .w = 1.0 };
-const Vec4 BLIB_VEC4F_ONE = { .x = 1, .y = 1, .z = 1, .w = 1.0 };
-const Vec4 BLIB_VEC4F_UP = { .x = 0, .y = 1, .z = 0, .w = 1.0 };
-const Vec4 BLIB_VEC4F_DOWN = { .x = 0, .y = -1, .z = 0, .w = 1.0 };
-const Vec4 BLIB_VEC4F_LEFT = { .x = -1, .y = 0, .z = 0, .w = 1.0 };
-const Vec4 BLIB_VEC4F_RIGHT = { .x = 1, .y = 0, .z = 0, .w = 1.0 };
-const Vec4 BLIB_VEC4F_FORWARD = { .x = 0, .y = 0, .z = 1, .w = 1.0 };
-const Vec4 BLIB_VEC4F_BACK = { .x = 0, .y = 0, .z = -1, .w = 1.0 };
+const vec4 VEC4F_ZERO = { .x = 0, .y = 0, .z = 0, .w = 1.0 };
+const vec4 VEC4F_ONE = { .x = 1, .y = 1, .z = 1, .w = 1.0 };
+const vec4 VEC4F_UP = { .x = 0, .y = 1, .z = 0, .w = 1.0 };
+const vec4 VEC4F_DOWN = { .x = 0, .y = -1, .z = 0, .w = 1.0 };
+const vec4 VEC4F_LEFT = { .x = -1, .y = 0, .z = 0, .w = 1.0 };
+const vec4 VEC4F_RIGHT = { .x = 1, .y = 0, .z = 0, .w = 1.0 };
+const vec4 VEC4F_FORWARD = { .x = 0, .y = 0, .z = 1, .w = 1.0 };
+const vec4 VEC4F_BACK = { .x = 0, .y = 0, .z = -1, .w = 1.0 };
 
-void vec4f_printf (const Vec4 v, const char *label) {
+void vec4f_printf (const vec4 v, const char *label) {
   printf ("%s [%f, %f, %f, %f]\n", label, v.x, v.y, v.z, v.w);
 }
 
-Vec4 vec4f_negate (Vec4 v) {
-  return (Vec4){ .x = -v.x, .y = -v.y, .z = -v.z, .w = -v.w };
+vec4 vec4f_negate (vec4 v) {
+  return (vec4){ .x = -v.x, .y = -v.y, .z = -v.z, .w = -v.w };
 }
 
-float vec4f_magnitude (Vec4 v) {
-  return sqrt (Vec4_sqrmagnitude (v));
+float vec4f_magnitude (vec4 v) {
+  return sqrt (vec4_sqrmagnitude (v));
 }
 
-float Vec4_sqrmagnitude (Vec4 v) {
+float vec4_sqrmagnitude (vec4 v) {
   return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w));
 }
 
-Vec4 vec4f_normalize (Vec4 v) {
+vec4 vec4f_normalize (vec4 v) {
   float m = vec4f_magnitude (v);
   if (m == 0)
-    return BLIB_VEC4F_ZERO;
-  return (Vec4){ .x = v.x / m, .y = v.y / m, .z = v.z / m, .w = v.w / m };
+    return VEC4F_ZERO;
+  return (vec4){ .x = v.x / m, .y = v.y / m, .z = v.z / m, .w = v.w / m };
 }
 
-Vec4 vec4f_add (Vec4 a, Vec4 b) {
-  return (Vec4){
+vec4 vec4f_add (vec4 a, vec4 b) {
+  return (vec4){
     .x = a.x + b.x,
     .y = a.y + b.y,
     .z = a.z + b.z,
@@ -547,8 +547,8 @@ Vec4 vec4f_add (Vec4 a, Vec4 b) {
   };
 }
 
-Vec4 vec4f_subtract (Vec4 minuend, Vec4 subtrahend) {
-  return (Vec4){
+vec4 vec4f_subtract (vec4 minuend, vec4 subtrahend) {
+  return (vec4){
     .x = minuend.x - subtrahend.x,
     .y = minuend.y - subtrahend.y,
     .z = minuend.z - subtrahend.z,
@@ -556,12 +556,12 @@ Vec4 vec4f_subtract (Vec4 minuend, Vec4 subtrahend) {
   };
 }
 
-float vec4f_distance (Vec4 a, Vec4 b) {
+float vec4f_distance (vec4 a, vec4 b) {
   return vec4f_magnitude (vec4f_subtract (b, a));
 }
 
-Vec4 vec4f_scale (Vec4 v, float scalar) {
-  return (Vec4){
+vec4 vec4f_scale (vec4 v, float scalar) {
+  return (vec4){
     .x = v.x * scalar,
     .y = v.y * scalar,
     .z = v.z * scalar,
@@ -569,12 +569,12 @@ Vec4 vec4f_scale (Vec4 v, float scalar) {
   };
 }
 
-float vec4f_dot (Vec4 a, Vec4 b) {
+float vec4f_dot (vec4 a, vec4 b) {
   return (a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w);
 }
 
-Vec4 vec4f_lerp (Vec4 a, Vec4 b, float t) {
-  return (Vec4){
+vec4 vec4f_lerp (vec4 a, vec4 b, float t) {
+  return (vec4){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
     .z = a.z + (b.z - a.z) * t,
@@ -582,12 +582,12 @@ Vec4 vec4f_lerp (Vec4 a, Vec4 b, float t) {
   };
 }
 
-Vec4 vec4f_lerpclamped (Vec4 a, Vec4 b, float n) {
+vec4 vec4f_lerpclamped (vec4 a, vec4 b, float n) {
   /*clamp n between 0 and 1*/
   n = n < 0.0f ? 0.0f : n;
   n = n > 1.0f ? 1.0f : n;
   /*perform lerp*/
-  return (Vec4){
+  return (vec4){
     .x = a.x + (b.x - a.x) * n,
     .y = a.y + (b.y - a.y) * n,
     .z = a.z + (b.z - a.z) * n,
@@ -595,8 +595,8 @@ Vec4 vec4f_lerpclamped (Vec4 a, Vec4 b, float n) {
   };
 }
 
-Vec4 vec4f_max (Vec4 a, Vec4 b) {
-  return (Vec4){
+vec4 vec4f_max (vec4 a, vec4 b) {
+  return (vec4){
     .x = a.x >= b.x ? a.x : b.x,
     .y = a.y >= b.y ? a.y : b.y,
     .z = a.z >= b.z ? a.z : b.z,
@@ -604,8 +604,8 @@ Vec4 vec4f_max (Vec4 a, Vec4 b) {
   };
 }
 
-Vec4 vec4f_min (Vec4 a, Vec4 b) {
-  return (Vec4){
+vec4 vec4f_min (vec4 a, vec4 b) {
+  return (vec4){
     .x = a.x <= b.x ? a.x : b.x,
     .y = a.y <= b.y ? a.y : b.y,
     .z = a.z <= b.z ? a.z : b.z,
@@ -613,12 +613,12 @@ Vec4 vec4f_min (Vec4 a, Vec4 b) {
   };
 }
 
-Vec2 Vec4_toVec2 (Vec4 v) {
-  return (Vec2){ .x = v.x, .y = v.y };
+vec2 vec4_toVec2 (vec4 v) {
+  return (vec2){ .x = v.x, .y = v.y };
 }
 
-Vec3 Vec4_toVec3 (Vec4 v) {
-  return (Vec3){ .x = v.x, .y = v.y, .z = v.z };
+vec3 vec4_toVec3 (vec4 v) {
+  return (vec3){ .x = v.x, .y = v.y, .z = v.z };
 }
 
 /*BEGIN SINGLE DIMENSIONAL*/
