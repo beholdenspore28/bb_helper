@@ -541,10 +541,10 @@ mat4 mat4_scale (const vec3 scale);
 mat4 mat4_rotate (const float angle, vec3 axis);
 
 /*Translates a vector to a 4x4 matrix*/
-mat4 mat4_translatevec3 (vec3 t);
+mat4 mat4_translateVec3 (vec3 t);
 
 /*Translates a vector to a 4x4 matrix*/
-mat4 mat4_translatevec4 (vec4 t);
+mat4 mat4_translateVec4 (vec4 t);
 
 /*Multiplies a 4x4 matrix with another 4x4 matrix*/
 mat4 mat4_multiply (const mat4 a, const mat4 b);

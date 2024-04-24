@@ -233,7 +233,7 @@ mat4 mat4_rotate (const float angle, vec3 axis){
   return result;
 }
 
-mat4 mat4_translatevec3 (vec3 t)
+mat4 mat4_translateVec3 (vec3 t)
 {
   mat4 result = MAT4_IDENTITY;
   result.elements[12] += t.x;
@@ -242,7 +242,7 @@ mat4 mat4_translatevec3 (vec3 t)
   return result;
 }
 
-mat4 mat4_translatevec4 (vec4 t) {
+mat4 mat4_translateVec4 (vec4 t) {
   mat4 result = MAT4_IDENTITY;
   result.elements[12] += t.x;
   result.elements[13] += t.y;
