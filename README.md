@@ -10,7 +10,21 @@ inner-workings of the code most people take for granted. This will allow me to
 completely understand all of the code that I use in my projects.
 
 # How do I use it?
-All questions will be answered when you look at the header files
+Simply add the header files to one of your include directories and place the c files in your src directory.
+You have to link to the standard math library for many of the libraries functions contained in b_math to work.
+
+here is an example makefile that i use for most of my projects. (your mileage may vary)
+
+```makefile
+SRCFILES != find . -name '*.c'
+INCDIR := -Isrc -Idep
+CFLAGS := -Wall -Wno-missing-braces -std=c11 -g3 -O0
+LIBS := -lglfw -lGL -lm 
+
+build: build/bin
+	clang ${SRCFILES} ${INCDIR} ${LIBS} ${CFLAGS} -o build/bin/game
+	./build/bin/game
+```
 
 # Why is it called blib? 
 The name blib is a combination of my first initial and 'lib' which is short
