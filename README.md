@@ -19,7 +19,7 @@ here is an example makefile that i use for most of my projects. (your mileage ma
 SRCFILES != find . -name '*.c'
 INCDIR := -Isrc -Idep
 CFLAGS := -Wall -Wextra -Werror -O2 -std=c11 -pedantic
-LIBS := -lm 
+LIBS := -lm #this links to the standard c math library.
 
 build: build/bin
 	clang ${SRCFILES} ${INCDIR} ${LIBS} ${CFLAGS} -o build/bin/game
