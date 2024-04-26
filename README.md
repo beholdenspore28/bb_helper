@@ -18,7 +18,7 @@ here is an example makefile that i use for most of my projects. (your mileage ma
 ```makefile
 SRCFILES != find . -name '*.c'
 INCDIR := -Isrc -Idep
-CFLAGS := -Wall -Wno-missing-braces -std=c11 -g3 -O0
+CFLAGS := -Wall -Wextra -Werror -O2 -std=c11 -pedantic
 LIBS := -lm 
 
 build: build/bin
