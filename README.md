@@ -19,7 +19,7 @@ here is an example makefile that i use for most of my projects. (your mileage ma
 SRCFILES != find . -name '*.c'
 INCDIR := -Isrc -Idep
 CFLAGS := -Wall -Wno-missing-braces -std=c11 -g3 -O0
-LIBS := -lglfw -lGL -lm 
+LIBS := -lm 
 
 build: build/bin
 	clang ${SRCFILES} ${INCDIR} ${LIBS} ${CFLAGS} -o build/bin/game
