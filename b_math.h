@@ -24,8 +24,7 @@ SOFTWARE.
 
 -----------------------------------------------------------------------------*/
 
-#if !defined(B_MATH_H)
-#define B_MATH_H
+#pragma once
 
 #include <assert.h>
 #include <math.h>
@@ -59,28 +58,8 @@ float noise_interpolated2d (float x, float y);
 /*Returns perlin-ish two-dimensional noise values.*/
 float noise_perlin2d (float x, float y, float persistance, int octaves);
 
-/*
-General floating point math functions
-TODO    LerpAngle	Same as Lerp but makes sure the values interpolate
-correctly
-        when they wrap around 360 degrees.
-TODO    MoveTowards	Moves a value current towards target.
-TODO    MoveTowardsAngle	Same as MoveTowards but makes sure the values
-        interpolate correctly when they wrap around 360 degrees.
-TODO    SmoothDamp	Gradually changes a value towards a desired goal over
-time.
-TODO    SmoothDampAngle	Gradually changes an angle given in degrees towards a
-        desired goal angle over time.
-TODO    SmoothStep	Interpolates between min and max with smoothing at the
-        limits.
-*/
-
 #if !defined(PI)
 #define PI 3.14159265358
-#endif
-
-#if !defined(TAU)
-#define TAU 6.28318530718
 #endif
 
 /*Converts "n" radians into degrees.*/
@@ -206,24 +185,6 @@ typedef struct {
 #define VEC4_BACK                                                             \
   (vec4) { 0.0f, 0.0f, -1.0f, 1.0f }
 
-///*shorthand for vector2 (0, 0)*/
-// extern const vec2 VEC2F_ZERO;
-//
-///*shorthand for vector2 (1, 1)*/
-// extern const vec2 VEC2F_ONE;
-//
-///*shorthand for vector2 (0, 1)*/
-// extern const vec2 VEC2F_UP;
-//
-///*shorthand for vector2 (0,-1)*/
-// extern const vec2 VEC2F_DOWN;
-//
-///*shorthand for vector2 (-1,0)*/
-// extern const vec2 VEC2F_LEFT;
-//
-///*shorthand for vector2 (1, 0)*/
-// extern const vec2 VEC2F_RIGHT;
-
 /*Prints a vector "v" using printf*/
 void vec2_printf (const vec2 v, const char *label);
 
@@ -287,62 +248,6 @@ vec3 vec2_tovec3 (vec2 v);
 
 /*Converts a 2 dimensional vector to a 4 dimensional one*/
 vec4 vec2_tovec4 (vec2 v);
-
-/*
-TODO MoveTowards	Calculate a position between the points specified by
-current
-and target, moving no farther than the distance specified by maxDistanceDelta.
-TODO Slerp	Spherically interpolates between two vectors.
-TODO ClampMagnitude	Returns a copy of vector with its magnitude clamped to
-maxLength.
-TODO Angle	Calculates the angle between vectors from and.
-TODO LerpUnclamped	Linearly interpolates between two vectors.
-TODO Max	Returns a vector that is made from the largest components of
-two vectors.
-TODO Min	Returns a vector that is made from the smallest components of
-two vectors.
-TODO OrthoNormalize	Makes vectors normalized and orthogonal to each other.
-TODO Project	Projects a vector onto another vector.
-TODO ProjectOnPlane	Projects a vector onto a plane defined by a normal
-orthogonal to the plane.
-TODO Reflect	Reflects a vector off the plane defined by a normal.
-TODO RotateTowards	Rotates a vector current towards target.
-TODO SignedAngle	Calculates the signed angle between vectors from and to
-in relation to axis.
-TODO SlerpUnclamped	Spherically interpolates between two vectors.
-TODO SmoothDamp	Gradually changes a vector towards a desired goal over time.
-
-currentTilt = 0f;
-float smoothTime = 0.3f;
-float refTilt = 0f
-currentTilt = mathf.SmoothDamp(currentTilt, tiltAmount*horizontalInput,
-ref refTilt, smoothTime);
-transform.localRotation = Quaternion.Euler(0, 0, currentTilt);
-*/
-
-///*shorthand for vector3 (0, 0, 0)*/
-// extern const vec3 VEC3F_ZERO;
-//
-///*shorthand for vector3 (0, 1, 0)*/
-// extern const vec3 VEC3F_UP;
-//
-///*shorthand for vector3 (0,-1, 0)*/
-// extern const vec3 VEC3F_DOWN;
-//
-///*shorthand for vector3 (-1,0, 0)*/
-// extern const vec3 VEC3F_LEFT;
-//
-///*shorthand for vector3 (1, 0, 0)*/
-// extern const vec3 VEC3F_RIGHT;
-//
-///*shorthand for vector3 (0, 0, 1)*/
-// extern const vec3 VEC3F_FORWARD;
-//
-///*shorthand for vector3 (0, 0,-1)*/
-// extern const vec3 VEC3F_BACK;
-//
-///*shorthand for vector3 (1, 1, 1)*/
-// extern const vec3 VEC3F_ONE;
 
 /*Prints a vector "v" using printf*/
 void vec3_printf (const vec3 v, const char *label);
@@ -418,30 +323,6 @@ vec2 vec3_tovec2 (vec3 v);
 
 /*Converts a 3 dimensional vector to a 4 dimensional one*/
 vec4 vec3_tovec4 (vec3 v);
-
-///*shorthand for vector4 (0, 0, 0, 0)*/
-// extern const vec4 VEC4F_ZERO;
-//
-///*shorthand for vector4 (0, 1, 0, 1)*/
-// extern const vec4 VEC4F_UP;
-//
-///*shorthand for vector4 (0,-1, 0, 1)*/
-// extern const vec4 VEC4F_DOWN;
-//
-///*shorthand for vector4 (-1,0, 0, 1)*/
-// extern const vec4 VEC4F_LEFT;
-//
-///*shorthand for vector4 (1, 0, 0, 1)*/
-// extern const vec4 VEC4F_RIGHT;
-//
-///*shorthand for vector4 (0, 0, 1, 1)*/
-// extern const vec4 VEC4F_FORWARD;
-//
-///*shorthand for vector4 (0, 0,-1, 1)*/
-// extern const vec4 VEC4F_BACK;
-//
-///*shorthand for vector4 (1, 1, 1, 1)*/
-// extern const vec4 VEC4F_ONE;
 
 /*Prints a vector "v" using printf*/
 void vec4_printf (const vec4 v, const char *label);
@@ -551,5 +432,3 @@ mat4 mat4_multiply (const mat4 a, const mat4 b);
 
 /*Multiplies a 4x4 matrix with a 4 dimensional vector*/
 vec4 mat4_multiplyvec4(vec4 Left, mat4 Right);
-
-#endif /*B_MATH_H*/
