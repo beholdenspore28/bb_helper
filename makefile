@@ -1,4 +1,4 @@
-SRC := test.c
+SRC := test.c newtest.c
 OPT_DEBUG := -g3
 OPT_SMALL := -Oz -flto
 OPT_RELEASE := -flto -O3 
