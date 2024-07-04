@@ -1,5 +1,11 @@
-SRC := test.c b_arr.c
-CFLAGS := -Wall -Wextra -Werror -pedantic -O0 -g3 -std=c89
+SRC := test.c
+OPT_DEBUG := -g3
+OPT_SMALL := -Oz -flto
+OPT_RELEASE := -flto -O3 
+OPT_ := ${OPT_DEBUG} 
+OPT := ${OPT_${MODE}}
+CFLAGS += ${OPT} -Wall -Wextra -Werror -pedantic -std=c89
+
 OUT := deleteme
 CC := gcc
 
