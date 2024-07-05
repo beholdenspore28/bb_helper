@@ -168,15 +168,15 @@ vec4 vec3_toVec4 (vec3 v) {
   return (vec4){ .x = v.x, .y = v.y, .z = v.z, .w = 1.0f };
 }
 
-void vec4f_printf (const vec4 v, const char *label) {
+void vec4_printf (const vec4 v, const char *label) {
   printf ("%s [%f, %f, %f, %f]\n", label, v.x, v.y, v.z, v.w);
 }
 
-vec4 vec4f_negate (vec4 v) {
+vec4 vec4_negate (vec4 v) {
   return (vec4){ .x = -v.x, .y = -v.y, .z = -v.z, .w = -v.w };
 }
 
-float vec4f_magnitude (vec4 v) {
+float vec4_magnitude (vec4 v) {
   return sqrt (vec4_sqrmagnitude (v));
 }
 
@@ -184,14 +184,14 @@ float vec4_sqrmagnitude (vec4 v) {
   return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w));
 }
 
-vec4 vec4f_normalize (vec4 v) {
-  float m = vec4f_magnitude (v);
+vec4 vec4_normalize (vec4 v) {
+  float m = vec4_magnitude (v);
   if (m == 0)
     return VEC4_ZERO;
   return (vec4){ .x = v.x / m, .y = v.y / m, .z = v.z / m, .w = v.w / m };
 }
 
-vec4 vec4f_add (vec4 a, vec4 b) {
+vec4 vec4_add (vec4 a, vec4 b) {
   return (vec4){
     .x = a.x + b.x,
     .y = a.y + b.y,
@@ -200,7 +200,7 @@ vec4 vec4f_add (vec4 a, vec4 b) {
   };
 }
 
-vec4 vec4f_subtract (vec4 minuend, vec4 subtrahend) {
+vec4 vec4_subtract (vec4 minuend, vec4 subtrahend) {
   return (vec4){
     .x = minuend.x - subtrahend.x,
     .y = minuend.y - subtrahend.y,
@@ -209,11 +209,11 @@ vec4 vec4f_subtract (vec4 minuend, vec4 subtrahend) {
   };
 }
 
-float vec4f_distance (vec4 a, vec4 b) {
-  return vec4f_magnitude (vec4f_subtract (b, a));
+float vec4_distance (vec4 a, vec4 b) {
+  return vec4_magnitude (vec4_subtract (b, a));
 }
 
-vec4 vec4f_scale (vec4 v, float scalar) {
+vec4 vec4_scale (vec4 v, float scalar) {
   return (vec4){
     .x = v.x * scalar,
     .y = v.y * scalar,
@@ -222,11 +222,11 @@ vec4 vec4f_scale (vec4 v, float scalar) {
   };
 }
 
-float vec4f_dot (vec4 a, vec4 b) {
+float vec4_dot (vec4 a, vec4 b) {
   return (a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w);
 }
 
-vec4 vec4f_lerp (vec4 a, vec4 b, float t) {
+vec4 vec4_lerp (vec4 a, vec4 b, float t) {
   return (vec4){
     .x = a.x + (b.x - a.x) * t,
     .y = a.y + (b.y - a.y) * t,
@@ -235,7 +235,7 @@ vec4 vec4f_lerp (vec4 a, vec4 b, float t) {
   };
 }
 
-vec4 vec4f_lerpclamped (vec4 a, vec4 b, float n) {
+vec4 vec4_lerpclamped (vec4 a, vec4 b, float n) {
   /*clamp n between 0 and 1*/
   n = n < 0.0f ? 0.0f : n;
   n = n > 1.0f ? 1.0f : n;
@@ -248,7 +248,7 @@ vec4 vec4f_lerpclamped (vec4 a, vec4 b, float n) {
   };
 }
 
-vec4 vec4f_max (vec4 a, vec4 b) {
+vec4 vec4_max (vec4 a, vec4 b) {
   return (vec4){
     .x = a.x >= b.x ? a.x : b.x,
     .y = a.y >= b.y ? a.y : b.y,
@@ -257,7 +257,7 @@ vec4 vec4f_max (vec4 a, vec4 b) {
   };
 }
 
-vec4 vec4f_min (vec4 a, vec4 b) {
+vec4 vec4_min (vec4 a, vec4 b) {
   return (vec4){
     .x = a.x <= b.x ? a.x : b.x,
     .y = a.y <= b.y ? a.y : b.y,
@@ -391,7 +391,24 @@ mat4_perspective (float fov, float aspect, float near, float far)
   return result;
 }
 
-vec4 mat4_multiplyvec4(vec4 Left, mat4 Right){
+vec3 mat4_multiplyVec3(vec3 Left, mat4 Right){
+    vec3 result;
+    result.y = Left.y * Right.elements[0];
+    result.x = Left.y * Right.elements[4];
+    result.z = Left.y * Right.elements[8];
+
+    result.y += Left.x * Right.elements[1];
+    result.x += Left.x * Right.elements[5];
+    result.z += Left.x * Right.elements[9];
+		
+    result.y += Left.z * Right.elements[2];
+    result.x += Left.z * Right.elements[6];
+    result.z += Left.z * Right.elements[10];
+
+    return result;
+}
+
+vec4 mat4_multiplyVec4(vec4 Left, mat4 Right){
     vec4 result;
     result.y = Left.y * Right.elements[0];
     result.x = Left.y * Right.elements[4];

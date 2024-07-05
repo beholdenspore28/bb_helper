@@ -129,10 +129,10 @@ Returns a point at "t"% of the way between "a" and "b".*/
 vec2 vec2_lerpclamped (vec2 a, vec2 b, float t);
 
 /*Converts a 2 dimensional vector to a 3 dimensional one*/
-vec3 vec2_tovec3 (vec2 v);
+vec3 vec2_toVec3 (vec2 v);
 
 /*Converts a 2 dimensional vector to a 4 dimensional one*/
-vec4 vec2_tovec4 (vec2 v);
+vec4 vec2_toVec4 (vec2 v);
 
 /*Prints a vector "v" using printf*/
 void vec3_printf (const vec3 v, const char *label);
@@ -204,10 +204,10 @@ vectors.*/
 vec3 vec3_min (vec3 a, vec3 b);
 
 /*Converts a 3 dimensional vector to a 2 dimensional one*/
-vec2 vec3_tovec2 (vec3 v);
+vec2 vec3_toVec2 (vec3 v);
 
 /*Converts a 3 dimensional vector to a 4 dimensional one*/
-vec4 vec3_tovec4 (vec3 v);
+vec4 vec3_toVec4 (vec3 v);
 
 /*Prints a vector "v" using printf*/
 void vec4_printf (const vec4 v, const char *label);
@@ -276,10 +276,10 @@ vectors.*/
 vec4 vec4_min (vec4 a, vec4 b);
 
 /*Converts a 4 dimensional vector to a 2 dimensional one*/
-vec2 vec4_tovec2 (vec4 v);
+vec2 vec4_toVec2 (vec4 v);
 
 /*Converts a 4 dimensional vector to a 3 dimensional one*/
-vec3 vec4_tovec3 (vec4 v);
+vec3 vec4_toVec3 (vec4 v);
 
 /*A column major 4x4 matrix*/
 typedef struct{
@@ -316,4 +316,7 @@ mat4 mat4_translateVec4 (vec4 t);
 mat4 mat4_multiply (const mat4 a, const mat4 b);
 
 /*Multiplies a 4x4 matrix with a 4 dimensional vector*/
-vec4 mat4_multiplyvec4(vec4 Left, mat4 Right);
+vec3 mat4_multiplyVec3(vec3 Left, mat4 Right);
+
+/*Multiplies a 4x4 matrix with a 4 dimensional vector*/
+vec4 mat4_multiplyVec4(vec4 Left, mat4 Right);
