@@ -354,33 +354,27 @@ void mat4_printf (mat4 m, const char *label) {
   printf ("\n--------------------------------\n");
 }
 
-mat4
-mat4_add (const mat4 a, const mat4 b)
-{
+mat4 mat4_add (const mat4 a, const mat4 b) {
   mat4 sum = MAT4_IDENTITY;
   int i = 0;
+
   for (i = 0; i < 16; i++)
-    {
       sum.elements[i] = a.elements[i] + b.elements[i];
-    }
+
   return sum;
 }
 
-mat4
-mat4_subtract (const mat4 min, const mat4 sub)
-{
+mat4 mat4_subtract (const mat4 min, const mat4 sub) {
   mat4 dif = MAT4_IDENTITY;
   int i = 0;
+
   for (i = 0; i < 16; i++)
-    {
       dif.elements[i] = min.elements[i] - sub.elements[i];
-    }
+
   return dif;
 }
 
-mat4
-mat4_perspective (float fov, float aspect, float near, float far)
-{
+mat4 mat4_perspective (float fov, float aspect, float near, float far) {
   mat4 result = MAT4_IDENTITY;
   float Cotangent = (1.0f / tanf (fov / 2.0f));
   result.elements[0] = (Cotangent / aspect);
@@ -391,7 +385,7 @@ mat4_perspective (float fov, float aspect, float near, float far)
   return result;
 }
 
-vec3 mat4_multiplyVec3(vec3 Left, mat4 Right){
+vec3 mat4_multiplyVec3(vec3 Left, mat4 Right) {
     vec3 result;
     result.y = Left.y * Right.elements[0];
     result.x = Left.y * Right.elements[4];
@@ -408,7 +402,7 @@ vec3 mat4_multiplyVec3(vec3 Left, mat4 Right){
     return result;
 }
 
-vec4 mat4_multiplyVec4(vec4 Left, mat4 Right){
+vec4 mat4_multiplyVec4(vec4 Left, mat4 Right) {
     vec4 result;
     result.y = Left.y * Right.elements[0];
     result.x = Left.y * Right.elements[4];
@@ -497,8 +491,7 @@ mat4 mat4_rotate (const float angle, vec3 axis){
   return result;
 }
 
-mat4 mat4_translateVec3 (vec3 t)
-{
+mat4 mat4_translateVec3 (vec3 t) {
   mat4 result = MAT4_IDENTITY;
   result.elements[12] += t.x;
   result.elements[13] += t.y;
