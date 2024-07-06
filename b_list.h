@@ -29,6 +29,8 @@ void list_##type##_remove(list_##type* l);
 #define DEFINE_LIST(type) \
 list_##type list_##type##_alloc(void) { \
 	list_##type list; \
+	list.length = 1; \
+	list.capacity = 1; \
 	memset(&list, 0, sizeof(list_##type)); \
 	list.data = malloc(sizeof(type)); \
 	return list; \
