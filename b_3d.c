@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "b_3d.h"
+#include "b_math.h"
 
 void vec2_printf (const vec2 v, const char *label) {
   printf ("%s [%f, %f]\n", label, v.x, v.y);
@@ -507,3 +508,193 @@ mat4 mat4_translateVec4 (vec4 t) {
   result.elements[15] += t.w;
   return result;
 }
+
+/*QUATERNION*/
+
+/*
+The negative of a quaternion:
+(-a, -b, -c, -d)
+*/
+quat quat_negate(quat q) {
+	q.x = -q.x;
+	q.y = -q.y;
+	q.z = -q.z;
+	q.w = -q.w;
+	return q;
+}
+
+/*
+The conjugate of a quaternion:
+(-x, -y, -z, w)
+*/
+quat quat_conj(quat q) {
+	quat ret;
+	ret.w = q.w;
+	ret.x = -q.x;
+	ret.y = -q.y;
+	ret.z = -q.z;
+	return ret;
+}
+
+/*
+Addition of a real number   r   and a quaternion   q:
+r + q = q + r = (a+r, b, c, d)
+*/
+quat quat_addReal(quat quat, float real) {
+	quat.w += real;
+	return quat;
+}
+
+/*
+Addition of two quaternions:
+q1 + q2 = (a1+a2, b1+b2, c1+c2, d1+d2)
+*/
+quat quat_add(quat q1, quat q2) {
+	q1.x += q2.x;
+	q1.y += q2.y;
+	q1.z += q2.z;
+	q1.w += q2.w;
+	return q1;
+}
+
+/*
+Multiplication of a real number and a quaternion:
+qr = rq = (ar, br, cr, dr)
+*/
+quat quat_scale(quat q, float scalar) {
+	q.x *= scalar;
+	q.y *= scalar;
+	q.z *= scalar;
+	q.w *= scalar;
+	return q;
+}
+
+/*
+Multiplication of two quaternions   q1   and   q2   is given by:
+q1q2 ≠ q2q1
+*/
+quat quat_mult(quat q1, quat q2) {
+	quat ret;
+	ret.x =   q1.x * q2.w + q1.y * q2.z - q1.z * q2.y + q1.w * q2.x;
+	ret.y =  -q1.x * q2.z + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y;
+	ret.z =   q1.x * q2.y - q1.y * q2.x + q1.z * q2.w + q1.w * q2.z;
+	ret.w =  -q1.x * q2.x - q1.y * q2.y - q1.z * q2.z + q1.w * q2.w;
+	return ret;
+}
+
+/*Dot product of two quaternions*/
+float quat_dot(quat a, quat b) {
+	return (a.w + a.x + a.y + a.z) *
+	(b.w + b.x + b.y + b.z);
+}
+
+/*
+Returns 1 if q1 is equal to q2.
+Returns 0 if q1 is not equal to q2.
+*/
+int quat_equal(quat q1, quat q2) {
+	return 
+		q1.w == q2.w &&
+		q1.x == q2.x &&
+		q1.y == q2.y &&
+		q1.z == q2.z;
+}
+
+/*
+Prints the given quaternion to standard out.
+*/
+void quat_print(quat q, const char* label) {
+	printf("\t%12f, %12f, %12f, %12f\t%s\n", 
+			q.x, q.y, q.z, q.w, label);
+}
+
+/*
+Returns the squared magnitude of a given quaternion
+*/
+float quat_sqrmag(quat q) {
+	return q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w;
+}
+
+/*
+Returns the magnitude of a given quaternion.
+*/
+float quat_mag(quat q) {
+	return sqrt(quat_sqrmag(q));
+}
+
+quat quat_fromEuler(vec3 eulerAngles) {
+	quat q;
+	float c1, s1, c2, s2, c3, s3, c1c2, s1s2;
+
+	c1 = (float)cos(eulerAngles.y/2.0f);
+	s1 = (float)sin(eulerAngles.y/2.0f);
+	c2 = (float)cos(eulerAngles.x/2.0f);
+	s2 = (float)sin(eulerAngles.x/2.0f);
+	c3 = (float)cos(eulerAngles.z/2.0f);
+	s3 = (float)sin(eulerAngles.z/2.0f);
+
+	c1c2 = c1 * c2;
+	s1s2 = s1 * s2;
+	
+	q.w = c1c2 * c3 - s1s2 * s3;
+	q.x = c1c2 * s3 + s1s2 * c3;
+	q.y = s1   * c2 * c3   + c1 * s2 * s3;
+	q.z = c1   * s2 * c3   - s1 * c2 * s3;
+
+	return q;
+}
+
+vec3 quat_toEuler(quat q) {
+	float test, sqx, sqy, sqz;
+	vec3 ret;
+
+	test = q.x*q.y + q.z*q.w;
+	sqx = q.x*q.x;
+	sqy = q.y*q.y;
+	sqz = q.z*q.z;
+
+	if (test > 0.499f) { /* singularity at north pole */
+		ret.y = 2 * (float)atan2(q.x,q.w);
+		ret.x = PI*0.5;
+		ret.z = 0;
+		return ret;
+	}
+
+	if (test < -0.499) { /* singularity at south pole */
+		ret.y = -2 * atan2(q.x,q.w);
+		ret.x = - PI*0.5;
+		ret.z = 0;
+		return ret;
+	}
+
+	sqx = q.x*q.x;
+	sqy = q.y*q.y;
+	sqz = q.z*q.z;
+	ret.y = atan2(2*q.y*q.w-2*q.x*q.z , 1 - 2*sqy - 2*sqz);
+	ret.x = asin(2*test);
+	ret.z = atan2(2*q.x*q.w-2*q.y*q.z , 1 - 2*sqx - 2*sqz);
+	return ret;
+}
+
+/*
+Returns a quaternion representing the given rotation by 'angle' around 'axis'.
+*/
+quat quat_angleAxis(float angle, vec3 axis) {
+	quat ret;
+	float s = (float)sin(angle / 2.0);
+	ret.x = axis.x * s;
+	ret.y = axis.y * s;
+	ret.z = axis.z * s;
+	ret.w = (float)cos(angle / 2.0);
+	return ret;
+}
+
+quat quat_set(float x, float y, float z, float w) {
+	quat q;
+	q.x = x;
+	q.y = y;
+	q.z = z;
+	q.w = w;
+	return q;
+}
+

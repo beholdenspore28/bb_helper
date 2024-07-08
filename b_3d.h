@@ -320,3 +320,81 @@ vec3 mat4_multiplyVec3(vec3 Left, mat4 Right);
 
 /*Multiplies a 4x4 matrix with a 4 dimensional vector*/
 vec4 mat4_multiplyVec4(vec4 Left, mat4 Right);
+
+typedef struct {
+	float x;
+	float y;
+	float z;
+	float w;
+} quat;
+
+#define QUATERNION_IDENTITY {0.0f, 0.0f, 0.0f, 1.0f}
+
+/*
+The negative of a quaternion:
+(-a, -b, -c, -d)
+*/
+quat quat_negate(quat q);
+
+/*
+The conjugate of a quaternion:
+(-x, -y, -z, w)
+*/
+quat quat_conj(quat q);
+
+/*
+Addition of a real number   r   and a quaternion   q:
+r + q = q + r = (a+r, b, c, d)
+*/
+quat quat_addReal(quat quat, float real);
+
+/*
+Addition of two quaternions:
+q1 + q2 = (a1+a2, b1+b2, c1+c2, d1+d2)
+*/
+quat quat_add(quat q1, quat q2);
+
+/*
+Multiplication of a real number and a quaternion:
+qr = rq = (ar, br, cr, dr)
+*/
+quat quat_scale(quat q, float scalar);
+
+/*
+Multiplication of two quaternions   q1   and   q2   is given by:
+q1q2 ≠ q2q1
+*/
+quat quat_mult(quat q1, quat q2);
+
+/*Dot product of two quaternions*/
+float quat_dot(quat a, quat b);
+
+/*
+Returns 1 if q1 is equal to q2.
+Returns 0 if q1 is not equal to q2.
+*/
+int quat_equal(quat q1, quat q2);
+
+/*
+Prints the given quaternion to standard out.
+*/
+void quat_print(quat q, const char* label);
+
+/*
+Returns the squared magnitude of a given quaternion
+*/
+float quat_sqrmag(quat q);
+
+/*
+Returns the magnitude of a given quaternion.
+*/
+float quat_mag(quat q);
+
+quat quat_fromEuler(vec3 eulerAngles);
+vec3 quat_toEuler(quat q);
+/*
+Returns a quaternion representing the given rotation by 'angle' around 'axis'.
+*/
+quat quat_angleAxis(float angle, vec3 axis);
+
+quat quat_set(float x, float y, float z, float w);

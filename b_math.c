@@ -69,7 +69,7 @@ float map (float n, float fromMin, float fromMax, float toMin, float toMax) {
   return lerp (norm (n, fromMin, fromMax), toMin, toMax);
 }
 
-bool aproxequal (float a, float b, float tolerance) {
+int aproxequal (float a, float b, float tolerance) {
   return (fabs (a - b) < tolerance);
 }
 

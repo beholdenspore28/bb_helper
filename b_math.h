@@ -28,7 +28,6 @@ SOFTWARE.
 
 #include <assert.h>
 #include <math.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -93,7 +92,7 @@ float map (float n, float fromMin, float fromMax, float toMin, float toMax);
  * another. This function will check if two numbers are similar enough to be
  * considered equal. Returns true if the absolute value of "a" minus the
  * absolute value of "b" is less than "tolerance".*/
-bool aproxEqual (float a, float b, float tolerance);
+int aproxEqual (float a, float b, float tolerance);
 
 /*Interpolation using cosine*/
 float cosInterpolate (float a, float b, float t);
