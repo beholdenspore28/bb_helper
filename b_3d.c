@@ -509,12 +509,6 @@ mat4 mat4_translateVec4 (vec4 t) {
   return result;
 }
 
-/*QUATERNION*/
-
-/*
-The negative of a quaternion:
-(-a, -b, -c, -d)
-*/
 quat quat_negate(quat q) {
 	q.x = -q.x;
 	q.y = -q.y;
@@ -523,10 +517,6 @@ quat quat_negate(quat q) {
 	return q;
 }
 
-/*
-The conjugate of a quaternion:
-(-x, -y, -z, w)
-*/
 quat quat_conj(quat q) {
 	quat ret;
 	ret.w = q.w;
@@ -536,19 +526,11 @@ quat quat_conj(quat q) {
 	return ret;
 }
 
-/*
-Addition of a real number   r   and a quaternion   q:
-r + q = q + r = (a+r, b, c, d)
-*/
 quat quat_addReal(quat quat, float real) {
 	quat.w += real;
 	return quat;
 }
 
-/*
-Addition of two quaternions:
-q1 + q2 = (a1+a2, b1+b2, c1+c2, d1+d2)
-*/
 quat quat_add(quat q1, quat q2) {
 	q1.x += q2.x;
 	q1.y += q2.y;
@@ -557,10 +539,6 @@ quat quat_add(quat q1, quat q2) {
 	return q1;
 }
 
-/*
-Multiplication of a real number and a quaternion:
-qr = rq = (ar, br, cr, dr)
-*/
 quat quat_scale(quat q, float scalar) {
 	q.x *= scalar;
 	q.y *= scalar;
@@ -569,10 +547,6 @@ quat quat_scale(quat q, float scalar) {
 	return q;
 }
 
-/*
-Multiplication of two quaternions   q1   and   q2   is given by:
-q1q2 ≠ q2q1
-*/
 quat quat_mult(quat q1, quat q2) {
 	quat ret;
 	ret.x =   q1.x * q2.w + q1.y * q2.z - q1.z * q2.y + q1.w * q2.x;
@@ -582,16 +556,11 @@ quat quat_mult(quat q1, quat q2) {
 	return ret;
 }
 
-/*Dot product of two quaternions*/
 float quat_dot(quat a, quat b) {
 	return (a.w + a.x + a.y + a.z) *
 	(b.w + b.x + b.y + b.z);
 }
 
-/*
-Returns 1 if q1 is equal to q2.
-Returns 0 if q1 is not equal to q2.
-*/
 int quat_equal(quat q1, quat q2) {
 	return 
 		q1.w == q2.w &&
@@ -600,26 +569,78 @@ int quat_equal(quat q1, quat q2) {
 		q1.z == q2.z;
 }
 
-/*
-Prints the given quaternion to standard out.
-*/
 void quat_print(quat q, const char* label) {
 	printf("\t%12f, %12f, %12f, %12f\t%s\n", 
 			q.x, q.y, q.z, q.w, label);
 }
 
-/*
-Returns the squared magnitude of a given quaternion
-*/
 float quat_sqrmag(quat q) {
 	return q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w;
 }
 
-/*
-Returns the magnitude of a given quaternion.
-*/
 float quat_mag(quat q) {
 	return sqrt(quat_sqrmag(q));
+}
+
+mat4 quat_toMat4(quat q) {
+	mat4 ret;
+	ret = MAT4_IDENTITY;
+	double sqw = q.w*q.w;
+	double sqx = q.x*q.x;
+	double sqy = q.y*q.y;
+	double sqz = q.z*q.z;
+
+	// invs (inverse square length) is only required if quaternion is not already normalised
+	double invs = 1 / (sqx + sqy + sqz + sqw);
+	// since sqw + sqx + sqy + sqz =1/invs*invs
+	ret.elements[0] = ( sqx - sqy - sqz + sqw)*invs; //0.133333 
+	ret.elements[5] = (-sqx + sqy - sqz + sqw)*invs; //0.333333
+	ret.elements[10] = (-sqx - sqy + sqz + sqw)*invs; //0.666667
+
+	double tmp1 = q.x*q.y;
+	double tmp2 = q.z*q.w;
+	ret.elements[1] = 2.0 * (tmp1 + tmp2)*invs;//0.933333
+	ret.elements[4] = 2.0 * (tmp1 - tmp2)*invs;//-0.666667
+
+	tmp1 = q.x*q.z;
+	tmp2 = q.y*q.w;
+	ret.elements[2] = 2.0 * (tmp1 - tmp2)*invs; //-0.333333
+	ret.elements[8] = 2.0 * (tmp1 + tmp2)*invs; //0.733333
+	tmp1 = q.y*q.z;
+	tmp2 = q.x*q.w;
+	ret.elements[6] = 2.0 * (tmp1 + tmp2)*invs; //0.666667
+	ret.elements[9] = 2.0 * (tmp1 - tmp2)*invs; //0.133333   
+	return ret;
+}
+
+quat quat_slerp(quat qa, quat qb, double t) {
+	quat ret = QUATERNION_IDENTITY;
+	// Calculate angle between them.
+	double cosHalfTheta = qa.w * qb.w + qa.x * qb.x + qa.y * qb.y + qa.z * qb.z;
+	// if qa=qb or qa=-qb then theta = 0 and we can return qa
+	if (fabs(cosHalfTheta) >= 1.0){
+		ret.w = qa.w;ret.x = qa.x;ret.y = qa.y;ret.z = qa.z;
+		return ret;
+	}
+	double halfTheta = acos(cosHalfTheta);
+	double sinHalfTheta = sqrt(1.0 - cosHalfTheta*cosHalfTheta);
+	// if theta = 180 degrees then result is not fully defined
+	// we could rotate around any axis normal to qa or qb
+	if (fabs(sinHalfTheta) < 0.001){ // fabs is floating point absolute
+		ret.w = (qa.w * 0.5 + qb.w * 0.5);
+		ret.x = (qa.x * 0.5 + qb.x * 0.5);
+		ret.y = (qa.y * 0.5 + qb.y * 0.5);
+		ret.z = (qa.z * 0.5 + qb.z * 0.5);
+		return ret;
+	}
+	double ratioA = sin((1 - t) * halfTheta) / sinHalfTheta;
+	double ratioB = sin(t * halfTheta) / sinHalfTheta; 
+	//calculate Quaternion.
+	ret.w = (qa.w * ratioA + qb.w * ratioB);
+	ret.x = (qa.x * ratioA + qb.x * ratioB);
+	ret.y = (qa.y * ratioA + qb.y * ratioB);
+	ret.z = (qa.z * ratioA + qb.z * ratioB);
+	return ret;
 }
 
 quat quat_fromEuler(vec3 eulerAngles) {
@@ -676,9 +697,6 @@ vec3 quat_toEuler(quat q) {
 	return ret;
 }
 
-/*
-Returns a quaternion representing the given rotation by 'angle' around 'axis'.
-*/
 quat quat_angleAxis(float angle, vec3 axis) {
 	quat ret;
 	float s = (float)sin(angle / 2.0);
@@ -697,4 +715,3 @@ quat quat_set(float x, float y, float z, float w) {
 	q.w = w;
 	return q;
 }
-

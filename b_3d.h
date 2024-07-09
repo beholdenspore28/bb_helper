@@ -23,52 +23,68 @@ typedef struct {
   float w;
 } vec4;
 
-#define VEC2_ZERO                                                             \
-  (vec2) { 0.0f, 0.0f }
-#define VEC2_ONE                                                              \
-  (vec2) { 1.0f, 1.0f }
-#define VEC2_UP                                                               \
-  (vec2) { 0.0f, 1.0f }
-#define VEC2_DOWN                                                             \
-  (vec2) { 0.0f, -1.0f }
-#define VEC2_LEFT                                                             \
-  (vec2) { -1.0f, 0.0f }
-#define VEC2_RIGHT                                                            \
-  (vec2) { 1.0f, 0.0f }
+/*A column major 4x4 matrix*/
+typedef struct{
+  float elements[16];
+} mat4;
 
-#define VEC3_ZERO                                                             \
+
+typedef struct {
+	float x;
+	float y;
+	float z;
+	float w;
+} quat;
+
+#define QUATERNION_IDENTITY (quat){0.0f, 0.0f, 0.0f, 1.0f}
+
+
+#define VEC2_ZERO          					                                                 \
+  (vec2) { 0.0f, 0.0f }
+#define VEC2_ONE(scalar)   					                                                \
+  (vec2) { scalar, scalar }
+#define VEC2_UP(scalar)      					                                                 \
+  (vec2) { 0.0f, scalar }
+#define VEC2_DOWN(scalar)  					                                                 \
+  (vec2) { 0.0f, -scalar }
+#define VEC2_LEFT(scalar)                                                             \
+  (vec2) { -scalar, 0.0f }
+#define VEC2_RIGHT(scalar)                                                            \
+  (vec2) { scalar, 0.0f }
+
+#define VEC3_ZERO     				                                                        \
   (vec3) { 0.0f, 0.0f, 0.0f }
-#define VEC3_ONE                                                              \
-  (vec3) { 1.0f, 1.0f, 1.0f }
-#define VEC3_UP                                                               \
-  (vec3) { 0.0f, 1.0f, 0.0f }
-#define VEC3_DOWN                                                             \
-  (vec3) { 0.0f, -1.0f, 0.0f }
-#define VEC3_LEFT                                                             \
-  (vec3) { -1.0f, 0.0f, 0.0f }
-#define VEC3_RIGHT                                                            \
-  (vec3) { 1.0f, 0.0f, 0.0f }
-#define VEC3_FORWARD                                                          \
-  (vec3) { 0.0f, 0.0f, 1.0f }
-#define VEC3_BACK                                                             \
-  (vec3) { 0.0f, 0.0f, -1.0f }
+#define VEC3_ONE(scalar)                                                              \
+  (vec3) { scalar, scalar, scalar }
+#define VEC3_UP(scalar)                                                               \
+  (vec3) { 0.0f, scalar, 0.0f }
+#define VEC3_DOWN(scalar)                                                             \
+  (vec3) { 0.0f, -scalar, 0.0f }
+#define VEC3_LEFT(scalar)                                                             \
+  (vec3) { -scalar, 0.0f, 0.0f }
+#define VEC3_RIGHT(scalar)                                                            \
+  (vec3) { scalar, 0.0f, 0.0f }
+#define VEC3_FORWARD(scalar)                                                          \
+  (vec3) { 0.0f, 0.0f, scalar }
+#define VEC3_BACK(scalar)                                                             \
+  (vec3) { 0.0f, 0.0f, -scalar }
 
 #define VEC4_ZERO                                                             \
   (vec4) { 0.0f, 0.0f, 0.0f, 1.0f }
-#define VEC4_ONE                                                              \
-  (vec4) { 1.0f, 1.0f, 1.0f, 1.0f }
-#define VEC4_UP                                                               \
-  (vec4) { 0.0f, 1.0f, 0.0f, 1.0f }
-#define VEC4_DOWN                                                             \
-  (vec4) { 0.0f, -1.0f, 0.0f, 1.0f }
-#define VEC4_LEFT                                                             \
-  (vec4) { -1.0f, 0.0f, 0.0f, 1.0f }
-#define VEC4_RIGHT                                                            \
-  (vec4) { 1.0f, 0.0f, 0.0f, 1.0f }
-#define VEC4_FORWARD                                                          \
-  (vec4) { 0.0f, 0.0f, 1.0f, 1.0f }
-#define VEC4_BACK                                                             \
-  (vec4) { 0.0f, 0.0f, -1.0f, 1.0f }
+#define VEC4_ONE(scalar)                                                              \
+  (vec4) { scalar, scalar, scalar, scalar }
+#define VEC4_UP(scalar)                                                               \
+  (vec4) { 0.0f, scalar, 0.0f, scalar }
+#define VEC4_DOWN(scalar)                                                             \
+  (vec4) { 0.0f, -scalar, 0.0f, scalar }
+#define VEC4_LEFT(scalar)                                                             \
+  (vec4) { -scalar, 0.0f, 0.0f, scalar }
+#define VEC4_RIGHT(scalar)                                                            \
+  (vec4) { scalar, 0.0f, 0.0f, scalar }
+#define VEC4_FORWARD(scalar)                                                          \
+  (vec4) { 0.0f, 0.0f, scalar, scalar }
+#define VEC4_BACK(scalar)                                                             \
+  (vec4) { 0.0f, 0.0f, -scalar, scalar }
 
 /*Prints a vector "v" using printf*/
 void vec2_printf (const vec2 v, const char *label);
@@ -281,11 +297,6 @@ vec2 vec4_toVec2 (vec4 v);
 /*Converts a 4 dimensional vector to a 3 dimensional one*/
 vec3 vec4_toVec3 (vec4 v);
 
-/*A column major 4x4 matrix*/
-typedef struct{
-  float elements[16];
-} mat4;
-
 extern const mat4 MAT4_IDENTITY;
 
 mat4 mat4_lookAt (vec3 eye, vec3 center, vec3 up);
@@ -321,14 +332,10 @@ vec3 mat4_multiplyVec3(vec3 Left, mat4 Right);
 /*Multiplies a 4x4 matrix with a 4 dimensional vector*/
 vec4 mat4_multiplyVec4(vec4 Left, mat4 Right);
 
-typedef struct {
-	float x;
-	float y;
-	float z;
-	float w;
-} quat;
-
-#define QUATERNION_IDENTITY {0.0f, 0.0f, 0.0f, 1.0f}
+/*
+Returns the quaternion t% from qa to qb
+*/
+quat quat_slerp(quat qa, quat qb, double t);
 
 /*
 The negative of a quaternion:
@@ -390,11 +397,21 @@ Returns the magnitude of a given quaternion.
 */
 float quat_mag(quat q);
 
+/*
+Returns the given euler angles converted to a quaternion.
+*/
 quat quat_fromEuler(vec3 eulerAngles);
+
+/*
+Returns the given quaternion converted to euler angles.
+*/
 vec3 quat_toEuler(quat q);
+
 /*
 Returns a quaternion representing the given rotation by 'angle' around 'axis'.
 */
 quat quat_angleAxis(float angle, vec3 axis);
 
 quat quat_set(float x, float y, float z, float w);
+
+mat4 quat_toMat4(quat q);
