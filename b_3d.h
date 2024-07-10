@@ -40,30 +40,30 @@ typedef struct {
 
 
 // clang-format off
-static inline Vector2 Vector2_Zero(void) 						{ return (Vector2) {	0.0f,			0.0f 		}; }
-static inline Vector2 Vector2_One(float scalar) 		{ return (Vector2) {	scalar,		scalar	}; }
-static inline Vector2 Vector2_Up(float scalar)			{ return (Vector2) {	0.0f,			scalar	}; }
-static inline Vector2 Vector2_Down(float scalar)		{ return (Vector2) {	0.0f,			-scalar	}; }
-static inline Vector2 Vector2_Right(float scalar)		{ return (Vector2) {	scalar,		0.0f 		}; }
-static inline Vector2 Vector2_Left(float scalar)		{ return (Vector2) {	-scalar,	0.0f 		}; }
+static inline Vector2 Vector2_Zero	(void)		{ return (Vector2) {0.0f,	0.0f	}; }
+static inline Vector2 Vector2_One	(float s)	{ return (Vector2) {s,		s	}; }
+static inline Vector2 Vector2_Up	(float s)	{ return (Vector2) {0.0f,	s	}; }
+static inline Vector2 Vector2_Down	(float s)	{ return (Vector2) {0.0f,	-s	}; }
+static inline Vector2 Vector2_Right	(float s)	{ return (Vector2) {s,		0.0f	}; }
+static inline Vector2 Vector2_Left	(float s)	{ return (Vector2) {-s,		0.0f	}; }
 
-static inline Vector3 Vector3_Zero(void) 						{ return (Vector3) {	0.0f,			0.0f,			0.0f	 	}; }
-static inline Vector3 Vector3_One(float scalar) 		{ return (Vector3) {	scalar,		scalar,		scalar 	}; }
-static inline Vector3 Vector3_Up(float scalar)			{ return (Vector3) {	0.0f,			scalar,		0.0f	 	}; }
-static inline Vector3 Vector3_Down(float scalar)		{ return (Vector3) {	0.0f,			-scalar,	0.0f	 	}; }
-static inline Vector3 Vector3_Right(float scalar)		{ return (Vector3) {	scalar,		0.0f, 		0.0f	 	}; }
-static inline Vector3 Vector3_Left(float scalar)		{ return (Vector3) {	-scalar,	0.0f, 		0.0f	 	}; }
-static inline Vector3 Vector3_Forward(float scalar)	{ return (Vector3) {	0.0f,			0.0f, 		scalar	}; }
-static inline Vector3 Vector3_Back(float scalar)		{ return (Vector3) {	0.0f,			0.0f, 		-scalar	}; }
+static inline Vector3 Vector3_Zero	(void) 	 	{ return (Vector3) {0.0f,	0.0f,	0.0f 	}; }
+static inline Vector3 Vector3_One	(float s)	{ return (Vector3) {s,		s,	s	}; }
+static inline Vector3 Vector3_Up	(float s)	{ return (Vector3) {0.0f,	s,	0.0f 	}; }
+static inline Vector3 Vector3_Down	(float s)	{ return (Vector3) {0.0f,	-s,	0.0f 	}; }
+static inline Vector3 Vector3_Right	(float s)	{ return (Vector3) {s,		0.0f, 	0.0f 	}; }
+static inline Vector3 Vector3_Left	(float s)	{ return (Vector3) {-s,		0.0f, 	0.0f 	}; }
+static inline Vector3 Vector3_Forward	(float s)	{ return (Vector3) {0.0f,	0.0f, 	s	}; }
+static inline Vector3 Vector3_Back	(float s)	{ return (Vector3) {0.0f,	0.0f, 	-s	}; }
 
-static inline Vector4 Vector4_Zero(void) 						{ return (Vector4) {	0.0f,			0.0f,			0.0f,	 		1.0f}; }
-static inline Vector4 Vector4_One(float scalar) 		{ return (Vector4) {	scalar,		scalar,		scalar,		1.0f}; }
-static inline Vector4 Vector4_Up(float scalar)			{ return (Vector4) {	0.0f,			scalar,		0.0f,	 		1.0f}; }
-static inline Vector4 Vector4_Down(float scalar)		{ return (Vector4) {	0.0f,			-scalar,	0.0f,	 		1.0f}; }
-static inline Vector4 Vector4_Right(float scalar)		{ return (Vector4) {	scalar,		0.0f, 		0.0f,	 		1.0f}; }
-static inline Vector4 Vector4_Left(float scalar)		{ return (Vector4) {	-scalar,	0.0f, 		0.0f,	 		1.0f}; }
-static inline Vector4 Vector4_Forward(float scalar)	{ return (Vector4) {	0.0f,			0.0f, 		scalar,		1.0f}; }
-static inline Vector4 Vector4_Back(float scalar)		{ return (Vector4) {	0.0f,			0.0f, 		-scalar,	1.0f}; }
+static inline Vector4 Vector4_Zero	(void) 	 	{ return (Vector4) {0.0f,	0.0f,	0.0f,	1.0f}; }
+static inline Vector4 Vector4_One	(float s)	{ return (Vector4) {s,		s,	s,	1.0f}; }
+static inline Vector4 Vector4_Up	(float s)	{ return (Vector4) {0.0f,	s,	0.0f,	1.0f}; }
+static inline Vector4 Vector4_Down	(float s)	{ return (Vector4) {0.0f,	-s,	0.0f,	1.0f}; }
+static inline Vector4 Vector4_Right	(float s)	{ return (Vector4) {s,		0.0f, 	0.0f,	1.0f}; }
+static inline Vector4 Vector4_Left	(float s)	{ return (Vector4) {-s,		0.0f, 	0.0f,	1.0f}; }
+static inline Vector4 Vector4_Forward	(float s)	{ return (Vector4) {0.0f,	0.0f, 	s,	1.0f}; }
+static inline Vector4 Vector4_Back	(float s)	{ return (Vector4) {0.0f,	0.0f, 	-s,	1.0f}; }
 // clang-format on
 
 /*Prints a vector "v" using printf*/
@@ -471,6 +471,7 @@ static inline Matrix4x4 Matrix4x4_scale(Matrix4x4 m, float scalar) {
 	}
 	return m;
 }
+
 #if 0
 static inline float Matrix4x4_determinant(Matrix4x4 mat) {
 	float* m = mat.elements;
