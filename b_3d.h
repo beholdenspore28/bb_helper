@@ -769,6 +769,10 @@ static inline void Matrix4x4_print (Matrix4x4 m, const char *label) {
 
 //QUATERNION START
 
+static inline Vector3 Quaternion_Imaginary(Quaternion q) {
+	return (Vector3) { .x=q.x, .y=q.y, .z=q.z };
+}
+
 static inline Quaternion Quaternion_Identity(void) {
 	return (Quaternion){ .x = 0.0f, .y = 0.0f, .z = 0.0f, .w=1.0f };
 }
