@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct{
+typedef struct {
   size_t len;
   char *text;
   bool error : 1;
@@ -18,11 +18,11 @@ typedef struct{
 #endif
 
 #if !defined(B_FILE_BUFFER_GROWTH)
-#define B_FILE_BUFFER_GROWTH                                                  \
+#define B_FILE_BUFFER_GROWTH                                                   \
   (4 /* times */) /*Scalar to multiply chunk size when expanding*/
 #endif
 
-void FileBuffer_close (FileBuffer file);
-FileBuffer FileBuffer_read (const char *filename);
+void FileBuffer_close(FileBuffer file);
+FileBuffer FileBuffer_read(const char *filename);
 
 #endif /*B_FILE_H*/
