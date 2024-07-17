@@ -708,6 +708,35 @@ static inline Quaternion Quaternion_Identity(void) {
   return (Quaternion){.x = 0.0f, .y = 0.0f, .z = 0.0f, .w = 1.0f};
 }
 
+static inline float Quaternion_SquareMagnitude(Quaternion q) {
+	return q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z;
+}
+
+static inline float Quaternion_Magnitude(Quaternion q) {
+	return sqrt(Quaternion_SquareMagnitude(q));
+}
+
+static inline Quaternion Quaternion_Normalize(Quaternion q) {
+	float mag = Quaternion_Magnitude(q);
+	if (mag == 0) {
+		return Quaternion_Identity();
+	}
+	q.w /= mag;
+	q.x /= mag;
+	q.y /= mag;
+	q.z /= mag;
+	return q;
+}
+
+static inline Quaternion Quaternion_Conjugate(Quaternion q) {
+	return (Quaternion) { 
+		.w = q.w, 
+		.x = -q.x, 
+		.y = -q.y, 
+		.z = -q.z 
+	};
+}
+
 static inline void Quaternion_Print(Quaternion q, const char *label) {
   printf("\t%12f, %12f, %12f, %12f\t%s\n", q.x, q.y, q.z, q.w, label);
 }
@@ -728,6 +757,27 @@ static inline Quaternion Quaternion_Multiply(Quaternion q1, Quaternion q2) {
   ret.z = q1.x * q2.y - q1.y * q2.x + q1.z * q2.w + q1.w * q2.z;
   ret.w = -q1.x * q2.x - q1.y * q2.y - q1.z * q2.z + q1.w * q2.w;
   return ret;
+}
+
+/*
+Returns the given vector 'v' rotated by the quaternion 'rotation'.
+*/
+static inline Vector3 Vector3_Rotate(Vector3 v, Quaternion rotation) {
+	Quaternion vq = (Quaternion) {
+		.w = 0,
+		.x = v.x,
+		.y = v.y,
+		.z = v.z,
+	};
+	
+	vq = Quaternion_Multiply(rotation, vq);
+	vq = Quaternion_Multiply(vq, Quaternion_Conjugate(rotation));
+
+	return (Vector3) { 
+		.x = vq.x, 
+		.y = vq.y, 
+		.z = vq.z,
+	};
 }
 
 static inline Quaternion Quaternion_FromAngleAxis(float angle, Vector3 axis) {
