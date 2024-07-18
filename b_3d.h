@@ -850,7 +850,6 @@ static inline Matrix4x4 Quaternion_ToMatrix4x4(Quaternion q) {
   Matrix4x4 mat = Matrix4x4_Identity();
   float *m = mat.elements;
 
-  float sqw = q.w * q.w;
   float sqx = q.x * q.x;
   float sqy = q.y * q.y;
   float sqz = q.z * q.z;
