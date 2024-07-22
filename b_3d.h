@@ -794,17 +794,16 @@ static inline Quaternion Quaternion_FromAngleAxis(float angle, Vector3 axis) {
 
 static inline Quaternion Quaternion_FromEuler(Vector3 eulerAngles) {
   Quaternion q;
-  float c1, s1, c2, s2, c3, s3, c1c2, s1s2;
 
-  c1 = cosf(eulerAngles.y / 2.0f);
-  s1 = sinf(eulerAngles.y / 2.0f);
-  c2 = cosf(eulerAngles.x / 2.0f);
-  s2 = sinf(eulerAngles.x / 2.0f);
-  c3 = cosf(eulerAngles.z / 2.0f);
-  s3 = sinf(eulerAngles.z / 2.0f);
+  float c1 = cosf(eulerAngles.y / 2.0f);
+  float s1 = sinf(eulerAngles.y / 2.0f);
+  float c2 = cosf(eulerAngles.x / 2.0f);
+  float s2 = sinf(eulerAngles.x / 2.0f);
+  float c3 = cosf(eulerAngles.z / 2.0f);
+  float s3 = sinf(eulerAngles.z / 2.0f);
 
-  c1c2 = c1 * c2;
-  s1s2 = s1 * s2;
+  float c1c2 = c1 * c2;
+  float s1s2 = s1 * s2;
 
   q.w = c1c2 * c3 - s1s2 * s3;
   q.x = c1c2 * s3 + s1s2 * c3;
@@ -848,23 +847,34 @@ static inline Vector3 Quaternion_ToEuler(Quaternion q) {
 
 static inline Matrix4x4 Quaternion_ToMatrix4x4(Quaternion q) {
   Matrix4x4 mat = Matrix4x4_Identity();
-  float *m = mat.elements;
+	float* m = mat.elements;
+	
+	float xx = q.x * q.x;
+  float xy = q.x * q.y;
+  float xz = q.x * q.z;
+  float xw = q.x * q.w;
+		
+  float yy = q.y * q.y;
+  float yz = q.y * q.z;
+  float yw = q.y * q.w;
+		
+  float zz = q.z * q.z;
+  float zw = q.z * q.w;
 
-  float sqx = q.x * q.x;
-  float sqy = q.y * q.y;
-  float sqz = q.z * q.z;
+	m[0]  = 1 - 2 * ( yy + zz );
+	m[4]  =     2 * ( xy - zw );
+	m[8]  =     2 * ( xz + yw );
 
-  m[0] = 1 - 2 * sqy - 2 * sqz;
-  m[1] = q.x * q.y + q.x * q.y - q.w * q.z + q.w * q.z;
-  m[2] = 2 * q.x * q.z + 2 * q.w * q.y;
+	m[1]  =     2 * ( xy + zw );
+	m[5]  = 1 - 2 * ( xx + zz );
+	m[9]  =     2 * ( yz - xw );
 
-  m[4] = 2 * q.x * q.y + 2 * q.w * q.z;
-  m[5] = 1 - 2 * sqx - 2 * sqz;
-  m[6] = 2 * q.y * q.z - 2 * q.w * q.x;
+	m[2]  =     2 * ( xz - yw );
+	m[7]  =     2 * ( yz + xw );
+	m[10] = 1 - 2 * ( xx + yy );
 
-  m[8] = 2 * q.x * q.z - 2 * q.w * q.y;
-  m[9] = 2 * q.y * q.z + 2 * q.w * q.x;
-  m[10] = 1 - 2 * sqx - 2 * sqy;
+	m[12] = m[13] = m[14] = m[3] = m[7] = m[11] = 0;
+	m[15] = 1;
 
   return mat;
 }
