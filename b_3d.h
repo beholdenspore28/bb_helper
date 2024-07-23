@@ -753,18 +753,6 @@ static inline Vector3 Vector3_Rotate(Vector3 v, Quaternion rotation) {
 	};
 }
 
-static inline Quaternion Quaternion_FromAngleAxis(float angle, Vector3 axis) {
-  // clang-format off
-	float sa = sinf(angle/2.0f);
-	return (Quaternion) {
-		.w = cosf(angle/2.0f),
-		.x = axis.x * sa,
-		.y = axis.y * sa,
-		.z = axis.z * sa,
-	};
-  // clang-format on
-}
-
 static inline Quaternion Quaternion_FromEuler(Vector3 eulerAngles) {
   Quaternion q;
 
@@ -779,43 +767,20 @@ static inline Quaternion Quaternion_FromEuler(Vector3 eulerAngles) {
   float s1s2 = s1 * s2;
 
   q.w = c1c2 * c3 - s1s2 * s3;
-  q.x = c1c2 * s3 + s1s2 * c3;
+  q.z = c1c2 * s3 + s1s2 * c3;
   q.y = s1 * c2 * c3 + c1 * s2 * s3;
-  q.z = c1 * s2 * c3 - s1 * c2 * s3;
+  q.x = c1 * s2 * c3 - s1 * c2 * s3;
 
   return q;
 }
 
-static inline Vector3 Quaternion_ToEuler(Quaternion q) {
-  float test, sqx, sqy, sqz;
-  Vector3 ret;
-
-  test = q.x * q.y + q.z * q.w;
-  sqx = q.x * q.x;
-  sqy = q.y * q.y;
-  sqz = q.z * q.z;
-
-  if (test > 0.499f) { /* singularity at north pole */
-    ret.y = 2 * (float)atan2(q.x, q.w);
-    ret.x = PI * 0.5;
-    ret.z = 0;
-    return ret;
-  }
-
-  if (test < -0.499) { /* singularity at south pole */
-    ret.y = -2 * atan2(q.x, q.w);
-    ret.x = -PI * 0.5;
-    ret.z = 0;
-    return ret;
-  }
-
-  sqx = q.x * q.x;
-  sqy = q.y * q.y;
-  sqz = q.z * q.z;
-  ret.y = atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * sqy - 2 * sqz);
-  ret.x = asin(2 * test);
-  ret.z = atan2(2 * q.x * q.w - 2 * q.y * q.z, 1 - 2 * sqx - 2 * sqz);
-  return ret;
+static inline Quaternion Quaternion_Inverse(Quaternion q) {
+	return (Quaternion) {
+		.x = -q.x,
+		.y = -q.y,
+		.z = -q.z,
+		.w = -q.w,
+	};
 }
 
 static inline Matrix4x4 Quaternion_ToMatrix4x4(Quaternion q) {
