@@ -641,33 +641,6 @@ static inline Matrix4x4 Matrix4x4_setScale(const Vector3 scale) {
   return mat;
 }
 
-#if 0
-/*Returns a rotation matrix around "axis" by "angle"*/
-static inline Matrix4x4 Matrix4x4_rotate(const float angle, Vector3 axis) {
-  Matrix4x4 result = Matrix4x4_Identity();
-
-  axis = Vector3_Normalize(axis);
-
-  float sinTheta = sinf(angle);
-  float cosTheta = cosf(angle);
-  float cosValue = 1.0f - cosTheta;
-
-  result.elements[0] = (axis.x * axis.x * cosValue) + cosTheta;
-  result.elements[1] = (axis.x * axis.y * cosValue) + (axis.z * sinTheta);
-  result.elements[2] = (axis.x * axis.z * cosValue) - (axis.y * sinTheta);
-
-  result.elements[4] = (axis.y * axis.x * cosValue) - (axis.z * sinTheta);
-  result.elements[5] = (axis.y * axis.y * cosValue) + cosTheta;
-  result.elements[6] = (axis.y * axis.z * cosValue) + (axis.x * sinTheta);
-
-  result.elements[8] = (axis.z * axis.x * cosValue) + (axis.y * sinTheta);
-  result.elements[9] = (axis.z * axis.y * cosValue) - (axis.x * sinTheta);
-  result.elements[10] = (axis.z * axis.z * cosValue) + cosTheta;
-
-  return result;
-}
-#endif
-
 // returns a translation matrix from the specified Vector4 'v'
 static inline Matrix4x4 Matrix4x4_Translation(Vector3 v) {
   Matrix4x4 result = Matrix4x4_Identity();
