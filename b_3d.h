@@ -677,16 +677,41 @@ static inline void Matrix4x4_print(Matrix4x4 m, const char *label) {
   printf("\n--------------------------------\n");
 }
 
+#define QUATERNION_EPSILON (1e-4)
+
+static inline Quaternion Quaternion_Set(float x, float y, float z, float w) {
+  return (Quaternion){
+      .w = w,
+      .x = x,
+      .y = y,
+      .z = z,
+  };
+}
+
 static inline Quaternion Quaternion_Identity(void) {
   return (Quaternion){.x = 0.0f, .y = 0.0f, .z = 0.0f, .w = 1.0f};
 }
 
-static inline float Quaternion_SquareMagnitude(Quaternion q) {
-	return q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z;
+static inline int Quaternion_Equal(Quaternion a, Quaternion b) {
+	return
+		fabs(a.x - b.x) <= QUATERNION_EPSILON &&
+		fabs(a.y - b.y) <= QUATERNION_EPSILON &&
+		fabs(a.z - b.z) <= QUATERNION_EPSILON &&
+		fabs(a.w - b.w) <= QUATERNION_EPSILON;
+}
+
+static inline Quaternion Quaternion_FromAngleAxis(float angle, Vector3 axis) {
+	Quaternion ret;
+	float s = sinf(angle/2);
+  ret.x = axis.x * s;
+  ret.y = axis.y * s;
+  ret.z = axis.z * s;
+  ret.w = cosf(angle/2);
+  return ret;
 }
 
 static inline float Quaternion_Magnitude(Quaternion q) {
-	return sqrt(Quaternion_SquareMagnitude(q));
+	return sqrt(q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z);
 }
 
 static inline Quaternion Quaternion_Normalize(Quaternion q) {
@@ -710,18 +735,19 @@ static inline Quaternion Quaternion_Conjugate(Quaternion q) {
 	};
 }
 
+static inline Quaternion Quaternion_Inverse(Quaternion q) {
+	return (Quaternion) {
+		.x = -q.x,
+		.y = -q.y,
+		.z = -q.z,
+		.w = -q.w,
+	};
+}
+
 static inline void Quaternion_Print(Quaternion q, const char *label) {
   printf("\t%12f, %12f, %12f, %12f\t%s\n", q.x, q.y, q.z, q.w, label);
 }
 
-static inline Quaternion Quaternion_Set(float x, float y, float z, float w) {
-  return (Quaternion){
-      .w = w,
-      .x = x,
-      .y = y,
-      .z = z,
-  };
-}
 
 static inline Quaternion Quaternion_Multiply(Quaternion q1, Quaternion q2) {
   Quaternion ret;
@@ -774,14 +800,12 @@ static inline Quaternion Quaternion_FromEuler(Vector3 eulerAngles) {
   return q;
 }
 
-static inline Quaternion Quaternion_Inverse(Quaternion q) {
-	return (Quaternion) {
-		.x = -q.x,
-		.y = -q.y,
-		.z = -q.z,
-		.w = -q.w,
-	};
-}
+/* euclideanspace.com matrix index key
+m00	m01	m02 m03
+m10	m11	m12 m13
+m20	m21	m22 m23
+m30 m31 m32 m33
+*/
 
 static inline Matrix4x4 Quaternion_ToMatrix4x4(Quaternion q) {
   Matrix4x4 mat = Matrix4x4_Identity();
@@ -808,7 +832,7 @@ static inline Matrix4x4 Quaternion_ToMatrix4x4(Quaternion q) {
 	m[9]  =     2 * ( yz - xw );
 
 	m[2]  =     2 * ( xz - yw );
-	m[7]  =     2 * ( yz + xw );
+	m[6]  =     2 * ( yz + xw );
 	m[10] = 1 - 2 * ( xx + yy );
 
 	m[12] = m[13] = m[14] = m[3] = m[7] = m[11] = 0;
