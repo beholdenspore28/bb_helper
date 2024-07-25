@@ -25,10 +25,10 @@ typedef struct {
 } Matrix4x4;
 
 typedef struct {
+  float w;
   float x;
   float y;
   float z;
-  float w;
 } Quaternion;
 
 static inline Vector2 Vector2_Zero(void) { return (Vector2){0.0f, 0.0f}; }
@@ -737,10 +737,10 @@ static inline Quaternion Quaternion_Conjugate(Quaternion q) {
 
 static inline Quaternion Quaternion_Inverse(Quaternion q) {
 	return (Quaternion) {
+		.w = -q.w,
 		.x = -q.x,
 		.y = -q.y,
 		.z = -q.z,
-		.w = -q.w,
 	};
 }
 
@@ -748,54 +748,102 @@ static inline void Quaternion_Print(Quaternion q, const char *label) {
   printf("\t%12f, %12f, %12f, %12f\t%s\n", q.x, q.y, q.z, q.w, label);
 }
 
-
-static inline Quaternion Quaternion_Multiply(Quaternion q1, Quaternion q2) {
-  Quaternion ret;
-  ret.x = q1.x * q2.w + q1.y * q2.z - q1.z * q2.y + q1.w * q2.x;
-  ret.y = -q1.x * q2.z + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y;
-  ret.z = q1.x * q2.y - q1.y * q2.x + q1.z * q2.w + q1.w * q2.z;
-  ret.w = -q1.x * q2.x - q1.y * q2.y - q1.z * q2.z + q1.w * q2.w;
-  return ret;
+static inline Quaternion Quaterion_Add(Quaternion q1, Quaternion q2) {
+	return (Quaternion) {
+		.w = q1.w + q2.w,
+		.x = q1.x + q2.x,
+		.y = q1.y + q2.y,
+		.z = q1.z + q2.z,
+	};
 }
 
+static inline Quaternion Quaternion_Multiply(Quaternion q1, Quaternion q2) {
+  Quaternion ret = {0};
+#if 0
+  ret.w = q1.x * q2.w + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w;
+  ret.x = q1.x * q2.x + q1.y * q2.z + q1.z * q2.y + q1.w * q2.x;
+  ret.y = q1.x * q2.y + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y;
+  ret.z = q1.x * q2.z + q1.y * q2.x + q1.z * q2.w + q1.w * q2.z;
+#elif 0
+	ret.w = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
+	ret.x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z + q1.z * q2.y;
+	ret.y = q1.w * q2.y + q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
+	ret.z = q1.w * q2.z + q1.x * q2.y + q1.y * q2.x + q1.z * q2.w;
+#elif 0
+	ret.w += q1.w * q2.w;
+	ret.x += q1.w * q2.x;
+	ret.y += q1.w * q2.y;
+	ret.z += q1.w * q2.z;
+
+	ret.x += q1.x * q2.x;
+#elif 1
+	ret.w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
+	ret.x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y;
+	ret.y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
+	ret.z = q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w;
+#endif
+  return ret;
+}
+#if 0
+static inline Vector3 Vector3_Rotate(Vector3 v, Quaternion rotation) {
+	Quaternion vq = (quaternion) {
+
+	};
+}
+#else
 /*
 Returns the given vector 'v' rotated by the quaternion 'rotation'.
 */
 static inline Vector3 Vector3_Rotate(Vector3 v, Quaternion rotation) {
-	Quaternion vq = (Quaternion) {
+	Quaternion ret = (Quaternion) {
 		.w = 0,
 		.x = v.x,
 		.y = v.y,
 		.z = v.z,
 	};
 	
-	vq = Quaternion_Multiply(rotation, vq);
-	vq = Quaternion_Multiply(vq, Quaternion_Conjugate(rotation));
+	//Quaternion conjvq = Quaternion_Conjugate(rotation);
+	//Quaternion temp1 = Quaternion_Multiply(rotation, vq);
+	//Quaternion ret = Quaternion_Multiply(temp1, conjvq);
+	//vq = Quaternion_Multiply(rotation, vq);
+	ret = Quaternion_Multiply(Quaternion_Multiply(rotation, ret), Quaternion_Conjugate(rotation));
 
 	return (Vector3) { 
-		.x = vq.x, 
-		.y = vq.y, 
-		.z = vq.z,
+		.x = ret.x, 
+		.y = ret.y, 
+		.z = ret.z,
 	};
 }
+#endif
 
 static inline Quaternion Quaternion_FromEuler(Vector3 eulerAngles) {
   Quaternion q;
 
+#if 0
   float c1 = cosf(eulerAngles.y / 2.0f);
-  float s1 = sinf(eulerAngles.y / 2.0f);
   float c2 = cosf(eulerAngles.x / 2.0f);
-  float s2 = sinf(eulerAngles.x / 2.0f);
   float c3 = cosf(eulerAngles.z / 2.0f);
+
+  float s1 = sinf(eulerAngles.y / 2.0f);
+  float s2 = sinf(eulerAngles.x / 2.0f);
   float s3 = sinf(eulerAngles.z / 2.0f);
 
-  float c1c2 = c1 * c2;
-  float s1s2 = s1 * s2;
-
-  q.w = c1c2 * c3 - s1s2 * s3;
-  q.z = c1c2 * s3 + s1s2 * c3;
+  q.w = c1 * c2 * c3 - s1 * s2 * s3;
+  q.z = c1 * c2 * s3 + s1 * s2 * c3;
   q.y = s1 * c2 * c3 + c1 * s2 * s3;
   q.x = c1 * s2 * c3 - s1 * c2 * s3;
+#else
+	float cRoll = cosf(eulerAngles.x * 0.5f);
+	float sRoll = sinf(eulerAngles.x * 0.5f);
+	float cPitch = cosf(eulerAngles.y * 0.5f);
+	float sPitch = sinf(eulerAngles.y * 0.5f);
+	float cYaw = cosf(eulerAngles.z * 0.5f);
+	float sYaw = sinf(eulerAngles.z * 0.5f);
+	q.w = cRoll * cPitch * cYaw + sRoll * sPitch * sYaw;
+	q.x = sRoll * cPitch * cYaw - cRoll * sPitch * sYaw;
+	q.y = cRoll * sPitch * cYaw + sRoll * cPitch * sYaw;
+	q.z = cRoll * cPitch * sYaw - sRoll * sPitch * cYaw;
+#endif
 
   return q;
 }
