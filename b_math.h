@@ -33,6 +33,8 @@ SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 
+#define FLOAT_EPSILON (1e-4)
+
 /*Returns completely raw, random, single-dimensional noise values*/
 float noise_1d(int x);
 

@@ -518,7 +518,7 @@ static inline Matrix4x4 Matrix4x4_lookAt(Vector3 eye, Vector3 center,
 }
 
 /*Returns the difference between two 4x4 matrices.*/
-static inline Matrix4x4 Matrix4x4_subtract(const Matrix4x4 min,
+static inline Matrix4x4 Matrix4x4_Subtract(const Matrix4x4 min,
                                            const Matrix4x4 sub) {
   Matrix4x4 dif = Matrix4x4_Identity();
   int i = 0;
@@ -529,7 +529,7 @@ static inline Matrix4x4 Matrix4x4_subtract(const Matrix4x4 min,
   return dif;
 }
 
-static inline Matrix4x4 Matrix4x4_perspective(float fov, float aspect,
+static inline Matrix4x4 Matrix4x4_Perspective(float fov, float aspect,
                                               float near, float far) {
   Matrix4x4 result = Matrix4x4_Identity();
   float Cotangent = (1.0f / tanf(fov / 2.0f));
@@ -633,7 +633,7 @@ static inline Matrix4x4 Matrix4x4_Multiply(const Matrix4x4 a,
 }
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
-static inline Matrix4x4 Matrix4x4_setScale(const Vector3 scale) {
+static inline Matrix4x4 Matrix4x4_SetScale(const Vector3 scale) {
   Matrix4x4 mat = Matrix4x4_Identity();
   mat.elements[0] = scale.x;
   mat.elements[5] = scale.y;
@@ -651,7 +651,7 @@ static inline Matrix4x4 Matrix4x4_Translation(Vector3 v) {
 }
 
 /*Prints a formatted Matrix4x4 to the console.*/
-static inline void Matrix4x4_print(Matrix4x4 m, const char *label) {
+static inline void Matrix4x4_Print(Matrix4x4 m, const char *label) {
   // TODO condense this to one printf call.
   printf("--------------------------------\n");
   printf("MATRIX4: %s\n", label);
@@ -694,10 +694,10 @@ static inline Quaternion Quaternion_Identity(void) {
 
 static inline int Quaternion_Equal(Quaternion a, Quaternion b) {
 	return
-		fabs(a.x - b.x) <= QUATERNION_EPSILON &&
-		fabs(a.y - b.y) <= QUATERNION_EPSILON &&
-		fabs(a.z - b.z) <= QUATERNION_EPSILON &&
-		fabs(a.w - b.w) <= QUATERNION_EPSILON;
+		fabs(a.x - b.x) <= FLOAT_EPSILON &&
+		fabs(a.y - b.y) <= FLOAT_EPSILON &&
+		fabs(a.z - b.z) <= FLOAT_EPSILON &&
+		fabs(a.w - b.w) <= FLOAT_EPSILON;
 }
 
 static inline Quaternion Quaternion_FromAngleAxis(float angle, Vector3 axis) {
