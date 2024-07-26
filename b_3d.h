@@ -5,135 +5,135 @@
 typedef struct {
   float x;
   float y;
-} Vector2;
+} vector2_t;
 
 typedef struct {
   float x;
   float y;
   float z;
-} Vector3;
+} vector3_t;
 
 typedef struct {
   float x;
   float y;
   float z;
   float w;
-} Vector4;
+} vector4_t;
 
 typedef struct {
   float elements[16];
-} Matrix4x4;
+} matrix4_t;
 
 typedef struct {
   float w;
   float x;
   float y;
   float z;
-} Quaternion;
+} quaternion_t;
 
-static inline Vector2 Vector2_Zero(void) { return (Vector2){0.0f, 0.0f}; }
-static inline Vector2 Vector2_One(float s) { return (Vector2){s, s}; }
-static inline Vector2 Vector2_Up(float s) { return (Vector2){0.0f, s}; }
-static inline Vector2 Vector2_Down(float s) { return (Vector2){0.0f, -s}; }
-static inline Vector2 Vector2_Right(float s) { return (Vector2){s, 0.0f}; }
-static inline Vector2 Vector2_Left(float s) { return (Vector2){-s, 0.0f}; }
+static inline vector2_t vector2_zero(void) { return (vector2_t){0.0f, 0.0f}; }
+static inline vector2_t vector2_one(float s) { return (vector2_t){s, s}; }
+static inline vector2_t vector2_up(float s) { return (vector2_t){0.0f, s}; }
+static inline vector2_t vector2_down(float s) { return (vector2_t){0.0f, -s}; }
+static inline vector2_t vector2_right(float s) { return (vector2_t){s, 0.0f}; }
+static inline vector2_t vector2_left(float s) { return (vector2_t){-s, 0.0f}; }
 
-static inline Vector3 Vector3_Zero(void) { return (Vector3){0.0f, 0.0f, 0.0f}; }
-static inline Vector3 Vector3_One(float s) { return (Vector3){s, s, s}; }
-static inline Vector3 Vector3_Up(float s) { return (Vector3){0.0f, s, 0.0f}; }
-static inline Vector3 Vector3_Down(float s) {
-  return (Vector3){0.0f, -s, 0.0f};
+static inline vector3_t vector3_zero(void) { return (vector3_t){0.0f, 0.0f, 0.0f}; }
+static inline vector3_t vector3_one(float s) { return (vector3_t){s, s, s}; }
+static inline vector3_t vector3_up(float s) { return (vector3_t){0.0f, s, 0.0f}; }
+static inline vector3_t vector3_down(float s) {
+  return (vector3_t){0.0f, -s, 0.0f};
 }
-static inline Vector3 Vector3_Right(float s) {
-  return (Vector3){s, 0.0f, 0.0f};
+static inline vector3_t vector3_right(float s) {
+  return (vector3_t){s, 0.0f, 0.0f};
 }
-static inline Vector3 Vector3_Left(float s) {
-  return (Vector3){-s, 0.0f, 0.0f};
+static inline vector3_t vector3_left(float s) {
+  return (vector3_t){-s, 0.0f, 0.0f};
 }
-static inline Vector3 Vector3_Forward(float s) {
-  return (Vector3){0.0f, 0.0f, s};
+static inline vector3_t vector3_forward(float s) {
+  return (vector3_t){0.0f, 0.0f, s};
 }
-static inline Vector3 Vector3_Back(float s) {
-  return (Vector3){0.0f, 0.0f, -s};
+static inline vector3_t vector3_back(float s) {
+  return (vector3_t){0.0f, 0.0f, -s};
 }
 
-static inline Vector4 Vector4_Zero(void) {
-  return (Vector4){0.0f, 0.0f, 0.0f, 1.0f};
+static inline vector4_t vector4_zero(void) {
+  return (vector4_t){0.0f, 0.0f, 0.0f, 1.0f};
 }
-static inline Vector4 Vector4_One(float s) { return (Vector4){s, s, s, 1.0f}; }
-static inline Vector4 Vector4_Up(float s) {
-  return (Vector4){0.0f, s, 0.0f, 1.0f};
+static inline vector4_t vector4_one(float s) { return (vector4_t){s, s, s, 1.0f}; }
+static inline vector4_t vector4_up(float s) {
+  return (vector4_t){0.0f, s, 0.0f, 1.0f};
 }
-static inline Vector4 Vector4_Down(float s) {
-  return (Vector4){0.0f, -s, 0.0f, 1.0f};
+static inline vector4_t vector4_down(float s) {
+  return (vector4_t){0.0f, -s, 0.0f, 1.0f};
 }
-static inline Vector4 Vector4_Right(float s) {
-  return (Vector4){s, 0.0f, 0.0f, 1.0f};
+static inline vector4_t vector4_right(float s) {
+  return (vector4_t){s, 0.0f, 0.0f, 1.0f};
 }
-static inline Vector4 Vector4_Left(float s) {
-  return (Vector4){-s, 0.0f, 0.0f, 1.0f};
+static inline vector4_t vector4_left(float s) {
+  return (vector4_t){-s, 0.0f, 0.0f, 1.0f};
 }
-static inline Vector4 Vector4_Forward(float s) {
-  return (Vector4){0.0f, 0.0f, s, 1.0f};
+static inline vector4_t vector4_forward(float s) {
+  return (vector4_t){0.0f, 0.0f, s, 1.0f};
 }
-static inline Vector4 Vector4_Back(float s) {
-  return (Vector4){0.0f, 0.0f, -s, 1.0f};
+static inline vector4_t vector4_back(float s) {
+  return (vector4_t){0.0f, 0.0f, -s, 1.0f};
 }
 
 /*Prints a vector "v" using printf*/
-static inline void Vector2_Print(const Vector2 v, const char *label) {
+static inline void vector2_print(const vector2_t v, const char *label) {
   printf("%s [%f, %f]\n", label, v.x, v.y);
 }
 
 /*Returns a vector that points in the opposite direction of the given vector
 "v". The vector returned has a magnitude identical to the given vector "v"*/
-static inline Vector2 Vector2_Negate(Vector2 v) {
-  return (Vector2){.x = -v.x, .y = -v.y};
+static inline vector2_t vector2_negate(vector2_t v) {
+  return (vector2_t){.x = -v.x, .y = -v.y};
 }
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-static inline Vector2 Vector2_Subtract(Vector2 minuend, Vector2 subtrahend) {
-  return (Vector2){.x = minuend.x - subtrahend.x,
+static inline vector2_t vector2_subtract(vector2_t minuend, vector2_t subtrahend) {
+  return (vector2_t){.x = minuend.x - subtrahend.x,
                    .y = minuend.y - subtrahend.y};
 }
 
 /*Adds a vector "a" to another vector "b"*/
-static inline Vector2 Vector2_Add(Vector2 a, Vector2 b) {
-  return (Vector2){.x = a.x + b.x, .y = a.y + b.y};
+static inline vector2_t vector2_add(vector2_t a, vector2_t b) {
+  return (vector2_t){.x = a.x + b.x, .y = a.y + b.y};
 }
 
 /*A more performant way of getting the relative length of a
 vector "v". This saves a square root operation making it more
-performant than Vector2_Magnitude(). If all you have to do is
+performant than vector2_Magnitude(). If all you have to do is
 compare a vectors length relatively, use this function instead of
-Vector2_Magnitude()*/
-static inline float Vector2_SquareMagnitude(Vector2 v) {
+vector2_Magnitude()*/
+static inline float vector2_square_magnitude(vector2_t v) {
   return ((v.x * v.x) + (v.y * v.y));
 }
 
 /*Returns the actual length of a vector "v".
-This uses a square root operation. Use Vector2_SquareMagnitudenitude()
+This uses a square root operation. Use vector2_SquareMagnitudenitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-static inline float Vector2_Magnitude(Vector2 v) {
-  return sqrt(Vector2_SquareMagnitude(v));
+static inline float vector2_magnitude(vector2_t v) {
+  return sqrt(vector2_square_magnitude(v));
 }
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points
 in the same direction as the given vector "v"*/
-static inline Vector2 Vector2_Normalize(Vector2 v) {
-  float m = Vector2_Magnitude(v);
+static inline vector2_t vector2_normalize(vector2_t v) {
+  float m = vector2_magnitude(v);
   if (m == 0)
-    return Vector2_Zero();
-  return (Vector2){.x = v.x / m, .y = v.y / m};
+    return vector2_zero();
+  return (vector2_t){.x = v.x / m, .y = v.y / m};
 }
 
 /*Returns the distance between point a and point b
 in units.*/
-static inline float Vector2_Distance(Vector2 a, Vector2 b) {
-  return Vector2_Magnitude(Vector2_Subtract(b, a));
+static inline float vector2_distance(vector2_t a, vector2_t b) {
+  return vector2_magnitude(vector2_subtract(b, a));
 }
 
 /*Scales a vector "v" by "scalar".
@@ -141,23 +141,23 @@ increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 0.
 The returned vector will point in the same direction as
 the given vector "v".*/
-static inline Vector2 Vector2_Scale(Vector2 v, float scalar) {
-  return (Vector2){.x = v.x * scalar, .y = v.y * scalar};
+static inline vector2_t vector2_scale(vector2_t v, float scalar) {
+  return (vector2_t){.x = v.x * scalar, .y = v.y * scalar};
 }
 
 /*For normalized vectors Dot returns 1 if they point in
 exactly the same direction, -1 if they point in completely opposite directions
 and zero if the vectors are perpendicular.*/
-static inline float Vector2_Dot(Vector2 a, Vector2 b) {
+static inline float vector2_dot(vector2_t a, vector2_t b) {
   return (a.x * b.x) + (a.y * b.y);
 }
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays
-between "a" and "b", use Vector3_Lerpclamped() instead.
+between "a" and "b", use vector3_Lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-static inline Vector2 Vector2_Lerp(Vector2 a, Vector2 b, float t) {
-  return (Vector2){
+static inline vector2_t vector2_lerp(vector2_t a, vector2_t b, float t) {
+  return (vector2_t){
       .x = a.x + (b.x - a.x) * t,
       .y = a.y + (b.y - a.y) * t,
   };
@@ -165,82 +165,82 @@ static inline Vector2 Vector2_Lerp(Vector2 a, Vector2 b, float t) {
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-static inline Vector2 Vector2_Lerpclamped(Vector2 a, Vector2 b, float t) {
+static inline vector2_t vector2_lerp_clamped(vector2_t a, vector2_t b, float t) {
   /*clamp n between 0 and 1*/
   t = t < 0.0f ? 0.0f : t;
   t = t > 1.0f ? 1.0f : t;
   /*perform lerp*/
-  return (Vector2){
+  return (vector2_t){
       .x = a.x + (b.x - a.x) * t,
       .y = a.y + (b.y - a.y) * t,
   };
 }
 
 /*Converts a 2 dimensional vector to a 3 dimensional one*/
-static inline Vector3 Vector2_ToVec3(Vector2 v) {
-  return (Vector3){.x = v.x, .y = v.y, .z = 0.0f};
+static inline vector3_t vector2_to_vector3(vector2_t v) {
+  return (vector3_t){.x = v.x, .y = v.y, .z = 0.0f};
 }
 
 /*Converts a 2 dimensional vector to a 4 dimensional one*/
-static inline Vector4 Vector2_ToVec4(Vector2 v) {
-  return (Vector4){.x = v.x, .y = v.y, .z = 0.0f, .w = 1.0f};
+static inline vector4_t vector2_to_vector4(vector2_t v) {
+  return (vector4_t){.x = v.x, .y = v.y, .z = 0.0f, .w = 1.0f};
 }
 
 /*Prints a vector "v" using printf*/
-static inline void Vector3_Print(const Vector3 v, const char *label) {
+static inline void vector3_print(const vector3_t v, const char *label) {
   printf("%s [%f, %f, %f]\n", label, v.x, v.y, v.z);
 }
 
 /*Returns a vector that points in the opposite direction of the given vector
 "v". The vector returned has a magnitude identical to the given vector "v"*/
-static inline Vector3 Vector3_Negate(Vector3 v) {
-  return (Vector3){.x = -v.x, .y = -v.y, .z = -v.z};
+static inline vector3_t vector3_negate(vector3_t v) {
+  return (vector3_t){.x = -v.x, .y = -v.y, .z = -v.z};
 }
 
 /*Adds a vector "a" to another vector "b"*/
-static inline Vector3 Vector3_Add(Vector3 a, Vector3 b) {
-  return (Vector3){.x = a.x + b.x, .y = a.y + b.y, .z = a.z + b.z};
+static inline vector3_t vector3_add(vector3_t a, vector3_t b) {
+  return (vector3_t){.x = a.x + b.x, .y = a.y + b.y, .z = a.z + b.z};
 }
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-static inline Vector3 Vector3_Subtract(Vector3 minuend, Vector3 subtrahend) {
-  return (Vector3){.x = minuend.x - subtrahend.x,
+static inline vector3_t vector3_subtract(vector3_t minuend, vector3_t subtrahend) {
+  return (vector3_t){.x = minuend.x - subtrahend.x,
                    .y = minuend.y - subtrahend.y,
                    .z = minuend.z - subtrahend.z};
 }
 
 /*A more performant way of getting the relative length of a
 vector "v". This saves a square root operation making it more
-performant than Vector3_Magnitude(). If all you have to do is
+performant than vector3_Magnitude(). If all you have to do is
 compare a vectors length relatively, use this function instead of
-Vector3_Magnitude()*/
-static inline float Vector3_SquareMagnitude(Vector3 v) {
+vector3_Magnitude()*/
+static inline float vector3_square_magnitude(vector3_t v) {
   return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
 }
 
 /*Returns the actual length of a vector "v".
-This uses a square root operation. Use Vector3_SquareMagnitudenitude()
+This uses a square root operation. Use vector3_SquareMagnitudenitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-static inline float Vector3_Magnitude(Vector3 v) {
-  return sqrt(Vector3_SquareMagnitude(v));
+static inline float vector3_magnitude(vector3_t v) {
+  return sqrt(vector3_square_magnitude(v));
 }
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points
 in the same direction as the given vector "v"*/
-static inline Vector3 Vector3_Normalize(Vector3 v) {
-  float m = Vector3_Magnitude(v);
+static inline vector3_t vector3_normalize(vector3_t v) {
+  float m = vector3_magnitude(v);
   if (m == 0)
-    return Vector3_Zero();
-  return (Vector3){.x = v.x / m, .y = v.y / m, .z = v.z / m};
+    return vector3_zero();
+  return (vector3_t){.x = v.x / m, .y = v.y / m, .z = v.z / m};
 }
 
 /*Returns the distance between point a and point b
 in units.*/
-static inline float Vector3_Distance(Vector3 a, Vector3 b) {
-  return Vector3_Magnitude(Vector3_Subtract(b, a));
+static inline float vector3_distance(vector3_t a, vector3_t b) {
+  return vector3_magnitude(vector3_subtract(b, a));
 }
 
 /*Scales a vector "v" by "scalar".
@@ -248,13 +248,13 @@ increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 1.
 The returned vector will point in the same direction as
 the given vector "v".*/
-static inline Vector3 Vector3_Scale(Vector3 v, float scalar) {
-  return (Vector3){.x = v.x * scalar, .y = v.y * scalar, .z = v.z * scalar};
+static inline vector3_t vector3_scale(vector3_t v, float scalar) {
+  return (vector3_t){.x = v.x * scalar, .y = v.y * scalar, .z = v.z * scalar};
 }
 
 /*Returns a vector parallel to both "a" and "b".*/
-static inline Vector3 Vector3_Cross(Vector3 a, Vector3 b) {
-  return (Vector3){.x = (a.y * b.z) - (a.z * b.y),
+static inline vector3_t vector3_cross(vector3_t a, vector3_t b) {
+  return (vector3_t){.x = (a.y * b.z) - (a.z * b.y),
                    .y = -((a.x * b.z) - (a.z * b.x)),
                    .z = (a.x * b.y) - (a.y * b.x)};
 }
@@ -262,16 +262,16 @@ static inline Vector3 Vector3_Cross(Vector3 a, Vector3 b) {
 /*For normalized vectors Dot returns 1 if they point in
 exactly the same direction, -1 if they point in completely opposite directions
 and zero if the vectors are perpendicular.*/
-static inline float Vector3_Dot(Vector3 a, Vector3 b) {
+static inline float vector3_dot(vector3_t a, vector3_t b) {
   return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 }
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays
-between "a" and "b", use Vector2_Lerpclamped() instead.
+between "a" and "b", use vector2_Lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-static inline Vector3 Vector3_Lerp(Vector3 a, Vector3 b, float t) {
-  return (Vector3){
+static inline vector3_t vector3_lerp(vector3_t a, vector3_t b, float t) {
+  return (vector3_t){
       .x = a.x + (b.x - a.x) * t,
       .y = a.y + (b.y - a.y) * t,
       .z = a.z + (b.z - a.z) * t,
@@ -280,12 +280,12 @@ static inline Vector3 Vector3_Lerp(Vector3 a, Vector3 b, float t) {
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-static inline Vector3 Vector3_Lerpclamped(Vector3 a, Vector3 b, float n) {
+static inline vector3_t vector3_lerp_clamped(vector3_t a, vector3_t b, float n) {
   /*clamp n between 0 and 1*/
   n = n < 0.0f ? 0.0f : n;
   n = n > 1.0f ? 1.0f : n;
   /*perform lerp*/
-  return (Vector3){
+  return (vector3_t){
       .x = a.x + (b.x - a.x) * n,
       .y = a.y + (b.y - a.y) * n,
       .z = a.z + (b.z - a.z) * n,
@@ -294,8 +294,8 @@ static inline Vector3 Vector3_Lerpclamped(Vector3 a, Vector3 b, float n) {
 
 /*Returns a vector that is made from the largest components of two
 vectors.*/
-static inline Vector3 Vector3_Max(Vector3 a, Vector3 b) {
-  return (Vector3){
+static inline vector3_t vector3_max(vector3_t a, vector3_t b) {
+  return (vector3_t){
       .x = a.x >= b.x ? a.x : b.x,
       .y = a.y >= b.y ? a.y : b.y,
       .z = a.z >= b.z ? a.z : b.z,
@@ -304,8 +304,8 @@ static inline Vector3 Vector3_Max(Vector3 a, Vector3 b) {
 
 /*Returns a vector that is made from the smallest components of two
 vectors.*/
-static inline Vector3 Vector3_Min(Vector3 a, Vector3 b) {
-  return (Vector3){
+static inline vector3_t vector3_min(vector3_t a, vector3_t b) {
+  return (vector3_t){
       .x = a.x <= b.x ? a.x : b.x,
       .y = a.y <= b.y ? a.y : b.y,
       .z = a.z <= b.z ? a.z : b.z,
@@ -313,57 +313,57 @@ static inline Vector3 Vector3_Min(Vector3 a, Vector3 b) {
 }
 
 /*Converts a 3 dimensional vector to a 2 dimensional one*/
-static inline Vector2 Vector3_ToVec2(Vector3 v) {
-  return (Vector2){.x = v.x, .y = v.y};
+static inline vector2_t vector3_to_vector2(vector3_t v) {
+  return (vector2_t){.x = v.x, .y = v.y};
 }
 
 /*Converts a 3 dimensional vector to a 4 dimensional one*/
-static inline Vector4 Vector3_ToVec4(Vector3 v) {
-  return (Vector4){.x = v.x, .y = v.y, .z = v.z, .w = 1.0f};
+static inline vector4_t vector3_to_vector4(vector3_t v) {
+  return (vector4_t){.x = v.x, .y = v.y, .z = v.z, .w = 1.0f};
 }
 
 /*Prints a vector "v" using printf*/
-static inline void Vector4_Printf(const Vector4 v, const char *label) {
+static inline void vector4_print(const vector4_t v, const char *label) {
   printf("%s [%f, %f, %f, %f]\n", label, v.x, v.y, v.z, v.w);
 }
 
 /*Returns a vector that points in the opposite direction of the given vector
 "v". The vector returned has a magnitude identical to the given vector "v"*/
-static inline Vector4 Vector4_Negate(Vector4 v) {
-  return (Vector4){.x = -v.x, .y = -v.y, .z = -v.z, .w = -v.w};
+static inline vector4_t vector4_negate(vector4_t v) {
+  return (vector4_t){.x = -v.x, .y = -v.y, .z = -v.z, .w = -v.w};
 }
 
 /*A more performant way of getting the relative length of a
 vector "v". This saves a square root operation making it more
-performant than Vector4_Magnitude(). If all you have to do is
+performant than vector4_Magnitude(). If all you have to do is
 compare a vectors length relatively, use this function instead of
-Vector4_Magnitude()*/
-static inline float Vector4_SquareMagnitude(Vector4 v) {
+vector4_Magnitude()*/
+static inline float vector4_square_magnitude(vector4_t v) {
   return ((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w));
 }
 
 /*Returns the actual length of a vector "v".
-This uses a square root operation. Use Vector4_SquareMagnitudenitude()
+This uses a square root operation. Use vector4_SquareMagnitudenitude()
 to sacrifice accuracy and save on performance when comparing
 distances.*/
-static inline float Vector4_Magnitude(Vector4 v) {
-  return sqrt(Vector4_SquareMagnitude(v));
+static inline float vector4_magnitude(vector4_t v) {
+  return sqrt(vector4_square_magnitude(v));
 }
 
 /*Returns a given vector "v" as a unit vector.
 This means the magnitude(length) of the returned
 vector will always be 1 unit. The returned vector always points
 in the same direction as the given vector "v"*/
-static inline Vector4 Vector4_Normalize(Vector4 v) {
-  float m = Vector4_Magnitude(v);
+static inline vector4_t vector4_normalize(vector4_t v) {
+  float m = vector4_magnitude(v);
   if (m == 0)
-    return Vector4_Zero();
-  return (Vector4){.x = v.x / m, .y = v.y / m, .z = v.z / m, .w = v.w / m};
+    return vector4_zero();
+  return (vector4_t){.x = v.x / m, .y = v.y / m, .z = v.z / m, .w = v.w / m};
 }
 
 /*Adds a vector "a" to another vector "b"*/
-static inline Vector4 Vector4_Add(Vector4 a, Vector4 b) {
-  return (Vector4){
+static inline vector4_t vector4_add(vector4_t a, vector4_t b) {
+  return (vector4_t){
       .x = a.x + b.x,
       .y = a.y + b.y,
       .z = a.z + b.z,
@@ -372,8 +372,8 @@ static inline Vector4 Vector4_Add(Vector4 a, Vector4 b) {
 }
 
 /*Subtracts a vector "subtrahend" from another vector "minuend"*/
-static inline Vector4 Vector4_Subtract(Vector4 minuend, Vector4 subtrahend) {
-  return (Vector4){
+static inline vector4_t vector4_subtract(vector4_t minuend, vector4_t subtrahend) {
+  return (vector4_t){
       .x = minuend.x - subtrahend.x,
       .y = minuend.y - subtrahend.y,
       .z = minuend.z - subtrahend.z,
@@ -383,8 +383,8 @@ static inline Vector4 Vector4_Subtract(Vector4 minuend, Vector4 subtrahend) {
 
 /*Returns the distance between point a and point b
 in units.*/
-static inline float Vector4_Distance(Vector4 a, Vector4 b) {
-  return Vector4_Magnitude(Vector4_Subtract(b, a));
+static inline float vector4_distance(vector4_t a, vector4_t b) {
+  return vector4_magnitude(vector4_subtract(b, a));
 }
 
 /*Scales a vector "v" by "scalar".
@@ -392,8 +392,8 @@ increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 1.
 The returned vector will point in the same direction as
 the given vector "v".*/
-static inline Vector4 Vector4_Scale(Vector4 v, float scalar) {
-  return (Vector4){
+static inline vector4_t vector4_scale(vector4_t v, float scalar) {
+  return (vector4_t){
       .x = v.x * scalar,
       .y = v.y * scalar,
       .z = v.z * scalar,
@@ -404,16 +404,16 @@ static inline Vector4 Vector4_Scale(Vector4 v, float scalar) {
 /*For normalized vectors Dot returns 1 if they point in
 exactly the same direction, -1 if they point in completely opposite directions
 and zero if the vectors are perpendicular.*/
-static inline float Vector4_Dot(Vector4 a, Vector4 b) {
+static inline float vector4_dot(vector4_t a, vector4_t b) {
   return (a.x * b.x) + (a.y * b.y) + (a.z * b.z) + (a.w * b.w);
 }
 
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays
-between "a" and "b", use Vector2_Lerpclamped() instead.
+between "a" and "b", use vector2_lerpclamped() instead.
 Returns a point at "t"% of the way between "a" and "b".*/
-static inline Vector4 Vector4_Lerp(Vector4 a, Vector4 b, float t) {
-  return (Vector4){
+static inline vector4_t vector4_lerp(vector4_t a, vector4_t b, float t) {
+  return (vector4_t){
       .x = a.x + (b.x - a.x) * t,
       .y = a.y + (b.y - a.y) * t,
       .z = a.z + (b.z - a.z) * t,
@@ -423,12 +423,12 @@ static inline Vector4 Vector4_Lerp(Vector4 a, Vector4 b, float t) {
 
 /*Linearly interpolates between "a" and "b" by "t".
 Returns a point at "t"% of the way between "a" and "b".*/
-static inline Vector4 Vector4_Lerpclamped(Vector4 a, Vector4 b, float n) {
+static inline vector4_t vector4_Lerpclamped(vector4_t a, vector4_t b, float n) {
   /*clamp n between 0 and 1*/
   n = n < 0.0f ? 0.0f : n;
   n = n > 1.0f ? 1.0f : n;
   /*perform lerp*/
-  return (Vector4){
+  return (vector4_t){
       .x = a.x + (b.x - a.x) * n,
       .y = a.y + (b.y - a.y) * n,
       .z = a.z + (b.z - a.z) * n,
@@ -438,8 +438,8 @@ static inline Vector4 Vector4_Lerpclamped(Vector4 a, Vector4 b, float n) {
 
 /*Returns a vector that is made from the largest components of two
 vectors.*/
-static inline Vector4 Vector4_Max(Vector4 a, Vector4 b) {
-  return (Vector4){
+static inline vector4_t vector4_Max(vector4_t a, vector4_t b) {
+  return (vector4_t){
       .x = a.x >= b.x ? a.x : b.x,
       .y = a.y >= b.y ? a.y : b.y,
       .z = a.z >= b.z ? a.z : b.z,
@@ -449,8 +449,8 @@ static inline Vector4 Vector4_Max(Vector4 a, Vector4 b) {
 
 /*Returns a vector that is made from the smallest components of two
 vectors.*/
-static inline Vector4 Vector4_Min(Vector4 a, Vector4 b) {
-  return (Vector4){
+static inline vector4_t vector4_Min(vector4_t a, vector4_t b) {
+  return (vector4_t){
       .x = a.x <= b.x ? a.x : b.x,
       .y = a.y <= b.y ? a.y : b.y,
       .z = a.z <= b.z ? a.z : b.z,
@@ -459,17 +459,17 @@ static inline Vector4 Vector4_Min(Vector4 a, Vector4 b) {
 }
 
 /*Converts a 4 dimensional vector to a 2 dimensional one*/
-static inline Vector2 Vector4_ToVec2(Vector4 v) {
-  return (Vector2){.x = v.x, .y = v.y};
+static inline vector2_t vector4_ToVec2(vector4_t v) {
+  return (vector2_t){.x = v.x, .y = v.y};
 }
 
 /*Converts a 4 dimensional vector to a 3 dimensional one*/
-static inline Vector3 Vector4_ToVec3(Vector4 v) {
-  return (Vector3){.x = v.x, .y = v.y, .z = v.z};
+static inline vector3_t vector4_ToVec3(vector4_t v) {
+  return (vector3_t){.x = v.x, .y = v.y, .z = v.z};
 }
-static inline Matrix4x4 Matrix4x4_Identity(void) {
+static inline matrix4_t matrix4_identity(void) {
   // clang-format off
-  return (Matrix4x4){
+  return (matrix4_t){
       .elements = {
       1.0f, 0.0f, 0.0f, 0.0f, 
       0.0f, 1.0f, 0.0f, 0.0f, 
@@ -480,20 +480,20 @@ static inline Matrix4x4 Matrix4x4_Identity(void) {
   // clang-format on
 }
 
-static inline Matrix4x4 Matrix4x4_scale(Matrix4x4 m, float scalar) {
+static inline matrix4_t matrix4_scale(matrix4_t m, float scalar) {
   for (int i = 0; i < 16; i++) {
     m.elements[i] *= scalar;
   }
   return m;
 }
 
-static inline Matrix4x4 Matrix4x4_lookAt(Vector3 eye, Vector3 center,
-                                         Vector3 up) {
-  Vector3 f = Vector3_Normalize(Vector3_Subtract(eye, center));
-  Vector3 s = Vector3_Normalize(Vector3_Cross(f, up));
-  Vector3 u = Vector3_Cross(s, f);
+static inline matrix4_t matrix4_lookAt(vector3_t eye, vector3_t center,
+                                         vector3_t up) {
+  vector3_t f = vector3_normalize(vector3_subtract(eye, center));
+  vector3_t s = vector3_normalize(vector3_cross(f, up));
+  vector3_t u = vector3_cross(s, f);
 
-  Matrix4x4 ret = Matrix4x4_Identity();
+  matrix4_t ret = matrix4_identity();
   ret.elements[0] = s.x;
   ret.elements[1] = u.x;
   ret.elements[2] = -f.x;
@@ -509,18 +509,18 @@ static inline Matrix4x4 Matrix4x4_lookAt(Vector3 eye, Vector3 center,
   ret.elements[10] = -f.z;
   ret.elements[11] = 0.0f;
 
-  ret.elements[12] = -Vector3_Dot(s, eye);
-  ret.elements[13] = -Vector3_Dot(u, eye);
-  ret.elements[14] = Vector3_Dot(f, eye);
+  ret.elements[12] = -vector3_dot(s, eye);
+  ret.elements[13] = -vector3_dot(u, eye);
+  ret.elements[14] = vector3_dot(f, eye);
   ret.elements[15] = 1.0f;
 
   return ret;
 }
 
 /*Returns the difference between two 4x4 matrices.*/
-static inline Matrix4x4 Matrix4x4_Subtract(const Matrix4x4 min,
-                                           const Matrix4x4 sub) {
-  Matrix4x4 dif = Matrix4x4_Identity();
+static inline matrix4_t matrix4_Subtract(const matrix4_t min,
+                                           const matrix4_t sub) {
+  matrix4_t dif = matrix4_identity();
   int i = 0;
 
   for (i = 0; i < 16; i++)
@@ -529,9 +529,9 @@ static inline Matrix4x4 Matrix4x4_Subtract(const Matrix4x4 min,
   return dif;
 }
 
-static inline Matrix4x4 Matrix4x4_Perspective(float fov, float aspect,
+static inline matrix4_t matrix4_perspective(float fov, float aspect,
                                               float near, float far) {
-  Matrix4x4 result = Matrix4x4_Identity();
+  matrix4_t result = matrix4_identity();
   float Cotangent = (1.0f / tanf(fov / 2.0f));
   result.elements[0] = (Cotangent / aspect);
   result.elements[5] = Cotangent;
@@ -542,8 +542,8 @@ static inline Matrix4x4 Matrix4x4_Perspective(float fov, float aspect,
 }
 
 /*Multiplies a 4x4 matrix with a 3 dimensional vector*/
-static inline Vector3 Matrix4x4_MultiplyVec3(Vector3 Left, Matrix4x4 Right) {
-  Vector3 result;
+static inline vector3_t matrix4_multiplyVec3(vector3_t Left, matrix4_t Right) {
+  vector3_t result;
   result.y = Left.y * Right.elements[0];
   result.x = Left.y * Right.elements[4];
   result.z = Left.y * Right.elements[8];
@@ -560,8 +560,8 @@ static inline Vector3 Matrix4x4_MultiplyVec3(Vector3 Left, Matrix4x4 Right) {
 }
 
 /*Multiplies a 4x4 matrix with a 4 dimensional vector*/
-static inline Vector4 Matrix4x4_MultiplyVec4(Vector4 Left, Matrix4x4 Right) {
-  Vector4 result;
+static inline vector4_t matrix4_multiplyVec4(vector4_t Left, matrix4_t Right) {
+  vector4_t result;
   result.y = Left.y * Right.elements[0];
   result.x = Left.y * Right.elements[4];
   result.z = Left.y * Right.elements[8];
@@ -586,9 +586,9 @@ static inline Vector4 Matrix4x4_MultiplyVec4(Vector4 Left, Matrix4x4 Right) {
 }
 
 /*Multiplies a 4x4 matrix with another 4x4 matrix*/
-static inline Matrix4x4 Matrix4x4_Multiply(const Matrix4x4 a,
-                                           const Matrix4x4 b) {
-  return (Matrix4x4){
+static inline matrix4_t matrix4_multiply(const matrix4_t a,
+                                           const matrix4_t b) {
+  return (matrix4_t){
       .elements = {
           // column 0
           a.elements[0] * b.elements[0] + a.elements[4] * b.elements[1] +
@@ -633,25 +633,25 @@ static inline Matrix4x4 Matrix4x4_Multiply(const Matrix4x4 a,
 }
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
-static inline Matrix4x4 Matrix4x4_SetScale(const Vector3 scale) {
-  Matrix4x4 mat = Matrix4x4_Identity();
+static inline matrix4_t matrix4_SetScale(const vector3_t scale) {
+  matrix4_t mat = matrix4_identity();
   mat.elements[0] = scale.x;
   mat.elements[5] = scale.y;
   mat.elements[10] = scale.z;
   return mat;
 }
 
-// returns a translation matrix from the specified Vector4 'v'
-static inline Matrix4x4 Matrix4x4_Translation(Vector3 v) {
-  Matrix4x4 result = Matrix4x4_Identity();
+// returns a translation matrix from the specified vector4_t 'v'
+static inline matrix4_t matrix4_translation(vector3_t v) {
+  matrix4_t result = matrix4_identity();
   result.elements[12] += v.x;
   result.elements[13] += v.y;
   result.elements[14] += v.z;
   return result;
 }
 
-/*Prints a formatted Matrix4x4 to the console.*/
-static inline void Matrix4x4_Print(Matrix4x4 m, const char *label) {
+/*Prints a formatted matrix4_t to the console.*/
+static inline void matrix4_Print(matrix4_t m, const char *label) {
   // TODO condense this to one printf call.
   printf("--------------------------------\n");
   printf("MATRIX4: %s\n", label);
@@ -677,10 +677,10 @@ static inline void Matrix4x4_Print(Matrix4x4 m, const char *label) {
   printf("\n--------------------------------\n");
 }
 
-#define QUATERNION_EPSILON (1e-4)
+#define quaternion_EPSILON (1e-4)
 
-static inline Quaternion Quaternion_Set(float x, float y, float z, float w) {
-  return (Quaternion){
+static inline quaternion_t quaternion_Set(float x, float y, float z, float w) {
+  return (quaternion_t){
       .w = w,
       .x = x,
       .y = y,
@@ -688,11 +688,11 @@ static inline Quaternion Quaternion_Set(float x, float y, float z, float w) {
   };
 }
 
-static inline Quaternion Quaternion_Identity(void) {
-  return (Quaternion){.x = 0.0f, .y = 0.0f, .z = 0.0f, .w = 1.0f};
+static inline quaternion_t quaternion_identity(void) {
+  return (quaternion_t){.x = 0.0f, .y = 0.0f, .z = 0.0f, .w = 1.0f};
 }
 
-static inline int Quaternion_Equal(Quaternion a, Quaternion b) {
+static inline int quaternion_Equal(quaternion_t a, quaternion_t b) {
 	return
 		fabs(a.x - b.x) <= FLOAT_EPSILON &&
 		fabs(a.y - b.y) <= FLOAT_EPSILON &&
@@ -700,8 +700,8 @@ static inline int Quaternion_Equal(Quaternion a, Quaternion b) {
 		fabs(a.w - b.w) <= FLOAT_EPSILON;
 }
 
-static inline Quaternion Quaternion_FromAngleAxis(float angle, Vector3 axis) {
-	Quaternion ret;
+static inline quaternion_t quaternion_FromAngleAxis(float angle, vector3_t axis) {
+	quaternion_t ret;
 	float s = sinf(angle/2);
   ret.x = axis.x * s;
   ret.y = axis.y * s;
@@ -710,14 +710,14 @@ static inline Quaternion Quaternion_FromAngleAxis(float angle, Vector3 axis) {
   return ret;
 }
 
-static inline float Quaternion_Magnitude(Quaternion q) {
+static inline float quaternion_magnitude(quaternion_t q) {
 	return sqrt(q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z);
 }
 
-static inline Quaternion Quaternion_Normalize(Quaternion q) {
-	float mag = Quaternion_Magnitude(q);
+static inline quaternion_t quaternion_normalize(quaternion_t q) {
+	float mag = quaternion_magnitude(q);
 	if (mag == 0) {
-		return Quaternion_Identity();
+		return quaternion_identity();
 	}
 	q.w /= mag;
 	q.x /= mag;
@@ -726,8 +726,8 @@ static inline Quaternion Quaternion_Normalize(Quaternion q) {
 	return q;
 }
 
-static inline Quaternion Quaternion_Conjugate(Quaternion q) {
-	return (Quaternion) { 
+static inline quaternion_t quaternion_conjugate(quaternion_t q) {
+	return (quaternion_t) { 
 		.w = q.w, 
 		.x = -q.x, 
 		.y = -q.y, 
@@ -735,8 +735,8 @@ static inline Quaternion Quaternion_Conjugate(Quaternion q) {
 	};
 }
 
-static inline Quaternion Quaternion_Inverse(Quaternion q) {
-	return (Quaternion) {
+static inline quaternion_t quaternion_inverse(quaternion_t q) {
+	return (quaternion_t) {
 		.w = -q.w,
 		.x = -q.x,
 		.y = -q.y,
@@ -744,12 +744,12 @@ static inline Quaternion Quaternion_Inverse(Quaternion q) {
 	};
 }
 
-static inline void Quaternion_Print(Quaternion q, const char *label) {
+static inline void quaternion_print(quaternion_t q, const char *label) {
   printf("\t%12f, %12f, %12f, %12f\t%s\n", q.x, q.y, q.z, q.w, label);
 }
 
-static inline Quaternion Quaterion_Add(Quaternion q1, Quaternion q2) {
-	return (Quaternion) {
+static inline quaternion_t quaternion_add(quaternion_t q1, quaternion_t q2) {
+	return (quaternion_t) {
 		.w = q1.w + q2.w,
 		.x = q1.x + q2.x,
 		.y = q1.y + q2.y,
@@ -757,82 +757,38 @@ static inline Quaternion Quaterion_Add(Quaternion q1, Quaternion q2) {
 	};
 }
 
-static inline Quaternion Quaternion_Multiply(Quaternion q1, Quaternion q2) {
-  Quaternion ret = {0};
-#if 0
-  ret.w = q1.x * q2.w + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w;
-  ret.x = q1.x * q2.x + q1.y * q2.z + q1.z * q2.y + q1.w * q2.x;
-  ret.y = q1.x * q2.y + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y;
-  ret.z = q1.x * q2.z + q1.y * q2.x + q1.z * q2.w + q1.w * q2.z;
-#elif 0
-	ret.w = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
-	ret.x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z + q1.z * q2.y;
-	ret.y = q1.w * q2.y + q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
-	ret.z = q1.w * q2.z + q1.x * q2.y + q1.y * q2.x + q1.z * q2.w;
-#elif 0
-	ret.w += q1.w * q2.w;
-	ret.x += q1.w * q2.x;
-	ret.y += q1.w * q2.y;
-	ret.z += q1.w * q2.z;
-
-	ret.x += q1.x * q2.x;
-#elif 1
+static inline quaternion_t quaternion_multiply(quaternion_t q1, quaternion_t q2) {
+  quaternion_t ret = {0};
 	ret.w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
 	ret.x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y;
 	ret.y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
 	ret.z = q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w;
-#endif
   return ret;
 }
-#if 0
-static inline Vector3 Vector3_Rotate(Vector3 v, Quaternion rotation) {
-	Quaternion vq = (quaternion) {
 
-	};
-}
-#else
 /*
-Returns the given vector 'v' rotated by the quaternion 'rotation'.
+Returns the given vector 'v' rotated by the quaternion_t 'rotation'.
 */
-static inline Vector3 Vector3_Rotate(Vector3 v, Quaternion rotation) {
-	Quaternion ret = (Quaternion) {
+static inline vector3_t vector3_rotate(vector3_t v, quaternion_t rotation) {
+	quaternion_t ret = (quaternion_t) {
 		.w = 0,
 		.x = v.x,
 		.y = v.y,
 		.z = v.z,
 	};
 	
-	//Quaternion conjvq = Quaternion_Conjugate(rotation);
-	//Quaternion temp1 = Quaternion_Multiply(rotation, vq);
-	//Quaternion ret = Quaternion_Multiply(temp1, conjvq);
-	//vq = Quaternion_Multiply(rotation, vq);
-	ret = Quaternion_Multiply(Quaternion_Multiply(rotation, ret), Quaternion_Conjugate(rotation));
+	ret = quaternion_multiply(quaternion_multiply(rotation, ret), quaternion_conjugate(rotation));
 
-	return (Vector3) { 
+	return (vector3_t) { 
 		.x = ret.x, 
 		.y = ret.y, 
 		.z = ret.z,
 	};
 }
-#endif
 
-static inline Quaternion Quaternion_FromEuler(Vector3 eulerAngles) {
-  Quaternion q;
+static inline quaternion_t quaternion_from_euler(vector3_t eulerAngles) {
+  quaternion_t q;
 
-#if 0
-  float c1 = cosf(eulerAngles.y / 2.0f);
-  float c2 = cosf(eulerAngles.x / 2.0f);
-  float c3 = cosf(eulerAngles.z / 2.0f);
-
-  float s1 = sinf(eulerAngles.y / 2.0f);
-  float s2 = sinf(eulerAngles.x / 2.0f);
-  float s3 = sinf(eulerAngles.z / 2.0f);
-
-  q.w = c1 * c2 * c3 - s1 * s2 * s3;
-  q.z = c1 * c2 * s3 + s1 * s2 * c3;
-  q.y = s1 * c2 * c3 + c1 * s2 * s3;
-  q.x = c1 * s2 * c3 - s1 * c2 * s3;
-#else
 	float cRoll = cosf(eulerAngles.x * 0.5f);
 	float sRoll = sinf(eulerAngles.x * 0.5f);
 	float cPitch = cosf(eulerAngles.y * 0.5f);
@@ -843,20 +799,12 @@ static inline Quaternion Quaternion_FromEuler(Vector3 eulerAngles) {
 	q.x = sRoll * cPitch * cYaw - cRoll * sPitch * sYaw;
 	q.y = cRoll * sPitch * cYaw + sRoll * cPitch * sYaw;
 	q.z = cRoll * cPitch * sYaw - sRoll * sPitch * cYaw;
-#endif
 
   return q;
 }
 
-/* euclideanspace.com matrix index key
-m00	m01	m02 m03
-m10	m11	m12 m13
-m20	m21	m22 m23
-m30 m31 m32 m33
-*/
-
-static inline Matrix4x4 Quaternion_ToMatrix4x4(Quaternion q) {
-  Matrix4x4 mat = Matrix4x4_Identity();
+static inline matrix4_t quaternion_to_matrix4(quaternion_t q) {
+  matrix4_t mat = matrix4_identity();
 	float* m = mat.elements;
 	
 	float xx = q.x * q.x;

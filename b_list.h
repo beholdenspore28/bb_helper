@@ -20,26 +20,26 @@
     size_t capacity;                                                           \
     size_t length;                                                             \
     type *data;                                                                \
-  } List_##type;                                                               \
-  List_##type List_##type##_Alloc(void);                                       \
-  void List_##type##_Free(List_##type *list);                                  \
-  void List_##type##_Add(List_##type *l, type value);                          \
-  void List_##type##_Remove(List_##type *l);
+  } list_##type;                                                               \
+  list_##type list_##type##_alloc(void);                                       \
+  void list_##type##_free(list_##type *list);                                  \
+  void list_##type##_add(list_##type *l, type value);                          \
+  void list_##type##_remove(list_##type *l);
 
 #define DEFINE_LIST(type)                                                      \
-  List_##type List_##type##_Alloc(void) {                                      \
-    List_##type list;                                                          \
-    memset(&list, 0, sizeof(List_##type));                                     \
+  list_##type list_##type##_alloc(void) {                                      \
+    list_##type list;                                                          \
+    memset(&list, 0, sizeof(list_##type));                                     \
     list.data = malloc(sizeof(type));                                          \
     return list;                                                               \
   }                                                                            \
                                                                                \
-  void List_##type##_Free(List_##type *list) {                                 \
+  void list_##type##_free(list_##type *list) {                                 \
     free(list->data);                                                          \
-    memset(list, 0, sizeof(List_##type));                                      \
+    memset(list, 0, sizeof(list_##type));                                      \
   }                                                                            \
                                                                                \
-  void List_##type##_Add(List_##type *l, type value) {                         \
+  void list_##type##_add(list_##type *l, type value) {                         \
     if (l->length >= l->capacity) {                                            \
       l->capacity = l->length * 2 + 1;                                         \
       l->data = realloc(l->data, sizeof(type) * l->capacity);                  \
@@ -48,35 +48,35 @@
     l->length++;                                                               \
   }                                                                            \
                                                                                \
-  void List_##type##_Remove(List_##type *l) { l->length--; }
+  void list_##type##_remove(list_##type *l) { l->length--; }
 
 #define DEFINE_LIST_TYPES 1
 #if DEFINE_LIST_TYPES
 
 #define DECLARE_LIST_ALIAS(baseType, targetType)                               \
-  typedef List_##baseType List_##targetType;                                   \
-  List_##targetType List_##targetType##_Alloc(void);                           \
-  void List_##targetType##_Free(List_##targetType *list);                      \
-  void List_##targetType##_Add(List_##targetType *list, targetType value);     \
-  void List_##targetType##_Remove(List_##targetType *list);
+  typedef list_##baseType list_##targetType;                                   \
+  list_##targetType list_##targetType##_Alloc(void);                           \
+  void list_##targetType##_free(list_##targetType *list);                      \
+  void list_##targetType##_add(list_##targetType *list, targetType value);     \
+  void list_##targetType##_remove(list_##targetType *list);
 
 #define DEFINE_LIST_ALIAS(baseType, targetType)                                \
-  List_##targetType List_##targetType##_Alloc(void) {                          \
-    return List_##baseType##_Alloc();                                          \
+  list_##targetType list_##targetType##_alloc(void) {                          \
+    return list_##baseType##_alloc();                                          \
   }                                                                            \
-  void List_##targetType##_Free(List_##targetType *list) {                     \
-    List_##baseType##_Free(list);                                              \
+  void list_##targetType##_free(list_##targetType *list) {                     \
+    list_##baseType##_free(list);                                              \
   }                                                                            \
-  void List_##targetType##_Add(List_##targetType *list, targetType value) {    \
-    List_##baseType##_Add(list, *(targetType *)&value);                        \
+  void list_##targetType##_add(list_##targetType *list, targetType value) {    \
+    list_##baseType##_add(list, *(targetType *)&value);                        \
   }                                                                            \
-  void List_##targetType##_Remove(List_##targetType *list) {                   \
-    List_##baseType##_Remove(list);                                            \
+  void list_##targetType##_remove(list_##targetType *list) {                   \
+    list_##baseType##_remove(list);                                            \
   }
 
-typedef void *void_ptr;
-typedef const void *const_void_ptr;
-typedef const void *long_double;
+typedef void* void_ptr;
+typedef const void* const_void_ptr;
+typedef const void* long_double;
 
 DECLARE_LIST(void_ptr)
 DECLARE_LIST(const_void_ptr)
@@ -112,7 +112,6 @@ DECLARE_LIST_ALIAS(ui64, i64)
   DEFINE_LIST_ALIAS(ui16, i16)                                                 \
   DEFINE_LIST_ALIAS(ui32, i32)                                                 \
   DEFINE_LIST_ALIAS(ui64, i64)
-
 #endif /*DEFINE_LIST_TYPES*/
 
 #endif /*B_LIST_H*/
