@@ -651,7 +651,7 @@ static inline matrix4_t matrix4_translation(vector3_t v) {
 }
 
 /*Prints a formatted matrix4_t to the console.*/
-static inline void matrix4_Print(matrix4_t m, const char *label) {
+static inline void matrix4_print(matrix4_t m, const char *label) {
   // TODO condense this to one printf call.
   printf("--------------------------------\n");
   printf("MATRIX4: %s\n", label);
