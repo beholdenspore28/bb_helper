@@ -1,5 +1,4 @@
-#ifndef B_LIST_H
-#define B_LIST_H
+#pragma once
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -113,5 +112,3 @@ DECLARE_LIST_ALIAS(ui64, i64)
   DEFINE_LIST_ALIAS(ui32, i32)                                                 \
   DEFINE_LIST_ALIAS(ui64, i64)
 #endif /*DEFINE_LIST_TYPES*/
-
-#endif /*B_LIST_H*/
