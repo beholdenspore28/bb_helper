@@ -627,10 +627,11 @@ static inline matrix4_t matrix4_multiply(const matrix4_t a,
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
 static inline matrix4_t matrix4_scale(const vector3_t scale) {
-	matrix4_t m;
+	matrix4_t m = {0};
   m.elements[0]  = scale.x;
   m.elements[5]  = scale.y;
   m.elements[10] = scale.z;
+	m.elements[15] = 1.0f;
   return m;
 }
 
