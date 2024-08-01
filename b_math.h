@@ -1,3 +1,191 @@
+#pragma once
+
+#include <assert.h>
+#include <math.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define FLOAT_EPSILON (1e-4)
+#define PI 3.14159265358
+
+#include <math.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+static inline float rad2deg(const float n) { return n * (180.0f / PI); }
+
+static inline float deg2rad(const float n) { return n * (PI / 180.0f); }
+
+static inline float wrapAngle(float a) {
+  a = fmod(a, 2 * PI);
+  if (a < 0) {
+    a += 2 * PI;
+  }
+  return a;
+}
+
+static inline float clamp(float n, const float min, const float max) {
+  n = n < min ? min : n;
+  return n > max ? max : n;
+}
+
+static inline float clamp01(float n) {
+  n = n < 0 ? 0 : n;
+  return n > 1 ? 1 : n;
+}
+
+static inline float lerp(float a, float b, float t) { return a + (b - a) * t; }
+
+static inline float lerpclamped(float a, float b, float t) {
+  return a + (b - a) * clamp01(t);
+}
+
+static inline float norm(float n, float min, float max) { return (n - min) / (max - min); }
+
+static inline float map(float n, float fromMin, float fromMax, float toMin, float toMax) {
+  return lerp(norm(n, fromMin, fromMax), toMin, toMax);
+}
+
+static inline int aproxequal(float a, float b, float tolerance) {
+  return (fabs(a - b) < tolerance);
+}
+
+static inline float cosInterpolate(float a, float b, float t) {
+  float f = (1.0f - cos(t * PI)) * 0.5f;
+  return a * (1.0 - f) + b * f;
+}
+
+static inline float sigmoid(float n) { return (1 / (1 + pow(2.71828182846, -n))); }
+
+static inline float loop(float n, const float length) {
+  return clamp(n - floor(n / length) * length, 0.0f, length);
+}
+
+static inline float pingpong(float n, const float length) {
+  n = loop(n, length * 2.0f);
+  return fabs(n - length);
+}
+
+static inline float angleDelta(const float a, const float b) {
+  float delta = loop((b - a), 360.0f);
+  if (delta > 180.0f) {
+    delta -= 360.0f;
+  }
+  return delta;
+}
+
+/*BEGIN SINGLE DIMENSIONAL*/
+
+static inline float noise_1d(int x) {
+  x = (x << 13) ^ x;
+  return (1.0 - ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) /
+                    1073741824.0);
+}
+
+static inline float noise_smoothed1d(float x) {
+  return noise_1d(x) / 2 + noise_1d(x - 1) / 4 + noise_1d(x + 1) / 4;
+}
+
+static inline float noise_interpolated1d(float x) {
+  int integer_X = (int)x;
+  float fractional_X = x - integer_X;
+  float v1 = noise_smoothed1d(integer_X);
+  float v2 = noise_smoothed1d(integer_X + 1);
+  return cosInterpolate(v1, v2, fractional_X);
+}
+
+static inline float noise_perlin1d(float x, float persistance, int octaves) {
+  persistance *= 0.5f;
+  persistance = clamp(persistance, 0.0f, 1.0f);
+  float total = 0.0f;
+  int n = octaves - 1;
+
+  int i = 0;
+  float freq = 0.0f;
+  float amp = 0.0f;
+  for (i = 0; i < n; i++) {
+    freq = pow(2, i);
+    amp = pow(persistance, i);
+
+    total = total + noise_interpolated1d(x * freq) * amp;
+  }
+  total = (total + 1) * 0.5f;
+  assert(total <= 1);
+  assert(total >= -1);
+  return total;
+}
+/*END SINGLE DIMENSIONAL*/
+
+/*BEGIN TWO DIMENSIONAL*/
+
+static inline float noise_2d(int x, int y) {
+  int n = x + y * 57;
+  n = (n << 13) ^ n;
+  return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) /
+                    1073741824.0);
+}
+
+static inline float noise_smoothed2d(float x, float y) {
+  float corners = (noise_2d(x - 1, y - 1) + noise_2d(x + 1, y - 1) +
+                   noise_2d(x - 1, y + 1) + noise_2d(x + 1, y + 1)) /
+                  16;
+  float sides = (noise_2d(x - 1, y) + noise_2d(x + 1, y) + noise_2d(x, y - 1) +
+                 noise_2d(x, y + 1)) /
+                8;
+
+  float center = noise_2d(x, y) / 4;
+  return corners + sides + center;
+}
+
+static inline float noise_interpolated2d(float x, float y) {
+  int integer_X = (int)x;
+  float fractional_X = x - integer_X;
+
+  int integer_Y = (int)y;
+  float fractional_Y = y - integer_Y;
+
+  float v1 = noise_smoothed2d(integer_X, integer_Y);
+  float v2 = noise_smoothed2d(integer_X + 1, integer_Y);
+  float v3 = noise_smoothed2d(integer_X, integer_Y + 1);
+  float v4 = noise_smoothed2d(integer_X + 1, integer_Y + 1);
+
+  float i1 = cosInterpolate(v1, v2, fractional_X);
+  float i2 = cosInterpolate(v3, v4, fractional_X);
+
+  return cosInterpolate(i1, i2, fractional_Y);
+}
+
+static inline float noise_perlin2d(float x, float y, float persistance, int octaves) {
+  persistance *= 0.5f;
+  persistance = clamp(persistance, 0.0f, 1.0f);
+  float total = 0.0f;
+  float n = octaves - 1;
+
+  int i = 0;
+  float freq = 0.0f;
+  float amp = 0.0f;
+  for (i = 0; i < n; i++) {
+    freq = pow(2, i);
+    amp = pow(persistance, i);
+
+    total = total + noise_interpolated2d(x * freq, y * freq) * amp;
+  }
+  total = (total + 1) * 0.5f;
+  assert(total <= 1);
+  assert(total >= -1);
+  return total;
+}
+
+#ifdef __cplusplus
+} // extern "C" {
+#endif // __cplusplus
+
+/*END TWO DIMENSIONAL*/
+
 /*----------------------------------LEGAL--------------------------------------
 
 MIT License
@@ -24,91 +212,3 @@ SOFTWARE.
 
 -----------------------------------------------------------------------------*/
 
-#pragma once
-
-#include <assert.h>
-#include <math.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#define FLOAT_EPSILON (1e-4)
-
-/*Returns completely raw, random, single-dimensional noise values*/
-float noise_1d(int x);
-
-/*Returns smoothed single-dimensional noise values*/
-float noise_smoothed1d(float x);
-
-/*Returns smoothed and interpolated single-dimensional noise values*/
-float noise_interpolated1d(float x);
-
-/*Returns perlin-ish single-dimensional noise values.*/
-float noise_perlin1d(float x, float persistance, int octaves);
-
-/*Returns completely raw, random, two-dimensional noise values*/
-float noise_2d(int x, int y);
-
-/*Returns smoothed two-dimensional noise values*/
-float noise_smoothed2d(float x, float y);
-
-/*Returns smoothed and interpolated two-dimensional noise values*/
-float noise_interpolated2d(float x, float y);
-
-/*Returns perlin-ish two-dimensional noise values.*/
-float noise_perlin2d(float x, float y, float persistance, int octaves);
-
-#if !defined(PI)
-#define PI 3.14159265358
-#endif
-
-/*Converts "n" radians into degrees.*/
-float rad2deg(const float n);
-
-/*Converts "n" degrees into radians*/
-float deg2rad(const float n);
-
-float wrapAngle(float a);
-
-/*Returns "n" clamped between min and max*/
-float clamp(float n, const float min, const float max);
-
-/*Returns "n" clamped between 0 and 1*/
-float clamp01(float n);
-
-/*Linearly interpolates between "a" and "b" by "t"*/
-float lerp(float a, float b, float t);
-
-/*Linearly interpolates between "a" and "b" by "t".
-"t" is always clamped between 0 and 1 before performing the interpolation.*/
-float lerpclamped(float a, float b, float t);
-
-/*Returns the percentage of "n" from "min" to "max".*/
-float norm(float n, float min, float max);
-
-/*Converts a percentage of one range to a percentage of another.*/
-float map(float n, float fromMin, float fromMax, float toMin, float toMax);
-
-/*It is very rare that one floating point number is exactly the same as
- * another. This function will check if two numbers are similar enough to be
- * considered equal. Returns true if the absolute value of "a" minus the
- * absolute value of "b" is less than "tolerance".*/
-int aproxEqual(float a, float b, float tolerance);
-
-/*Interpolation using cosine*/
-float cosInterpolate(float a, float b, float t);
-
-/*Returns a point along the sigmoid (logistic) curve*/
-float sigmoid(float n);
-
-/*Ensures a number will stay between a certain range. Unlike clamp, the number
- * will wrap back around to 0 when it is greater than "length"*/
-float loop(float n, const float length);
-
-/*Ensures a number will stay between a certain range. Unlike clamp, the number
- * will bounce back and fourth between 0 and "length"*/
-float pingpong(float n, const float length);
-
-/*Returns the smallest possible difference between angle "a" and angle "b"*/
-float angleDelta(const float a, const float b);
