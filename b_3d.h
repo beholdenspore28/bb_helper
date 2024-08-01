@@ -480,13 +480,6 @@ static inline matrix4_t matrix4_identity(void) {
   // clang-format on
 }
 
-static inline matrix4_t matrix4_scale(matrix4_t m, float scalar) {
-  for (int i = 0; i < 16; i++) {
-    m.elements[i] *= scalar;
-  }
-  return m;
-}
-
 static inline matrix4_t matrix4_lookAt(vector3_t eye, vector3_t center,
                                          vector3_t up) {
   vector3_t f = vector3_normalize(vector3_subtract(eye, center));
@@ -633,20 +626,20 @@ static inline matrix4_t matrix4_multiply(const matrix4_t a,
 }
 
 /*Scales (multiplies) a 4x4 matrix by a scalar (number)*/
-static inline matrix4_t matrix4_SetScale(const vector3_t scale) {
-  matrix4_t mat = matrix4_identity();
-  mat.elements[0] = scale.x;
-  mat.elements[5] = scale.y;
-  mat.elements[10] = scale.z;
-  return mat;
+static inline matrix4_t matrix4_scale(const vector3_t scale) {
+	matrix4_t m;
+  m.elements[0]  = scale.x;
+  m.elements[5]  = scale.y;
+  m.elements[10] = scale.z;
+  return m;
 }
 
 // returns a translation matrix from the specified vector4_t 'v'
-static inline matrix4_t matrix4_translation(vector3_t v) {
+static inline matrix4_t matrix4_translate(vector3_t v) {
   matrix4_t result = matrix4_identity();
-  result.elements[12] += v.x;
-  result.elements[13] += v.y;
-  result.elements[14] += v.z;
+  result.elements[12] = v.x;
+  result.elements[13] = v.y;
+  result.elements[14] = v.z;
   return result;
 }
 
@@ -676,8 +669,6 @@ static inline void matrix4_print(matrix4_t m, const char *label) {
   printf("[15]%8f \t", m.elements[15]);
   printf("\n--------------------------------\n");
 }
-
-#define quaternion_EPSILON (1e-4)
 
 static inline quaternion_t quaternion_Set(float x, float y, float z, float w) {
   return (quaternion_t){
