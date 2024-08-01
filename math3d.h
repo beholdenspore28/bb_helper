@@ -1,6 +1,6 @@
 #pragma once
 
-#include "b_math.h"
+#include "math.h"
 
 typedef struct {
   float x;

@@ -1,15 +1,14 @@
 #pragma once
 
-#include <stdbool.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "blib.h"
 
 typedef struct {
   size_t len;
   char *text;
   bool error : 1;
-} FileBuffer;
+} filebuffer_t;
 
 #if !defined(B_FILE_BUFFER_CHUNK_SIZE)
 /*Number of chars before buffer must be expanded*/
@@ -21,12 +20,12 @@ typedef struct {
   (4 /* times */) /*Scalar to multiply chunk size when expanding*/
 #endif
 
-static inline void FileBuffer_close(FileBuffer file) { free(file.text); }
+static inline void filebuffer_close(filebuffer_t file) { free(file.text); }
 
-static inline FileBuffer FileBuffer_read(const char *filename) {
+static inline filebuffer_t filebuffer_read(const char *filename) {
   FILE *file = fopen(filename, "r");
   if (file == NULL) {
-    FileBuffer ret;
+    filebuffer_t ret;
     ret.error = true;
     return ret;
   }
@@ -47,7 +46,7 @@ static inline FileBuffer FileBuffer_read(const char *filename) {
   }
   buf[len] = '\0';
   fclose(file);
-  FileBuffer ret;
+  filebuffer_t ret;
   ret.text = buf;
   ret.len = len;
   ret.error = false;
