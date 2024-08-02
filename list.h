@@ -1,18 +1,35 @@
+/*----------------------------------LEGAL--------------------------------------
+
+MIT License
+
+Copyright (c) 2023 Benjamin Joseph Brooks
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-----------------------------------------------------------------------------*/
+
 #pragma once
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define ui8 uint8_t
-#define ui16 uint16_t
-#define ui32 uint32_t
-#define ui64 uint64_t
-
-#define i8 int8_t
-#define i16 int16_t
-#define i32 int32_t
-#define i64 int64_t
+#include "blib.h"
 
 #define DECLARE_LIST(type)                                                     \
   typedef struct {                                                             \
@@ -72,10 +89,6 @@
   void list_##targetType##_remove(list_##targetType *list) {                   \
     list_##baseType##_remove(list);                                            \
   }
-
-typedef void* void_ptr;
-typedef const void* const_void_ptr;
-typedef const void* long_double;
 
 DECLARE_LIST(void_ptr)
 DECLARE_LIST(const_void_ptr)

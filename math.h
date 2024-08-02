@@ -1,16 +1,40 @@
+/*----------------------------------LEGAL--------------------------------------
+
+MIT License
+
+Copyright (c) 2023 Benjamin Joseph Brooks
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-----------------------------------------------------------------------------*/
+
 #pragma once
 
 #include <assert.h>
-#include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define FLOAT_EPSILON (1e-4)
 #define PI 3.14159265358
-
-#include <math.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -78,8 +102,6 @@ static inline float angleDelta(const float a, const float b) {
   return delta;
 }
 
-/*BEGIN SINGLE DIMENSIONAL*/
-
 static inline float noise_1d(int x) {
   x = (x << 13) ^ x;
   return (1.0 - ((x * (x * x * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) /
@@ -118,9 +140,6 @@ static inline float noise_perlin1d(float x, float persistance, int octaves) {
   assert(total >= -1);
   return total;
 }
-/*END SINGLE DIMENSIONAL*/
-
-/*BEGIN TWO DIMENSIONAL*/
 
 static inline float noise_2d(int x, int y) {
   int n = x + y * 57;
@@ -183,32 +202,3 @@ static inline float noise_perlin2d(float x, float y, float persistance, int octa
 #ifdef __cplusplus
 } // extern "C" {
 #endif // __cplusplus
-
-/*END TWO DIMENSIONAL*/
-
-/*----------------------------------LEGAL--------------------------------------
-
-MIT License
-
-Copyright (c) 2023 Benjamin Joseph Brooks
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
------------------------------------------------------------------------------*/
-
