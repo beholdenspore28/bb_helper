@@ -71,7 +71,8 @@ static inline float lerpclamped(float a, float b, float t) {
 static inline float norm(float n, float min, float max) { return (n - min) / (max - min); }
 
 static inline float map(float n, float fromMin, float fromMax, float toMin, float toMax) {
-  return lerp(norm(n, fromMin, fromMax), toMin, toMax);
+  //return lerp(norm(n, fromMin, fromMax), toMin, toMax);
+  return (n - fromMin) * (toMax - toMin) / (fromMax - fromMin) + toMin;
 }
 
 static inline int aproxequal(float a, float b, float tolerance) {
