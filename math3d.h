@@ -36,12 +36,14 @@ typedef struct {
   float x;
   float y;
 } vector2_t;
+DECLARE_LIST(vector2_t)
 
 typedef struct {
   float x;
   float y;
   float z;
 } vector3_t;
+DECLARE_LIST(vector3_t)
 
 typedef struct {
   float x;
@@ -49,10 +51,12 @@ typedef struct {
   float z;
   float w;
 } vector4_t;
+DECLARE_LIST(vector4_t)
 
 typedef struct {
   float elements[16];
 } matrix4_t;
+DECLARE_LIST(matrix4_t)
 
 typedef struct {
   float w;
@@ -60,6 +64,7 @@ typedef struct {
   float y;
   float z;
 } quaternion_t;
+DECLARE_LIST(quaternion_t)
 
 static inline vector2_t vector2_zero(void) { return (vector2_t){0.0f, 0.0f}; }
 static inline vector2_t vector2_one(float s) { return (vector2_t){s, s}; }
