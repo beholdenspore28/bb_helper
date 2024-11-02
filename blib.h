@@ -38,16 +38,6 @@ extern "C" {
 #define true 1
 #define false 0
 
-	typedef uint8_t ui8;
-	typedef uint16_t ui16;
-	typedef uint32_t ui32;
-	typedef uint64_t ui64;
-
-	typedef int8_t i8;
-	typedef int16_t i16;
-	typedef int32_t i32;
-	typedef int64_t i64;
-
 	typedef void* void_ptr;
 	typedef const void* const_void_ptr;
 	typedef const void* long_double;
@@ -125,16 +115,16 @@ extern "C" {
 		DECLARE_LIST(double)
 		DECLARE_LIST(long_double)
 
-		DECLARE_LIST(ui8)
-		DECLARE_LIST(ui16)
-		DECLARE_LIST(ui32)
-		DECLARE_LIST(ui64)
+		DECLARE_LIST(uint8_t)
+		DECLARE_LIST(uint16_t)
+		DECLARE_LIST(uint32_t)
+		DECLARE_LIST(uint64_t)
 		DECLARE_LIST(size_t)
 
-		DECLARE_LIST_ALIAS(ui8, i8)
-		DECLARE_LIST_ALIAS(ui16, i16)
-		DECLARE_LIST_ALIAS(ui32, i32)
-		DECLARE_LIST_ALIAS(ui64, i64)
+		DECLARE_LIST_ALIAS(uint8_t, int8_t)
+		DECLARE_LIST_ALIAS(uint16_t, int16_t)
+		DECLARE_LIST_ALIAS(uint32_t, int32_t)
+		DECLARE_LIST_ALIAS(uint64_t, int64_t)
 
 #define B_LIST_IMPLEMENTATION                                                  \
 		DEFINE_LIST(void_ptr)                                                        \
@@ -143,16 +133,16 @@ extern "C" {
 		DEFINE_LIST(double)                                                          \
 		DEFINE_LIST(long_double)                                                     \
 		\
-		DEFINE_LIST(ui8)                                                             \
-		DEFINE_LIST(ui16)                                                            \
-		DEFINE_LIST(ui32)                                                            \
-		DEFINE_LIST(ui64)                                                            \
+		DEFINE_LIST(uint8_t)                                                             \
+		DEFINE_LIST(uint16_t)                                                            \
+		DEFINE_LIST(uint32_t)                                                            \
+		DEFINE_LIST(uint64_t)                                                            \
 		DEFINE_LIST(size_t)                                                          \
 		\
-		DEFINE_LIST_ALIAS(ui8, i8)                                                   \
-		DEFINE_LIST_ALIAS(ui16, i16)                                                 \
-		DEFINE_LIST_ALIAS(ui32, i32)                                                 \
-		DEFINE_LIST_ALIAS(ui64, i64)
+		DEFINE_LIST_ALIAS(uint8_t, int8_t)                                                   \
+		DEFINE_LIST_ALIAS(uint16_t, int16_t)                                                 \
+		DEFINE_LIST_ALIAS(uint32_t, int32_t)                                                 \
+		DEFINE_LIST_ALIAS(uint64_t, int64_t)
 #endif /*DEFINE_LIST_TYPES*/
 
 #ifdef __cplusplus
