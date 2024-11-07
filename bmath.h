@@ -200,6 +200,7 @@ static inline float noise_perlin2d(float x, float y, float persistance, int octa
   return total;
 }
 
+<<<<<<< HEAD
 static inline float noise_3d(int x, int y, int z) {
   int n = x + y + z * 57;
   n = (n << 13) ^ n;
