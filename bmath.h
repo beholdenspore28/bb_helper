@@ -79,8 +79,8 @@ static inline int aproxequal(float a, float b, float tolerance) {
   return (fabs(a - b) < tolerance);
 }
 
-static inline float cosInterpolate(float a, float b, float x) {
-  float f = (1.0f - cosf(x * PI)) * 0.5f;
+static inline float cosInterpolate(float a, float b, float t) {
+  float f = (1.0f - cos(t * PI)) * 0.5f;
   return a * (1.0 - f) + b * f;
 }
 
@@ -114,11 +114,11 @@ static inline float noise_smoothed1d(float x) {
 }
 
 static inline float noise_interpolated1d(float x) {
-  int integerX = (int)x;
-  float fractionalX = x - integerX;
-  float v1 = noise_smoothed1d(integerX);
-  float v2 = noise_smoothed1d(integerX + 1);
-  return cosInterpolate(v1, v2, fractionalX);
+  int integer_X = (int)x;
+  float fractional_X = x - integer_X;
+  float v1 = noise_smoothed1d(integer_X);
+  float v2 = noise_smoothed1d(integer_X + 1);
+  return cosInterpolate(v1, v2, fractional_X);
 }
 
 static inline float noise_perlin1d(float x, float persistance, int octaves) {
@@ -162,21 +162,21 @@ static inline float noise_smoothed2d(float x, float y) {
 }
 
 static inline float noise_interpolated2d(float x, float y) {
-  int integerX = (int)x;
-  float fractionalX = x - integerX;
+  int integer_X = (int)x;
+  float fractional_X = x - integer_X;
 
-  int integerY = (int)y;
-  float fractionalY = y - integerY;
+  int integer_Y = (int)y;
+  float fractional_Y = y - integer_Y;
 
-  float v1 = noise_smoothed2d(integerX, integerY);
-  float v2 = noise_smoothed2d(integerX + 1, integerY);
-  float v3 = noise_smoothed2d(integerX, integerY + 1);
-  float v4 = noise_smoothed2d(integerX + 1, integerY + 1);
+  float v1 = noise_smoothed2d(integer_X, integer_Y);
+  float v2 = noise_smoothed2d(integer_X + 1, integer_Y);
+  float v3 = noise_smoothed2d(integer_X, integer_Y + 1);
+  float v4 = noise_smoothed2d(integer_X + 1, integer_Y + 1);
 
-  float i1 = cosInterpolate(v1, v2, fractionalX);
-  float i2 = cosInterpolate(v3, v4, fractionalX);
+  float i1 = cosInterpolate(v1, v2, fractional_X);
+  float i2 = cosInterpolate(v3, v4, fractional_X);
 
-  return cosInterpolate(i1, i2, fractionalY);
+  return cosInterpolate(i1, i2, fractional_Y);
 }
 
 static inline float noise_perlin2d(float x, float y, float persistance, int octaves) {
@@ -200,83 +200,79 @@ static inline float noise_perlin2d(float x, float y, float persistance, int octa
   return total;
 }
 
-<<<<<<< HEAD
 static inline float noise_3d(int x, int y, int z) {
   int n = x + y + z * 57;
   n = (n << 13) ^ n;
-  return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) /
-                    1073741824.0);
+  return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF) / 1073741824.0) * 0.01;
 }
 
+/* produce smooth noise value by taking the average of
+a point and its neighboring points */
 static inline float noise_smoothed3d(float x, float y, float z) {
-  float corner1 = noise_3d(x - 1, y - 1, z - 1),
-        corner2 = noise_3d(x + 1, y - 1, z - 1),
-        corner3 = noise_3d(x - 1, y + 1, z - 1),
-        corner4 = noise_3d(x + 1, y + 1, z - 1),
-        corner5 = noise_3d(x - 1, y - 1, z + 1),
-        corner6 = noise_3d(x + 1, y - 1, z + 1),
-        corner7 = noise_3d(x - 1, y + 1, z + 1),
-        corner8 = noise_3d(x + 1, y + 1, z + 1),
-        corners = (corner1 + corner2 + corner3 + corner4 + 
-            corner5 + corner6 + corner7 + corner8),
-        side1   = noise_3d( x - 1, y,     z - 1),
-        side2   = noise_3d( x + 1, y,     z - 1),
-        side3   = noise_3d( x,     y - 1, z - 1),
-        side4   = noise_3d( x,     y + 1, z - 1),
-        side5   = noise_3d( x - 1, y,     z),
-        side6   = noise_3d( x + 1, y,     z),
-        side7   = noise_3d( x,     y - 1, z),
-        side8   = noise_3d( x,     y + 1, z),
-        side9   = noise_3d( x - 1, y,     z + 1),
-        side10  = noise_3d( x + 1, y,     z + 1),
-        side11  = noise_3d( x,     y - 1, z + 1),
-        side12  = noise_3d( x,     y + 1, z + 1),
-        sides = 
-          side1 + side2 + side3 + side4 + 
-          side5 + side6 + side7 + side8 + 
-          side9 + side10 + side11 + side12,
-        center = noise_3d(x,y,z);
-  return (corners + sides + center) / 128;
+  float corner1 = noise_3d( x - 1, y - 1, z - 1 ),
+        corner2 = noise_3d( x + 1, y - 1, z - 1 ),
+        corner3 = noise_3d( x - 1, y + 1, z - 1 ),
+        corner4 = noise_3d( x + 1, y + 1, z - 1 ),
+        corner5 = noise_3d( x - 1, y - 1, z + 1 ),
+        corner6 = noise_3d( x + 1, y - 1, z + 1 ),
+        corner7 = noise_3d( x - 1, y + 1, z + 1 ),
+        corner8 = noise_3d( x + 1, y + 1, z + 1 ),
+        corners = (corner1 + corner2 + corner3 + corner4 +
+                   corner5 + corner6 + corner7 + corner8) / 8,
+        side1  = noise_3d( x - 1, y,     z - 1 ),
+        side2  = noise_3d( x + 1, y,     z - 1 ),
+        side3  = noise_3d( x,     y - 1, z - 1 ),
+        side4  = noise_3d( x,     y + 1, z - 1 ),
+        side9  = noise_3d( x - 1, y,     z     ),
+        side10 = noise_3d( x + 1, y,     z     ),
+        side11 = noise_3d( x,     y - 1, z     ),
+        side12 = noise_3d( x,     y + 1, z     ),
+        side5  = noise_3d( x - 1, y,     z + 1 ),
+        side6  = noise_3d( x + 1, y,     z + 1 ),
+        side7  = noise_3d( x,     y - 1, z + 1 ),
+        side8  = noise_3d( x,     y + 1, z + 1 ),
+        sides = (side1 + side2  + side3  + side4 +
+                 side5 + side6  + side7  + side8 +
+                 side9 + side10 + side11 + side12) / 12,
+        center = noise_3d(x, y, z - 1) / 4;
+  return corners + sides + center;
 }
 
 static inline float noise_interpolated3d(float x, float y, float z) {
-  int integerX = (int)x,
-      integerY = (int)y,
-      integerZ = (int)z;
-
-  float fractionalX = x - integerX,
-        fractionalY = y - integerY,
-        fractionalZ = z - integerZ,
-
-        v1 = noise_smoothed3d(integerX,     integerY,     integerZ),
-        v2 = noise_smoothed3d(integerX + 1, integerY,     integerZ),
-        v3 = noise_smoothed3d(integerX,     integerY + 1, integerZ),
-        v4 = noise_smoothed3d(integerX + 1, integerY + 1, integerZ),
-        v5 = noise_smoothed3d(integerX,     integerY,     integerZ + 1),
-        v6 = noise_smoothed3d(integerX + 1, integerY,     integerZ + 1),
-        v7 = noise_smoothed3d(integerX,     integerY + 1, integerZ + 1),
-        v8 = noise_smoothed3d(integerX + 1, integerY + 1, integerZ + 1),
-
-        i1 = cosInterpolate(v1, v2, fractionalX),
-        i2 = cosInterpolate(v3, v4, fractionalX),
-        i3 = cosInterpolate(i1, i2, fractionalY),
-
-        i4 = cosInterpolate(v5, v6, fractionalY),
-        i5 = cosInterpolate(v7, v8, fractionalY),
-        i6 = cosInterpolate(i4, i5, fractionalZ),
-
-        i7 = cosInterpolate(i3, i6, fractionalY);
+  int integer_X = (int)x,
+      integer_Y = (int)y,
+      integer_Z = (int)z;
+  float fractional_X = x - integer_X,
+        fractional_Y = y - integer_Y,
+        fractional_Z = z - integer_Z,
+        v1 = noise_smoothed3d(integer_X,     integer_Y,     integer_Z),
+        v2 = noise_smoothed3d(integer_X + 1, integer_Y,     integer_Z),
+        v3 = noise_smoothed3d(integer_X,     integer_Y + 1, integer_Z),
+        v4 = noise_smoothed3d(integer_X + 1, integer_Y + 1, integer_Z),
+        v5 = noise_smoothed3d(integer_X,     integer_Y,     integer_Z + 1),
+        v6 = noise_smoothed3d(integer_X + 1, integer_Y,     integer_Z + 1),
+        v7 = noise_smoothed3d(integer_X,     integer_Y + 1, integer_Z + 1),
+        v8 = noise_smoothed3d(integer_X + 1, integer_Y + 1, integer_Z + 1),
+        i1 = cosInterpolate(v1, v2, fractional_X),
+        i2 = cosInterpolate(v3, v4, fractional_X),
+        i3 = cosInterpolate(v5, v6, fractional_Y),
+        i4 = cosInterpolate(v7, v8, fractional_Z),
+        i5 = cosInterpolate(i1, i2, fractional_Z),
+        i6 = cosInterpolate(i3, i4, fractional_Z),
+        i7 = cosInterpolate(i5, i6, fractional_Z);
   return i7;
 }
 
-static inline float noise_perlin3d(float x, float y, float z, float persistance, int octaves) {
-  float total = 0.0;
+static inline float noise_perlin3d(float x, float y, float z) {
+  float total = 0.0,
+        persistance = 0.8,
+        octaves = 1.0;
   for (int i = 0; i < octaves; i++) {
     float freq = pow(2, i),
           amp = pow(persistance, i);
     total = total + noise_interpolated3d(x * freq, y * freq, z * freq) * amp;
   }
-  return total * 0.1;
+  return total;
 }
 
 #ifdef __cplusplus
