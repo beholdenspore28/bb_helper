@@ -238,21 +238,21 @@ static inline float noise_interpolated3d(float x, float y, float z) {
         i3 = cosInterpolate(v5, v6, fractional_Y),
         i4 = cosInterpolate(v7, v8, fractional_Z),
         i5 = cosInterpolate(i1, i2, fractional_Z),
-        i6 = cosInterpolate(i3, i4, fractional_Z);
-  return i6;
+        i6 = cosInterpolate(i3, i4, fractional_Z),
+        i7 = cosInterpolate(i5, i6, fractional_Z);
+  return i7;
 }
 
-static inline float noise_perlin3d(float x, float y, float z, float persistance, int octaves) {
-  float total = 0.0f;
-  float freq = 0.0f;
-  float amp = 0.0f;
+static inline float noise_perlin3d(float x, float y, float z) {
+  float total = 0.0,
+        persistance = 0.8,
+        octaves = 1.0;
   for (int i = 0; i < octaves; i++) {
-    freq = pow(2, i);
-    amp = pow(persistance, i);
+    float freq = pow(2, i),
+          amp = pow(persistance, i);
     total = total + noise_interpolated3d(x * freq, y * freq, z * freq) * amp;
   }
-  total = (total + 1) * 0.5f;
-  return total;
+  return total * 0.01;
 }
 
 #ifdef __cplusplus
