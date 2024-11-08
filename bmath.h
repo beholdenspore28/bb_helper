@@ -104,68 +104,29 @@ static inline float angleDelta(const float a, const float b) {
 }
 
 static inline float fraction(float x) {
-  int i = (int)x;
-  return x - i;
+  return x - floorf(x);
 }
 
 // Single dimensional pseudo-random noise
 static inline float noise1(int x) {
-  float wave = sinf(x*100)*5647;
+  float wave = sinf(x*53)*6151;
   return fraction(wave);
 }
 
 // Two dimensional pseudo-random noise
 static inline float noise2(int x, int y) {
-  float wave = sinf(x*100+y*6574)*5647;
+  float wave = sinf(x*53+y*97)*6151;
   return fraction(wave);
 }
 
 // Three dimensional pseudo-random noise
 static inline float noise3(int x, int y, int z) {
-  float wave = sinf(x*2951+y*69905+z*9214)*53647;
+  float wave = sinf(x*53+y*97+z*193)*6151;
   return fraction(wave);
 }
 
 // Three dimensional pseudo-random noise
 #if 0
-static inline float noise3_smooth(float x, float y, float z) {
-  float wave = 
-    (noise3(x, y, z) +
-     noise3(x,   y-1, z+1) +
-     noise3(x,   y-1, z+1) +
-     noise3(x,   y+1, z+1) +
-     noise3(x,   y+1, z+1) +
-     noise3(x,   y-1, z-1) +
-     noise3(x,   y-1, z-1) +
-     noise3(x,   y+1, z-1) +
-     noise3(x,   y+1, z-1) +
-     noise3(x-1, y,   z+1) +
-     noise3(x+1, y,   z+1) +
-     noise3(x-1, y,   z+1) +
-     noise3(x+1, y,   z+1) +
-     noise3(x-1, y,   z-1) +
-     noise3(x+1, y,   z-1) +
-     noise3(x-1, y,   z-1) +
-     noise3(x+1, y,   z-1) +
-     noise3(x-1, y-1, z  ) +
-     noise3(x+1, y-1, z  ) +
-     noise3(x-1, y+1, z  ) +
-     noise3(x+1, y+1, z  ) +
-     noise3(x-1, y-1, z  ) +
-     noise3(x+1, y-1, z  ) +
-     noise3(x-1, y+1, z  ) +
-     noise3(x+1, y+1, z  ) +
-     noise3(x-1, y-1, z+1) +
-     noise3(x+1, y-1, z+1) +
-     noise3(x-1, y+1, z+1) +
-     noise3(x+1, y+1, z+1) +
-     noise3(x-1, y-1, z-1) +
-     noise3(x+1, y-1, z-1) +
-     noise3(x-1, y+1, z-1) +
-     noise3(x+1, y+1, z-1) ) / 64;
-  return wave;
-}
-#else
 static inline float noise3_lerp(float x, float y, float z) {
   float c = noise3(x, y, z);
 
@@ -183,21 +144,62 @@ static inline float noise3_lerp(float x, float y, float z) {
 
   float btl = noise3(floorX, floorY + 1, floorZ);
   float btr = noise3(floorX + 1, floorY + 1, floorZ);
-  float bt = cosInterpolate(btl, btr, fractX);
+  float bt = lerp(btl, btr, fractX);
 
   float fbl = noise3(floorX, floorY, floorZ);
-  float fbr = noise3(floorX + 1, floorY, floorZ);
-  float fb = cosInterpolate(fbl, fbr, fractX);
+  float v6 = noise3(floorX + 1, floorY, floorZ);
+  float fb = lerp(fbl, v6, fractX);
 
-  float ftl = noise3(floorX, floorY + 1, floorZ);
-  float ftr = noise3(floorX + 1, floorY + 1, floorZ);
-  float ft = cosInterpolate(ftl, ftr, fractX);
+  float v7 = noise3(floorX, floorY + 1, floorZ);
+  float v8 = noise3(floorX + 1, floorY + 1, floorZ);
+  float ft = lerp(v7, v8, fractX);
 
-  float fbt = cosInterpolate(fb, ft, fractY);
-  float bbt = cosInterpolate(bb, bt, fractY);
+  float fbt = lerp(fb, ft, fractY);
+  float s2 = lerp(bb, bt, fractY);
 
-  float fbtbbt = cosInterpolate(fbt, bbt, fractZ);
-  return fbtbbt / 50; 
+  float fbts2 = lerp(fbt, s2, fractZ);
+  return fbts2 / 50; 
+}
+#else
+static inline float noise3_lerp(float x, float y, float z) {
+  float fractX = fraction(x),
+        fractY = fraction(y),
+        fractZ = fraction(z),
+
+        floorX = floor(x),
+        floorY = floor(y),
+        floorZ = floor(z);
+
+  // interpolate between adjacent noise values
+  // ==================================================
+  // two vertices 'v' make an edge 'e' 
+  // two edges make a face 'f'
+  // two faces make a cube.
+  // ==================================================
+  
+  //===================================================
+  float v1 = noise3( floorX,     floorY,     floorZ),
+        v2 = noise3( floorX + 1, floorY,     floorZ),
+        e1 = cosInterpolate(v1, v2, fractX), // rear bottom
+
+        v3 = noise3( floorX,     floorY + 1, floorZ),
+        v4 = noise3( floorX + 1, floorY + 1, floorZ),
+        e2 = cosInterpolate(v3, v4, fractX), // rear top
+
+        v5 = noise3( floorX,     floorY,     floorZ + 1),
+        v6 = noise3( floorX + 1, floorY,     floorZ + 1),
+        e3 = cosInterpolate(v5, v6, fractX), // front bottom
+
+        v7 = noise3( floorX,     floorY + 1, floorZ + 1),
+        v8 = noise3( floorX + 1, floorY + 1, floorZ + 1),
+        e4 = cosInterpolate(v7, v8, fractX), // front top
+
+        f1 = cosInterpolate(e1, e2, fractY),
+        f2 = cosInterpolate(e3, e4, fractY),
+        cube  = cosInterpolate(f1, f2, fractZ);
+  //===================================================
+
+  return cube / 50; 
 }
 #endif
 
@@ -205,12 +207,12 @@ static inline float noise3_perlin(float x, float y, float z) {
   float total = 0.0;
   float freq = 1.0;
   float amplitude = 1.0;
-  float persistance = 0.25;
-  int octaves = 4;
+  float persistance = 0.5;
+  int octaves = 8;
   for (int i = 0; i < octaves; i++) {
     freq = pow(2, i);
     amplitude = pow(persistance, i);
-    total += noise3_smooth(x*freq, y*freq, z*freq) * amplitude; 
+    total += noise3_lerp(x*freq, y*freq, z*freq) * amplitude; 
   }
   return total;
 }
