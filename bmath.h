@@ -126,41 +126,6 @@ static inline float noise3(int x, int y, int z) {
 }
 
 // Three dimensional pseudo-random noise
-#if 0
-static inline float noise3_interpolated(float x, float y, float z) {
-  float c = noise3(x, y, z);
-
-  float fractX = fraction(x);
-  float fractY = fraction(y);
-  float fractZ = fraction(z);
-
-  float floorX = floor(x);
-  float floorY = floor(y);
-  float floorZ = floor(z);
-
-  float bbl = noise3(floorX, floorY, floorZ);
-  float bbr = noise3(floorX + 1, floorY, floorZ);
-  float bb = cosInterpolate(bbl, bbr, fractX);
-
-  float btl = noise3(floorX, floorY + 1, floorZ);
-  float btr = noise3(floorX + 1, floorY + 1, floorZ);
-  float bt = lerp(btl, btr, fractX);
-
-  float fbl = noise3(floorX, floorY, floorZ);
-  float v6 = noise3(floorX + 1, floorY, floorZ);
-  float fb = lerp(fbl, v6, fractX);
-
-  float v7 = noise3(floorX, floorY + 1, floorZ);
-  float v8 = noise3(floorX + 1, floorY + 1, floorZ);
-  float ft = lerp(v7, v8, fractX);
-
-  float fbt = lerp(fb, ft, fractY);
-  float s2 = lerp(bb, bt, fractY);
-
-  float fbts2 = lerp(fbt, s2, fractZ);
-  return fbts2 / 50; 
-}
-#else
 static inline float noise3_interpolated(float x, float y, float z) {
   float fractX = fraction(x),
         fractY = fraction(y),
@@ -200,7 +165,6 @@ static inline float noise3_interpolated(float x, float y, float z) {
 
   return cube / 50; 
 }
-#endif
 
 static inline float noise3_perlin(float x, float y, float z) {
   float total = 0.0;
