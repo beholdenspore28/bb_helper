@@ -127,7 +127,7 @@ static inline float noise3(int x, int y, int z) {
 
 // Three dimensional pseudo-random noise
 #if 0
-static inline float noise3_lerp(float x, float y, float z) {
+static inline float noise3_interpolated(float x, float y, float z) {
   float c = noise3(x, y, z);
 
   float fractX = fraction(x);
@@ -161,7 +161,7 @@ static inline float noise3_lerp(float x, float y, float z) {
   return fbts2 / 50; 
 }
 #else
-static inline float noise3_lerp(float x, float y, float z) {
+static inline float noise3_interpolated(float x, float y, float z) {
   float fractX = fraction(x),
         fractY = fraction(y),
         fractZ = fraction(z),
@@ -197,7 +197,6 @@ static inline float noise3_lerp(float x, float y, float z) {
         f1 = cosInterpolate(e1, e2, fractY),
         f2 = cosInterpolate(e3, e4, fractY),
         cube  = cosInterpolate(f1, f2, fractZ);
-  //===================================================
 
   return cube / 50; 
 }
@@ -208,11 +207,11 @@ static inline float noise3_perlin(float x, float y, float z) {
   float freq = 1.0;
   float amplitude = 1.0;
   float persistance = 0.5;
-  int octaves = 8;
+  int octaves = 16;
   for (int i = 0; i < octaves; i++) {
     freq = pow(2, i);
     amplitude = pow(persistance, i);
-    total += noise3_lerp(x*freq, y*freq, z*freq) * amplitude; 
+    total += noise3_interpolated(x*freq, y*freq, z*freq) * amplitude; 
   }
   return total;
 }
