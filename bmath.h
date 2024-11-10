@@ -163,10 +163,10 @@ static inline float noise3_interpolated(float x, float y, float z) {
         f2 = cosInterpolate(e3, e4, fractY),
         cube  = cosInterpolate(f1, f2, fractZ);
 
-  return cube / 50; 
+  return cube; 
 }
 
-static inline float noise3_perlin(float x, float y, float z) {
+static inline float noise3_fbm(float x, float y, float z) {
   float total = 0.0;
   float freq = 1.0;
   float amplitude = 1.0;
@@ -178,6 +178,13 @@ static inline float noise3_perlin(float x, float y, float z) {
     total += noise3_interpolated(x*freq, y*freq, z*freq) * amplitude; 
   }
   return total;
+}
+
+static inline float noise3_fbm_warped(float x, float y, float z, float warpFactor) {
+  float fbm1 = noise3_fbm(x, y, z);
+  float fbm2 = noise3_fbm(x + 5.2, y + 1.3*warpFactor, z + 6.4*warpFactor);
+  float fbm3 = noise3_fbm(x + 7.5, y + 0.3*warpFactor, z + 3.6*warpFactor);
+  return noise3_fbm(fbm1, fbm2, fbm3);
 }
 
 #ifdef __cplusplus
