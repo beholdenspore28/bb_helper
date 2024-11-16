@@ -171,6 +171,12 @@ static inline float vector2_distance(vector2_t a, vector2_t b) {
   return vector2_magnitude(vector2_subtract(b, a));
 }
 
+/*Returns the distance squared between point a and point b
+in units. Faster than vector2_distance, but the result is the distance squared*/
+static inline float vector2_square_distance(vector2_t a, vector2_t b) {
+  return vector2_square_magnitude(vector2_subtract(b, a));
+}
+
 /*Scales a vector "v" by "scalar".
 increases the magnitude when "scalar" is greater than 1.
 decreases the magnitude when "scalar" is less than 0.
@@ -276,6 +282,12 @@ static inline vector3_t vector3_normalize(vector3_t v) {
 in units.*/
 static inline float vector3_distance(vector3_t a, vector3_t b) {
   return vector3_magnitude(vector3_subtract(b, a));
+}
+
+/*Returns the distance squared between point a and point b
+in units. Faster than vector3_distance, but the result is the distance squared*/
+static inline float vector3_square_distance(vector3_t a, vector3_t b) {
+  return vector3_square_magnitude(vector3_subtract(b, a));
 }
 
 /*Scales a vector "v" by "scalar".
@@ -420,6 +432,12 @@ static inline vector4_t vector4_subtract(vector4_t minuend, vector4_t subtrahend
 in units.*/
 static inline float vector4_distance(vector4_t a, vector4_t b) {
   return vector4_magnitude(vector4_subtract(b, a));
+}
+
+/*Returns the distance squared between point a and point b
+in units. Faster than vector4_distance, but the result is the distance squared*/
+static inline float vector4_square_distance(vector4_t a, vector4_t b) {
+  return vector4_square_magnitude(vector4_subtract(b, a));
 }
 
 /*Scales a vector "v" by "scalar".
