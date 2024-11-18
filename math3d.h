@@ -737,7 +737,7 @@ static inline quaternion_t quaternion_identity(void) {
   return (quaternion_t){.x = 0.0f, .y = 0.0f, .z = 0.0f, .w = 1.0f};
 }
 
-static inline int quaternion_Equal(quaternion_t a, quaternion_t b) {
+static inline int quaternion_equal(quaternion_t a, quaternion_t b) {
 	return
 		fabs(a.x - b.x) <= FLOAT_EPSILON &&
 		fabs(a.y - b.y) <= FLOAT_EPSILON &&
