@@ -46,7 +46,7 @@ extern "C" {
 	typedef struct {                                                             \
 		size_t capacity;                                                           \
 		size_t length;                                                             \
-		type *data;                                                                \
+		type *array;                                                                \
 	} list_##type;                                                               \
 	list_##type list_##type##_alloc(void);                                       \
 	void list_##type##_free(list_##type *list);                                  \
@@ -57,27 +57,27 @@ extern "C" {
 	list_##type list_##type##_alloc(void) {                                      \
 		list_##type list;                                                          \
 		memset(&list, 0, sizeof(list_##type));                                     \
-		list.data = malloc(sizeof(type));                                          \
+		list.array = malloc(sizeof(type));                                          \
 		return list;                                                               \
 	}                                                                            \
 	\
 	void list_##type##_free(list_##type *list) {                                 \
-		free(list->data);                                                          \
+		free(list->array);                                                          \
 		memset(list, 0, sizeof(list_##type));                                      \
 	}                                                                            \
 	\
 	void list_##type##_add(list_##type *l, type value) {                         \
 		if (l->length >= l->capacity) {                                            \
 			l->capacity = l->length * 2 + 1;                                         \
-			l->data = realloc(l->data, sizeof(type) * l->capacity);                  \
+			l->array = realloc(l->array, sizeof(type) * l->capacity);                  \
 		}                                                                          \
-		l->data[l->length] = value;                                                \
+		l->array[l->length] = value;                                                \
 		l->length++;                                                               \
 	}                                                                            \
 	\
 	int list_##type##_contains(list_##type *l, type* item) {					\
 		for (size_t i = 0; i < l->length; i++) {									\
-			if (memcmp(&l->data[i],item,sizeof(type)))												\
+			if (memcmp(&l->array[i],item,sizeof(type)))												\
 				return 1;														\
 		}																		\
 		return 0;                                                               \
