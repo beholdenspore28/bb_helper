@@ -26,6 +26,7 @@ SOFTWARE.
 
 #pragma once
 
+#include "blib/blib.h"
 #include "blib_math.h"
 
 #ifdef __cplusplus
