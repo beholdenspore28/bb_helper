@@ -193,6 +193,19 @@ static inline float vector2_dot(vector2_t a, vector2_t b) {
   return (a.x * b.x) + (a.y * b.y);
 }
 
+/* Returns the position of a physical body over time by using the given
+ * 'acceleration' 'velocity' 'position' and 'time' arguments*/
+static inline vector3_t vector3_kinematic_equation(
+		vector3_t acceleration, 
+		vector3_t velocity,
+		vector3_t position, 
+		float time) {
+	float x = 0.5f * acceleration.x * time * time + velocity.x * time + position.x;
+	float y = 0.5f * acceleration.y * time * time + velocity.y * time + position.y;
+	float z = 0.5f * acceleration.z * time * time + velocity.z * time + position.z;
+	return (vector3_t){x, y, z};
+}
+
 /*Linearly interpolates between "a" and "b" by "t".
 If you want to make sure the returned value stays
 between "a" and "b", use vector3_Lerpclamped() instead.
