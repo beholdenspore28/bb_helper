@@ -26,7 +26,7 @@ SOFTWARE.
 
 #pragma once
 
-#include "bmath.h"
+#include "blib_math.h"
 
 #ifdef __cplusplus
 extern "C" {
