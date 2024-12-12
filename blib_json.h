@@ -38,7 +38,6 @@ DEFINE_LIST(void_ptr)
 void json_free(json_value *json) {
 	if (json->type == JSON_VALUE_STRING)
 		list_char_free(&json->string);
-
 	if (json->type == JSON_VALUE_OBJECT) {
 		for(size_t i = 0; i < json->children.length; i++) {
 			json_value *child = json->children.array[i];
@@ -46,7 +45,6 @@ void json_free(json_value *json) {
 		}
 		list_void_ptr_free(&json->children);
 	}
-
 	free(json);
 }
 
@@ -59,10 +57,10 @@ void json_print(json_value *json) {
 	static int depth = -1;
 	depth++;
 	putchar('\n');
-	indent(depth); printf("json value at %p\n", (void*)json);
 	for(size_t i = 0; i < json->children.length; i++) {
 		json_value *child = json->children.array[i];
-		indent(depth); printf("child of type %d at %p ", child->type, (void*)child);
+		indent(depth);
+		printf("child of type %d at %p ", child->type, (void*)child);
 		switch(child->type) {
 			case JSON_VALUE_OBJECT: {
 				json_print(child);
@@ -82,13 +80,13 @@ void json_print(json_value *json) {
 		};
 		putchar('\n');
 	}
+	indent(depth); puts("END");
 	depth=0;
 }
 
 #define is_number(character) (character <= '9' && character >= '0')
 
 json_value *json_parse(char* c, const size_t string_length) {
-	//puts("===============START==================");
 	json_value *json = malloc(sizeof(json_value));
 	json->children = list_void_ptr_alloc();
 	json->type = JSON_VALUE_OBJECT;
@@ -98,7 +96,6 @@ json_value *json_parse(char* c, const size_t string_length) {
 		if (is_number(*c)) {
 			double n;
 			sscanf(c, "%lf", &n);
-			//printf("number %lf\n", n);
 			while(is_number(*(++c)) || *(++c)=='.'){}
 			json_value *child = malloc(sizeof(json_value));
 			child->type = JSON_VALUE_NUMBER;
@@ -107,10 +104,13 @@ json_value *json_parse(char* c, const size_t string_length) {
 		}
 		switch (*c) {
 			case '{': {
-				//puts("OBJECT");
 				++c;
 				json_value* child = json_parse(c, string_length);
 				list_void_ptr_add(&json->children, (void*)child);
+			} break;
+			case '}': {
+				++c;
+				return json;
 			} break;
 			case '\"': {
 				list_char string = list_char_alloc();
@@ -118,7 +118,6 @@ json_value *json_parse(char* c, const size_t string_length) {
 					list_char_add(&string, *c);
 				}
 				list_char_add(&string, '\0');
-				//printf("string \"%s\" : ", string.array);
 				json_value *child = malloc(sizeof(json_value));
 				child->type = JSON_VALUE_STRING;
 				child->string = string;
@@ -128,7 +127,6 @@ json_value *json_parse(char* c, const size_t string_length) {
 				if( *(++c)=='r' &&
 					*(++c)=='u' &&
 					*(++c)=='e') {
-					//puts("true");
 					json_value *child = malloc(sizeof(json_value));
 					child->type = JSON_VALUE_BOOLEAN;
 					child->boolean = true;
@@ -140,19 +138,16 @@ json_value *json_parse(char* c, const size_t string_length) {
 					*(++c)=='l' &&
 					*(++c)=='s' &&
 					*(++c)=='e') {
-					//puts("false");
 					json_value *child = malloc(sizeof(json_value));
 					child->type = JSON_VALUE_BOOLEAN;
 					child->boolean = false;
 					list_void_ptr_add(&json->children, child);
 				}
-
 			} break;
 			case 'n': {
 				if( *(++c)=='u' &&
 					*(++c)=='l' &&
 					*(++c)=='l') {
-					//puts("null");
 					json_value *child = malloc(sizeof(json_value));
 					child->type = JSON_VALUE_NULL;
 					child->is_null = true;
@@ -162,7 +157,6 @@ json_value *json_parse(char* c, const size_t string_length) {
 		}
 		c++;
 	}
-	//puts("================END===================");
 	return json;
 }
 
