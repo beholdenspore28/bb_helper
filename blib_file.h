@@ -30,51 +30,51 @@ SOFTWARE.
 #include <stdlib.h>
 #include "blib.h"
 
-#define B_FILE_BUFFER_CHUNK_SIZE (64 /* chars */)
-#define B_FILE_BUFFER_GROWTH (4 /* times */)
+#define BLIB_FILE_BUFFER_CHUNK_SIZE (64 /* chars */)
+#define BLIB_FILE_BUFFER_GROWTH (4 /* times */)
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
 typedef struct {
-  size_t len;
+  size_t length;
   char *text;
   bool error : 1;
-} filebuffer_t;
+} file_buffer;
 
-static inline filebuffer_t filebuffer_read(const char *filename) {
+static inline file_buffer file_buffer_read(const char *filename) {
   FILE *file = fopen(filename, "r");
   if (file == NULL) {
-    filebuffer_t ret;
+    file_buffer ret;
     ret.error = true;
     return ret;
   }
-  size_t alloc = B_FILE_BUFFER_CHUNK_SIZE * B_FILE_BUFFER_GROWTH;
+  size_t alloc = BLIB_FILE_BUFFER_CHUNK_SIZE * BLIB_FILE_BUFFER_GROWTH;
   char *buf = (char *)malloc(alloc);
-  size_t len = 0;
+  size_t length = 0;
   while (!feof(file)) {
-    if (alloc - len <= B_FILE_BUFFER_CHUNK_SIZE + 1) {
-      alloc += B_FILE_BUFFER_CHUNK_SIZE;
-      alloc *= B_FILE_BUFFER_GROWTH;
+    if (alloc - length <= BLIB_FILE_BUFFER_CHUNK_SIZE + 1) {
+      alloc += BLIB_FILE_BUFFER_CHUNK_SIZE;
+      alloc *= BLIB_FILE_BUFFER_GROWTH;
       buf = (char *)realloc((void *)buf, alloc);
     }
-    int got = fread((void *)&buf[len], 1, B_FILE_BUFFER_CHUNK_SIZE, file);
-    len += got;
-    if (got != B_FILE_BUFFER_CHUNK_SIZE) {
+    int got = fread((void *)&buf[length], 1, BLIB_FILE_BUFFER_CHUNK_SIZE, file);
+    length += got;
+    if (got != BLIB_FILE_BUFFER_CHUNK_SIZE) {
       break;
     }
   }
-  buf[len] = '\0';
+  buf[length] = '\0';
   fclose(file);
-  filebuffer_t ret;
+  file_buffer ret;
   ret.text = buf;
-  ret.len = len;
+  ret.length = length;
   ret.error = false;
   return ret;
 }
 
-static inline void filebuffer_close(const filebuffer_t file) { free(file.text); }
+static inline void file_buffer_close(const file_buffer file) { free(file.text); }
 
 #ifdef __cplusplus
 } //extern "C" {

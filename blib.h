@@ -34,24 +34,24 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 
-	typedef uint8_t bool;
+typedef uint8_t bool;
 #define true 1
 #define false 0
 
-	typedef void* void_ptr;
-	typedef const void* const_void_ptr;
-	typedef const void* long_double;
+typedef void* void_ptr;
+typedef const void* const_void_ptr;
+typedef const void* long_double;
 
 #define DECLARE_LIST(type)\
-	typedef struct {\
-		size_t capacity;\
-		size_t length;\
-		type *array;\
-	} list_##type;\
-	list_##type list_##type##_alloc(void);\
-	void list_##type##_free(list_##type *list);\
-	void list_##type##_add(list_##type *l, type value);\
-	void list_##type##_remove(list_##type *l);
+typedef struct {\
+	size_t capacity;\
+	size_t length;\
+	type *array;\
+} list_##type;\
+list_##type list_##type##_alloc(void);\
+void list_##type##_free(list_##type *list);\
+void list_##type##_add(list_##type *l, type value);\
+void list_##type##_remove(list_##type *l);
 
 #define DEFINE_LIST(type)\
 	list_##type list_##type##_alloc(void) {\
@@ -87,7 +87,7 @@ extern "C" {
 
 #define DECLARE_LIST_ALIAS(baseType, targetType)\
 	typedef list_##baseType list_##targetType;\
-	list_##targetType list_##targetType##_Alloc(void);\
+	list_##targetType list_##targetType##_alloc(void);\
 	void list_##targetType##_free(list_##targetType *list);\
 	void list_##targetType##_add(list_##targetType *list, targetType value);\
 	void list_##targetType##_remove(list_##targetType *list);
@@ -108,6 +108,7 @@ extern "C" {
 
 	DECLARE_LIST(void_ptr)
 	DECLARE_LIST(const_void_ptr)
+	DECLARE_LIST(char)
 	DECLARE_LIST(float)
 	DECLARE_LIST(double)
 	DECLARE_LIST(long_double)
@@ -123,9 +124,10 @@ extern "C" {
 	DECLARE_LIST_ALIAS(uint32_t, int32_t)
 	DECLARE_LIST_ALIAS(uint64_t, int64_t)
 
-#ifdef B_LIST_IMPLEMENTATION
+#ifdef BLIB_IMPLEMENTATION
 	DEFINE_LIST(void_ptr)
 	DEFINE_LIST(const_void_ptr)
+	DEFINE_LIST(char)
 	DEFINE_LIST(float)
 	DEFINE_LIST(double)
 	DEFINE_LIST(long_double)
@@ -140,7 +142,7 @@ extern "C" {
 	DEFINE_LIST_ALIAS(uint16_t, int16_t)
 	DEFINE_LIST_ALIAS(uint32_t, int32_t)
 	DEFINE_LIST_ALIAS(uint64_t, int64_t)
-#endif
+#endif // BLIB_IMPLENTATION
 
 #ifdef __cplusplus
 } // extern "C" {
