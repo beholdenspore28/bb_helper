@@ -35,12 +35,10 @@ extern "C" {
 #include <string.h>
 
 typedef uint8_t bool;
-#define true 1
-#define false 0
+enum { false, true };
 
 typedef void* void_ptr;
 typedef const void* const_void_ptr;
-typedef const void* long_double;
 
 #define DECLARE_LIST(type)\
 typedef struct {\
@@ -111,7 +109,6 @@ void list_##type##_remove(list_##type *l);
 	DECLARE_LIST(char)
 	DECLARE_LIST(float)
 	DECLARE_LIST(double)
-	DECLARE_LIST(long_double)
 
 	DECLARE_LIST(uint8_t)
 	DECLARE_LIST(uint16_t)
@@ -130,7 +127,6 @@ void list_##type##_remove(list_##type *l);
 	DEFINE_LIST(char)
 	DEFINE_LIST(float)
 	DEFINE_LIST(double)
-	DEFINE_LIST(long_double)
 	
 	DEFINE_LIST(uint8_t)
 	DEFINE_LIST(uint16_t)
