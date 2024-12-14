@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLIB_JSON_H
+#define BLIB_JSON_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,7 +10,6 @@ extern "C" {
 #include <stdint.h>
 #include <ctype.h>
 
-#include "blib.h"
 #include "blib_file.h"
 
 enum {
@@ -30,10 +30,17 @@ typedef struct json_value {
 	list_void_ptr children;
 } json_value;
 
+#ifdef __cplusplus
+} // extern "C" {
+#endif //ifdef __cplusplus
+
+#endif // BLIB_JSON_H
+
 #ifdef BLIB_IMPLEMENTATION
 
-DEFINE_LIST(char)
-DEFINE_LIST(void_ptr)
+#ifdef __cplusplus
+extern "C" {
+#endif //ifdef __cplusplus
 
 void json_free(json_value *json) {
 	if (json->type == JSON_VALUE_STRING)
@@ -169,8 +176,8 @@ json_value *json_read(const char *path_to_file) {
 	return json;
 }
 
-#endif //#ifdef BLIB_IMPLEMENTATION
-
 #ifdef __cplusplus
 } // extern "C" {
 #endif //ifdef __cplusplus
+
+#endif //#ifdef BLIB_IMPLEMENTATION

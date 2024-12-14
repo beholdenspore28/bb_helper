@@ -24,7 +24,8 @@
 
   -----------------------------------------------------------------------------*/
 
-#pragma once
+#ifndef BLIB_H
+#define BLIB_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -104,24 +105,35 @@ void list_##type##_remove(list_##type *l);
 		list_##baseType##_remove(list);\
 	}
 
-	DECLARE_LIST(void_ptr)
-	DECLARE_LIST(const_void_ptr)
-	DECLARE_LIST(char)
-	DECLARE_LIST(float)
-	DECLARE_LIST(double)
+DECLARE_LIST(void_ptr)
+DECLARE_LIST(const_void_ptr)
+DECLARE_LIST(char)
+DECLARE_LIST(float)
+DECLARE_LIST(double)
 
-	DECLARE_LIST(uint8_t)
-	DECLARE_LIST(uint16_t)
-	DECLARE_LIST(uint32_t)
-	DECLARE_LIST(uint64_t)
-	DECLARE_LIST(size_t)
+DECLARE_LIST(uint8_t)
+DECLARE_LIST(uint16_t)
+DECLARE_LIST(uint32_t)
+DECLARE_LIST(uint64_t)
+DECLARE_LIST(size_t)
 
-	DECLARE_LIST_ALIAS(uint8_t, int8_t)
-	DECLARE_LIST_ALIAS(uint16_t, int16_t)
-	DECLARE_LIST_ALIAS(uint32_t, int32_t)
-	DECLARE_LIST_ALIAS(uint64_t, int64_t)
+DECLARE_LIST_ALIAS(uint8_t, int8_t)
+DECLARE_LIST_ALIAS(uint16_t, int16_t)
+DECLARE_LIST_ALIAS(uint32_t, int32_t)
+DECLARE_LIST_ALIAS(uint64_t, int64_t)
+
+#ifdef __cplusplus
+} // extern "C" {
+#endif //ifdef __cplusplus
+
+#endif // BLIB_H
 
 #ifdef BLIB_IMPLEMENTATION
+
+#ifdef __cplusplus
+extern "C" {
+#endif //ifdef __cplusplus
+
 	DEFINE_LIST(void_ptr)
 	DEFINE_LIST(const_void_ptr)
 	DEFINE_LIST(char)
@@ -138,8 +150,10 @@ void list_##type##_remove(list_##type *l);
 	DEFINE_LIST_ALIAS(uint16_t, int16_t)
 	DEFINE_LIST_ALIAS(uint32_t, int32_t)
 	DEFINE_LIST_ALIAS(uint64_t, int64_t)
-#endif // BLIB_IMPLENTATION
 
 #ifdef __cplusplus
 } // extern "C" {
 #endif //ifdef __cplusplus
+
+#endif // BLIB_IMPLEMENTATION
+

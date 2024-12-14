@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 -----------------------------------------------------------------------------*/
-
-#pragma once
+#ifndef BLIB_MATH3D_H
+#define BLIB_MATH3D_H
 
 #include "blib/blib.h"
 #include "blib_math.h"
@@ -937,3 +937,23 @@ static inline matrix4_t quaternion_to_matrix4(quaternion_t q) {
 #ifdef __cplusplus
 } // extern "C" {
 #endif // __cplusplus
+
+#endif // BLIB_MATH3D_H
+
+#ifdef BLIB_IMPLEMENTATION
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+DEFINE_LIST(vector4_t)
+DEFINE_LIST(vector3_t)
+DEFINE_LIST(vector2_t)
+DEFINE_LIST(quaternion_t)
+DEFINE_LIST(matrix4_t)
+
+#ifdef __cplusplus
+} // extern "C" {
+#endif // __cplusplus
+
+#endif
