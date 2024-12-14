@@ -24,7 +24,8 @@ SOFTWARE.
 
 -----------------------------------------------------------------------------*/
 
-#pragma once
+#ifndef BLIB_MATH_H
+#define BLIB_MATH_H
 
 #include <assert.h>
 #include <stddef.h>
@@ -190,3 +191,5 @@ static inline float noise3_fbm_warped(float x, float y, float z, float warpFacto
 #ifdef __cplusplus
 } // extern "C" {
 #endif // __cplusplus
+
+#endif // BLIB_MATH_H
