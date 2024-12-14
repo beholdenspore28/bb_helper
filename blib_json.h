@@ -161,11 +161,11 @@ json_value *json_parse(char* c, const size_t string_length) {
 }
 
 json_value *json_read(const char *path_to_file) {
-	file_buffer fb = file_buffer_read(path_to_file);
+	file_buffer fb = file_buffer_alloc(path_to_file);
 	if (fb.error)
 		fprintf(stderr, "failed to load file %s\n", path_to_file);
 	json_value *json = json_parse(fb.text, fb.length);
-	file_buffer_close(fb);
+	file_buffer_free(fb);
 	return json;
 }
 
