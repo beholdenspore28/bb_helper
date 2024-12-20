@@ -776,15 +776,6 @@ static inline void mat4_print(mat4_t m, const char *label) {
 	printf("\n--------------------------------\n");
 }
 
-static inline quat_t quat_Set(float x, float y, float z, float w) {
-	return (quat_t){
-		.w = w,
-			.x = x,
-			.y = y,
-			.z = z,
-	};
-}
-
 static inline quat_t quat_identity(void) {
 	return (quat_t){.x = 0.0f, .y = 0.0f, .z = 0.0f, .w = 1.0f};
 }
@@ -797,7 +788,7 @@ static inline int quat_equal(quat_t a, quat_t b) {
 		fabs(a.w - b.w) <= FLOAT_EPSILON;
 }
 
-static inline quat_t quat_FromAngleAxis(float angle, vec3_t axis) {
+static inline quat_t quat_from_angle_axis(float angle, vec3_t axis) {
 	quat_t ret;
 	float s = sinf(angle/2);
 	ret.x = axis.x * s;
@@ -861,6 +852,14 @@ static inline quat_t quat_multiply(quat_t q1, quat_t q2) {
 	ret.y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
 	ret.z = q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w;
 	return ret;
+}
+
+static inline quat_t quat_scale(quat_t quat, float scalar) {
+	quat.x *= scalar;
+	quat.y *= scalar;
+	quat.z *= scalar;
+	quat.w *= scalar;
+	return quat;
 }
 
 /*
