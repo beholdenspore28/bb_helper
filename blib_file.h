@@ -44,23 +44,7 @@ typedef struct {
 	bool error : 1;
 } file_buffer;
 
-file_buffer file_buffer_alloc(const char *filename);
-void file_buffer_free(const file_buffer file);
-
-
-#ifdef __cplusplus
-} //extern "C" {
-#endif // __cplusplus
-
-#endif // BLIB_FILE_H
-
-#ifdef BLIB_IMPLEMENTATION
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-inline file_buffer file_buffer_alloc(const char *filename) {
+static inline file_buffer file_buffer_alloc(const char *filename) {
 	FILE *file = fopen(filename, "r");
 	if (file == NULL) {
 		file_buffer ret;
@@ -91,7 +75,7 @@ inline file_buffer file_buffer_alloc(const char *filename) {
 	return ret;
 }
 
-inline void file_buffer_free(const file_buffer file) { free(file.text); }
+static inline void file_buffer_free(const file_buffer file) { free(file.text); }
 
 #ifdef __cplusplus
 } //extern "C" {
